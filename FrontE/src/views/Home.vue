@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div class="Home">
         <div class="drawsvg">
             <svg version="1.1" viewBox="0 0 700 300">
                 <symbol id="fade-text">
@@ -16,13 +16,18 @@
 <script>
 export default {
   methods: {
-    moveLogin () {
-      this.$router.push({ name: 'Login' })
-    }
+      moveLogin () {
+
+        this.$router.push({ name: 'Login' })
+      }
   }
 }
 </script>
 <style scoped>
+.Home{
+  overflow: hidden;
+}
+
 .drawsvg,svg {width: 100%; height: 300px}
 .stroke {
   stroke: #000;
