@@ -5,6 +5,8 @@ import store from './store'
 
 Vue.config.productionTip = false
 
+window.Kakao.init('8ec24047f36c31765ee62cb1766ec26a')
+
 new Vue({
   router,
   store,
