@@ -11,8 +11,9 @@ font-family: Avenir, Helvetica, Arial, sans-serif;
   text-align: center;
   color: #2c3e50;
   background-image: url(./assets/background.png);
+  background-repeat: repeat;
   background-size:contain;
   height: 100vh;
-  width: 100vw;
+  width: 100%;
 }
 </style>
