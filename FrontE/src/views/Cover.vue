@@ -10,12 +10,12 @@
             </svg>
         </div>
         <div class ="col">
-          <div>
-            <button @click="openModal()">Go</button>
-          </div>
-          <div>
+          <div v-if ="this.isLogin">
             <button @click="moveHome()">Home</button>
           </div>            
+          <div v-else>
+            <button @click="openModal()">Go</button>
+          </div>
         </div>
         <Login :modalOn="modalOn" @closeModal="closeModal"/>
     </div>
@@ -23,6 +23,7 @@
 
 <script>
 import Login from '@/components/Login.vue'
+import {mapState} from 'vuex'
 
 export default {
   components: {
@@ -32,6 +33,11 @@ export default {
     return {
       modalOn: ""
       }
+  },
+  computed:{
+    ...mapState({
+      isLogin : state => state.member.isLogin,
+    })
   },
   methods: {
     openModal () {
@@ -44,7 +50,7 @@ export default {
     moveHome(){
       this.$router.push({name : 'Home'})
     }
-  }
+  },
 }
 </script>
 <style scoped>
