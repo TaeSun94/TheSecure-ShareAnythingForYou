@@ -5,11 +5,12 @@
 </template>
 
 <script>
-import {mapMutations} from 'vuex'
+import {mapMutations,mapActions} from 'vuex'
 
 export default {
   methods:{
     ...mapMutations('member',['setisLogin']),
+    ...mapActions('member',['getAccessToken']),
     getParameters(paramName) { 
       // 리턴값을 위한 변수 선언 
       var returnValue; 
@@ -36,7 +37,7 @@ export default {
     else if(code !== undefined){
       console.log(code)
       this.$cookies.set("code",code,"1h")
-
+      //this.getAccessToken(code)
       // user id 도 저장할거임 
       this.$router.push({'name' : 'Home'})
     }
@@ -45,6 +46,9 @@ export default {
     if(this.$cookies.get('code') !== null){
       this.setisLogin(true);
     }
+    // if(this.$cookie.get('token') !== null){
+    //   this.setisLogin(true);
+    // }
   }
 }
 </script>

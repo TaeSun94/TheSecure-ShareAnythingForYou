@@ -51,6 +51,9 @@ export default {
       this.$router.push({name : 'Home'})
     }
   },
+  mounted(){
+    console.log(this.isLogin)
+  },
 }
 </script>
 <style scoped>
