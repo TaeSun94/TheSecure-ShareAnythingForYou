@@ -29,7 +29,7 @@
                     </v-list-item-icon>
         
                     <v-list-item-content>
-                    <v-list-item-title>{{ item.title }}</v-list-item-title>
+                    <v-list-item-title @click="excuteMenu(item.title)">{{ item.title }}</v-list-item-title>
                     </v-list-item-content>
                 </v-list-item>
                 </v-list>
@@ -57,6 +57,8 @@
     </div>
 </template>
 <script>
+import {mapMutations} from 'vuex'
+
 export default {
     data () {
     return {
@@ -67,10 +69,25 @@ export default {
             { title: 'Dashboard', icon: 'mdi-view-dashboard' },
             { title: 'Photos', icon: 'mdi-image' },
             { title: 'About', icon: 'mdi-help-box' },
+            { title: 'Logout', icon:'mdi-emoji_people'}
         ],
         right: null,
-    }
-  },
+        }
+    },
+    methods:{
+        ...mapMutations('member',['setisLogin']),
+        excuteMenu(menu) {
+            switch(menu){
+                // 로그아웃
+                case "Logout":
+                    this.$cookies.remove("code");
+                    this.$router.push({ name : 'Cover'})
+                    //this.$cookies.remove("token");
+                    this.setisLogin(false);
+                    break;
+            }
+        }
+    },
 }
 </script>
 <style scoped>
