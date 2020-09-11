@@ -1,108 +1,100 @@
 <template>
-    <div class="Home">
-        <div class="drawsvg">
-            <svg version="1.1" viewBox="0 0 700 300">
-                <symbol id="fade-text">
-                <text x="45%" y="40%" text-anchor="middle">Welcome to 2%</text>
-                <text x="55%" y="60%" text-anchor="middle">Use </text>
-                </symbol>
-                <g> <use class="stroke" xlink:href="#fade-text"/> <use class="fill" xlink:href="#fade-text"/> </g>
-            </svg>
-        </div>
-        <button @click="moveLogin()">Go</button>
+    <div class="home_container">
+        <v-app>
+            <v-navigation-drawer app
+            v-model="drawer"
+            permanent = "permanent">
+                <v-list-item>
+                    <v-list-item-content>
+                        <v-list-item-title class="title">
+                        2%
+                        </v-list-item-title>
+                        <v-list-item-subtitle>
+                        당신의 숙소를 확인하세요
+                        </v-list-item-subtitle>
+                    </v-list-item-content>
+                </v-list-item>
+                <v-divider></v-divider>
+                <v-list
+                dense
+                nav
+                >
+                <v-list-item
+                    v-for="item in items"
+                    :key="item.title"
+                    link
+                >
+                    <v-list-item-icon>
+                    <v-icon>{{ item.icon }}</v-icon>
+                    </v-list-item-icon>
+        
+                    <v-list-item-content>
+                    <v-list-item-title @click="excuteMenu(item.title)">{{ item.title }}</v-list-item-title>
+                    </v-list-item-content>
+                </v-list-item>
+                </v-list>
+            </v-navigation-drawer>
+
+            <v-app-bar app>
+                2%
+            </v-app-bar>
+
+            <!-- Sizes your content based upon application components -->
+            <v-main>
+
+                <!-- Provides the application the proper gutter -->
+                <v-container fluid>
+                    <!-- If using vue-router -->
+                    <router-view></router-view>
+                </v-container>
+            </v-main>
+
+            <v-footer app>
+                <h5>2%</h5>
+                <span>유태선 김기영 이완희 이한별</span>
+            </v-footer>
+        </v-app>
     </div>
 </template>
-
 <script>
-export default {
-  methods: {
-      moveLogin () {
+import {mapMutations} from 'vuex'
 
-        this.$router.push({ name: 'Login' })
-      }
-  }
+export default {
+    data () {
+    return {
+        drawer : true,
+        permanent : true,
+        expandOnHover : true,
+        items: [
+            { title: 'Dashboard', icon: 'mdi-view-dashboard' },
+            { title: 'Photos', icon: 'mdi-image' },
+            { title: 'About', icon: 'mdi-help-box' },
+            { title: 'Logout', icon:'mdi-emoji_people'}
+        ],
+        right: null,
+        }
+    },
+    methods:{
+        ...mapMutations('member',['setisLogin']),
+        excuteMenu(menu) {
+            switch(menu){
+                // 로그아웃
+                case "Logout":
+                    this.$cookies.remove("code");
+                    this.$router.push({ name : 'Cover'})
+                    //this.$cookies.remove("token");
+                    this.setisLogin(false);
+                    break;
+            }
+        }
+    },
 }
 </script>
 <style scoped>
-.Home{
-  overflow: hidden;
+.home_container{
+    background-color : black
 }
-
-.drawsvg,svg {width: 100%; height: 300px}
-.stroke {
-  stroke: #000;
-  stroke-width: 1px;
-  stroke-dasharray: 0 250;
-  stroke-opacity: 1; fill: none;
-  -webkit-animation: stroke_offset 8s infinite;
-  animation: stroke_offset 8s infinite;
-  -webkit-animation-timing-function: cubic-bezier(.25, .46, .45, .94);
-  animation-timing-function: cubic-bezier(.25, .46, .45, .94)
-  }
-  @-webkit-keyframes stroke_offset {
-    100%, 25% {stroke-dasharray: 0 250; stroke-opacity: 1 }
-    50%, 75% {stroke-dasharray: 250 0; stroke-opacity: .75 }
-    55%, 70% {stroke-dasharray: 250 0; stroke-opacity: 0 }
-  } @keyframes stroke_offset
-  { 100%, 25% {stroke-dasharray: 0 250; stroke-opacity: 1 }
-  50%, 75% {stroke-dasharray: 250 0; stroke-opacity: .75 }
-  55%, 70% {stroke-dasharray: 250 0; stroke-opacity: 0 } }
-  .fill { fill: #000; fill-opacity: 0;
-  -webkit-animation: fill_offset 8s infinite;
-  animation: fill_offset 8s infinite;
-  -webkit-animation-timing-function: cubic-bezier(.25, .46, .45, .94);
-  animation-timing-function: cubic-bezier(.25, .46, .45, .94) }
-  @-webkit-keyframes fill_offset {
-    100%, 25%, 35%, 90% { fill-opacity: 0 }
-    50%, 70% { fill-opacity: 1 }
-  }
-  @keyframes fill_offset {
-    100%, 25%, 35%, 90% { fill-opacity: 0 }
-    50%, 70% { fill-opacity: 1 }
-  } #fade-text {
-    font-family: 'Alex Brush', cursive;
-    font-size: 4em;
-  }
-
-  @import url(https://fonts.googleapis.com/css?family=Alex+Brush);
-
-  button{
-  background:#5f6099;
-  color:#fff;
-  border:none;
-  position:relative;
-  height:60px;
-  font-size:1.6em;
-  padding:0 2em;
-  cursor:pointer;
-  transition:800ms ease all;
-  outline:none;
-  border-radius: 10px;
-  margin-top: 5em;
+v-footer{
+    background-color: black;
 }
-button:hover{
-  background:#fff;
-  color:#5f6099;
-}
-button:before,button:after{
-  content:'';
-  position:absolute;
-  top:0;
-  right:0;
-  height:2px;
-  width:0;
-  background: #5f6099;
-  transition:400ms ease all;
-}
-button:after{
-  right:inherit;
-  top:inherit;
-  left:0;
-  bottom:0;
-}
-button:hover:before,button:hover:after{
-  width:100%;
-  transition:800ms ease all;
-}
-
 </style>

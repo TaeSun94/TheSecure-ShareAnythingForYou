@@ -2,13 +2,15 @@ import Vue from 'vue'
 import App from './App.vue'
 import router from './router'
 import store from './store'
+import vuetify from './plugins/vuetify'
 
 Vue.config.productionTip = false
+Vue.use(require('vue-cookies'))
 
-window.Kakao.init('8ec24047f36c31765ee62cb1766ec26a')
 
 new Vue({
   router,
   store,
+  vuetify,
   render: h => h(App)
 }).$mount('#app')
