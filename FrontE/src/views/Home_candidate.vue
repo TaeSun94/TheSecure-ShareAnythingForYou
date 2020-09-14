@@ -43,10 +43,38 @@
             <v-main>
 
                 <!-- Provides the application the proper gutter -->
-                <v-container fluid style="padding-top:0px;">
+                <v-container fluid>
                     <!-- If using vue-router -->
                     <router-view></router-view>
-                    <home-contents/>
+                    <v-carousel
+                        cycle
+                        height="100%"
+                        hide-delimiter-background
+                        show-arrows-on-hover="vertical"
+                        interval="3000"
+                        vertical="true"
+                        vertical-delimiters="right"
+                    >
+                        <v-carousel-item
+                        v-for="(slide, i) in slides"
+                        :key="i"
+                        >
+                        <v-sheet
+                            :color="colors[i]"
+                            height="95vh"
+                        >
+                            <v-row
+                            class="fill-height"
+                            align="center"
+                            justify="center"
+                            >
+                            <!-- 페이지 별 내용 입력 -->
+                            <!-- <div class="display-3">{{ slide }}</div>  -->
+                            <div class="display-3">{{ slide }}</div> 
+                            </v-row>
+                        </v-sheet>
+                        </v-carousel-item>
+                    </v-carousel> 
                 </v-container>
             </v-main>
 
@@ -59,7 +87,7 @@
 </template>
 <script>
 import {mapMutations} from 'vuex'
-import HomeContents from './HomeContents.vue'
+
 export default {
     data () {
     return {
@@ -74,10 +102,21 @@ export default {
             { title: 'Logout', icon:'mdi-exit-run'},
         ],
         right: null,
+        colors: [
+          'indigo',
+          'warning',
+          'pink darken-2',
+          'red lighten-1',
+          'deep-purple accent-4',
+        ],
+        slides: [
+          'Introduction',
+          'Reservation',
+          'Home_Sharing',
+          'Leave a Review',
+          'FAQ',
+        ],
         }
-    },
-    components:{
-        HomeContents
     },
     methods:{
         ...mapMutations('member',['setisLogin']),
@@ -104,5 +143,4 @@ export default {
 v-footer{
     background-color: black;
 }
-
 </style>
