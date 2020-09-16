@@ -1,0 +1,10 @@
+package com.ssafy.sharing.dao;
+
+import org.apache.ibatis.annotations.Mapper;
+
+import com.ssafy.sharing.domain.Wallet;
+
+@Mapper
+public interface WalletDao {
+	public void createWallet(Wallet wallet);
+}
