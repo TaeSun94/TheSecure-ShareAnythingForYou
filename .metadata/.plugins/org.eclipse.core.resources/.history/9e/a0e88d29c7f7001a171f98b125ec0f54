@@ -1,0 +1,21 @@
+package com.ssafy.sharing.application;
+
+import org.springframework.stereotype.Service;
+
+import com.ssafy.sharing.domain.Member;
+
+@Service
+public class UserServiceImpl implements UserService{
+
+	@Override
+	public Member getUserinfo(String useremail) {
+		try {
+			Member member = 
+		}catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		return null;
+	}
+
+}

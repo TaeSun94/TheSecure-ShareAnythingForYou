@@ -1,0 +1,5 @@
+package com.ssafy.sharing.dao;
+
+public interface UserDao {
+
+}

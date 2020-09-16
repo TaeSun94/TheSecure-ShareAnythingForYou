@@ -1,0 +1,47 @@
+package com.ssafy.sharing.domain;
+
+public class Token {
+	private String token;
+	private String member_email;
+	private boolean status;
+	private String access;
+
+	public String getToken() {
+		return token;
+	}
+
+	public void setToken(String token) {
+		this.token = token;
+	}
+
+	public String getMember_email() {
+		return member_email;
+	}
+
+	public void setMember_email(String member_email) {
+		this.member_email = member_email;
+	}
+
+	public boolean isStatus() {
+		return status;
+	}
+
+	public void setStatus(boolean status) {
+		this.status = status;
+	}
+
+	public String getAccess() {
+		return access;
+	}
+
+	public void setAccess(String access) {
+		this.access = access;
+	}
+
+	@Override
+	public String toString() {
+		return "Token [token=" + token + ", member_email=" + member_email + ", status=" + status + ", access=" + access
+				+ "]";
+	}
+
+}
