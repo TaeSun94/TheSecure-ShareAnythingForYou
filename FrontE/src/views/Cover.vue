@@ -14,6 +14,7 @@
             <button @click="moveHome()">Home</button>
           </div>            
           <div v-else>
+            <button style="margin-right : 10px;" @click="moveHome()">Test</button> 
             <button @click="openModal()">Go</button>
           </div>
         </div>
@@ -48,7 +49,7 @@ export default {
     },
 
     moveHome(){
-      this.$router.push({name : 'Home'})
+      this.$router.push({path : '/home'})
     }
   },
   mounted(){

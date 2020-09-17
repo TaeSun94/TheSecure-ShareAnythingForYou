@@ -23,13 +23,14 @@
                     v-for="item in items"
                     :key="item.title"
                     link
+                    @click="excuteMenu(item.title)"
                 >
                     <v-list-item-icon>
                     <v-icon>{{ item.icon }}</v-icon>
                     </v-list-item-icon>
         
-                    <v-list-item-content>
-                    <v-list-item-title @click="excuteMenu(item.title)">{{ item.title }}</v-list-item-title>
+                    <v-list-item-content >
+                    <v-list-item-title >{{ item.title }}</v-list-item-title>
                     </v-list-item-content>
                 </v-list-item>
                 </v-list>
@@ -43,10 +44,9 @@
             <v-main>
 
                 <!-- Provides the application the proper gutter -->
-                <v-container fluid style="padding-top:0px;">
+                <v-container fluid style="padding-top:0px; padding-bottom:0px;">
                     <!-- If using vue-router -->
                     <router-view></router-view>
-                    <home-contents/>
                 </v-container>
             </v-main>
 
@@ -67,6 +67,7 @@ export default {
         permanent : true,
         expandOnHover : true,
         items: [
+            { title: 'Our Service', icon: 'mdi-view-dashboard'},
             { title: 'Reservation', icon: 'mdi-image' },
             { title: 'Home-Sharing', icon: 'mdi-help-box' },
             { title: 'Review', icon: 'mdi-view-dashboard' },
@@ -76,24 +77,32 @@ export default {
         right: null,
         }
     },
-    components:{
-        HomeContents
-    },
     methods:{
         ...mapMutations('member',['setisLogin']),
         excuteMenu(menu) {
             switch(menu){
                 // 로그아웃
+                case "Our Service":
+                    this.$router.push({ path: '/home' })
+                    .catch(()=>{});
+                    break;
                 case "Logout":
                     this.$cookies.remove("code");
                     this.$router.push({ name : 'Cover'})
                     //this.$cookies.remove("token");
+                    $(window).unbind();
+                    $(window).off('mousewheel', 'html,body', function(e){e.preventDefault()});
+                    // window.removeEventListener('mousewheel',this.window)
                     this.setisLogin(false);
                     break;
                 case "Home-Sharing":
-                    this.$router.push({name : 'HomeSharing'})
+                    $(window).unbind();
+                    //window.addEventListener('mousewheel',function(e){return true;})
+                    this.$router.push({name : 'Sharing'})
+                    .catch(()=>{this.$router.go()});
+                    break;
             }
-        }
+        },
     },
 }
 </script>
