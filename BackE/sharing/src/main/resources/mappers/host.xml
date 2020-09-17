@@ -3,8 +3,8 @@
 <!DOCTYPE mapper  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.ssafy.sharing.dao.HostDao"> <!-- mybatis는 namespace필수!! -->
-	<select id="checkDuplication" parameterType="String" resultType="_int">
-		SELECT IF(COUNT(*) > 1, TRUE, FALSE)
+	<select id="checkDuplication" parameterType="string" resultType="_boolean">
+		SELECT IF(COUNT(*) <![CDATA[>]]> 0, TRUE, FALSE)
 		FROM host
 		WHERE host_address = #{host_address}
 	</select>
@@ -14,7 +14,7 @@
 		VALUES (#{member_email},#{host_address},#{host_type},#{host_intro})
 	</insert>
 	
-	<select id="getRecentHostNum" parameterType="String">
+	<select id="getRecentHostNum" parameterType="string">
 		SELECT host_num
 		FROM host
 		WHERE member_email = #{member_email}
@@ -33,10 +33,34 @@
 	</delete>
 	
 	<insert id="registHostAvailableDay" parameterType="hashmap">
-		INSERT INTO (host_num,host_available_day)
+		INSERT INTO host_available_days (host_num,host_available_day)
 		VALUES
 		<foreach collection="list" item="i" separator=",">
 			(#{i.host_num}, #{i.host_available_day})
 		</foreach>
 	</insert>
+	
+	<select id="getHosts" parameterType="string" resultType="com.ssafy.sharing.domain.Host">
+		SELECT *
+		FROM host
+		WHERE member_email = #{member_email}
+	</select>
+	
+	<select id="getHostImages" parameterType="_int" resultType="com.ssafy.sharing.domain.HostImages">
+		SELECT img1, img2, img3, img4, img5, img6
+		FROM host_imgs
+		WHERE host_num = #{host_num}
+	</select>
+	
+	<select id="getHostAvailableDays" parameterType="_int" resultType="string">
+		SELECT host_available_day
+		FROM host_available_days
+		WHERE host_num = #{host_num}
+	</select>
+	
+	<select id="getHostItems" parameterType="_int" resultType="com.ssafy.sharing.domain.HostItems">
+		SELECT item1, item2, item3, item4, item5, item6, item7, item8, item9, item10
+		FROM host_provide_items
+		WHERE host_num = #{host_num}
+	</select>
 </mapper>

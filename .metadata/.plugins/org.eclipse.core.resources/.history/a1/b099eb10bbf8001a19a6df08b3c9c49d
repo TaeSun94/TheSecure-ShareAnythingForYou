@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- mappers/user.xml -->
+<!DOCTYPE mapper  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ssafy.sharing.dao.UserDao"> <!-- mybatis는 namespace필수!! -->
+	<select id="getMember" parameterType="String" resultType="com.ssafy.sharing.domain.Member">
+		SELECT *
+		FROM member
+		WHERE member_email = #{member_email}	
+	</select>
+	
+</mapper>

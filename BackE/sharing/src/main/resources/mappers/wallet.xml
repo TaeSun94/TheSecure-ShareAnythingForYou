@@ -8,7 +8,7 @@
 		VALUES (#{owner_id}, #{address}, #{balance}, #{receiveing_count}, #{cash})
 	</insert>
 	
-	<select id="getWallet" parameterType="String" resultType="com.ssafy.sharing.domain.Wallet">
+	<select id="getWallet" parameterType="string" resultType="com.ssafy.sharing.domain.Wallet">
 		SELECT *
 		FROM wallet
 		WHERE owner_id = #{owner_id}

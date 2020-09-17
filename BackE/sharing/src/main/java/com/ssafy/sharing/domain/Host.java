@@ -7,14 +7,14 @@ public class Host {
 	private String host_address;
 	private String host_type;
 	private String host_intro;
-	private String[] host_provide_items;
+	private boolean[] host_provide_items;
 	private String[] host_images;
 	private String[] host_available_day;
 
 	public Host() {}
 
 	public Host(String member_email, String host_address, String host_type, String host_intro,
-			String[] host_provide_items, String[] host_images, String[] host_available_day) {
+			boolean[] host_provide_items, String[] host_images, String[] host_available_day) {
 		this.member_email = member_email;
 		this.host_address = host_address;
 		this.host_type = host_type;
@@ -22,6 +22,14 @@ public class Host {
 		this.host_provide_items = host_provide_items;
 		this.host_images = host_images;
 		this.host_available_day = host_available_day;
+	}
+
+	public int getHost_num() {
+		return host_num;
+	}
+
+	public void setHost_num(int host_num) {
+		this.host_num = host_num;
 	}
 
 	public String getMember_email() {
@@ -56,11 +64,11 @@ public class Host {
 		this.host_intro = host_intro;
 	}
 
-	public String[] getHost_provide_items() {
+	public boolean[] getHost_provide_items() {
 		return host_provide_items;
 	}
 
-	public void setHost_provide_items(String[] host_provide_items) {
+	public void setHost_provide_items(boolean[] host_provide_items) {
 		this.host_provide_items = host_provide_items;
 	}
 

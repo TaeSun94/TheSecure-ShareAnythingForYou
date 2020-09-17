@@ -10,6 +10,8 @@ import org.springframework.stereotype.Service;
 
 import com.ssafy.sharing.dao.HostDao;
 import com.ssafy.sharing.domain.Host;
+import com.ssafy.sharing.domain.HostImages;
+import com.ssafy.sharing.domain.HostItems;
 
 @Service
 public class HostServiceImpl implements HostService {
@@ -20,10 +22,10 @@ public class HostServiceImpl implements HostService {
 	@Override
 	public boolean registHost(Host host) {
 		try {
-			if(hostDao.checkDuplication(host.getHost_address())) {
+			if (hostDao.checkDuplication(host.getHost_address())) {
 				return false;
 			}
-			
+
 			// 계좌도 넣을것인가? 연락처도
 			Map<String, Object> map = new HashMap<>();
 			map.put("member_email", host.getMember_email());
@@ -76,7 +78,57 @@ public class HostServiceImpl implements HostService {
 
 	@Override
 	public boolean deleteHost(int host_num) {
-		return hostDao.removeHost(host_num);
+		try {
+			return hostDao.removeHost(host_num);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return false;
 	}
 
+	@Override
+	public List<Host> getHosts(String member_email) {
+		try {
+			List<Host> host_list = hostDao.getHosts(member_email);
+			for(Host host : host_list) {
+				HostImages hostimages = hostDao.getHostImages(host.getHost_num());
+				String[] img_list = new String[6];
+				setHostImages(hostimages,img_list);
+				host.setHost_images(img_list);
+				
+				host.setHost_available_day(hostDao.getHostAvailableDays(host.getHost_num()));
+
+				HostItems hostitems = hostDao.getHostProvideItems(host.getHost_num());
+				boolean[] item_list = new boolean[10];
+				setHostItems(hostitems, item_list);
+				host.setHost_provide_items(item_list);
+			}
+			return host_list;
+		}catch (Exception e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
+
+	private void setHostImages(HostImages hostImages, String[] tmp) {
+		tmp[0] = hostImages.getImg1();
+		tmp[1] = hostImages.getImg2();
+		tmp[2] = hostImages.getImg3();
+		tmp[3] = hostImages.getImg4();
+		tmp[4] = hostImages.getImg5();
+		tmp[5] = hostImages.getImg6();
+	}
+	
+	private void setHostItems(HostItems hostItems, boolean[] tmp) {
+		tmp[0] = hostItems.isItme1();
+		tmp[1] = hostItems.isItme2();
+		tmp[2] = hostItems.isItme3();
+		tmp[3] = hostItems.isItme4();
+		tmp[4] = hostItems.isItme5();
+		tmp[5] = hostItems.isItme6();
+		tmp[6] = hostItems.isItme7();
+		tmp[7] = hostItems.isItme8();
+		tmp[8] = hostItems.isItme9();
+		tmp[9] = hostItems.isItme10();
+	}
 }

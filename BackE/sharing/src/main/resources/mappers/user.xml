@@ -3,10 +3,15 @@
 <!DOCTYPE mapper  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.ssafy.sharing.dao.UserDao"> <!-- mybatis는 namespace필수!! -->
-	<select id="getMember" parameterType="String" resultType="com.ssafy.sharing.domain.Member">
+	<select id="getMember" parameterType="string" resultType="com.ssafy.sharing.domain.Member">
 		SELECT *
 		FROM member
 		WHERE member_email = #{member_email}	
 	</select>
 	
+	<select id="checkMember" parameterType="string" resultType="_boolean">
+		SELECT IF(COUNT(*) <![CDATA[>]]> 0 , TRUE, FALSE)
+		FROM member
+		WHERE member_email = #{member_email}
+	</select>
 </mapper>

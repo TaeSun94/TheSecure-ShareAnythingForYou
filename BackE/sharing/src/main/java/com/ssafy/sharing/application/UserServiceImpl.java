@@ -10,19 +10,29 @@ import com.ssafy.sharing.domain.Member;
 public class UserServiceImpl implements UserService {
 	@Autowired
 	UserDao userDao;
-	
+
 	@Override
 	public Member getUserinfo(String member_email) {
 		try {
 			Member member = userDao.getUserinfo(member_email);
-			if(member.getMember_email().equals(member_email)) {
+			if (member.getMember_email().equals(member_email)) {
 				return member;
 			}
-		}catch (Exception e) {
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		
+
 		return null;
+	}
+
+	@Override
+	public boolean checkMember(String member_email) {
+		try {
+			return userDao.checkMember(member_email);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return false;
 	}
 
 }

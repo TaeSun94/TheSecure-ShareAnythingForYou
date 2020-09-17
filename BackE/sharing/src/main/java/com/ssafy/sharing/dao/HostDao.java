@@ -1,7 +1,12 @@
 package com.ssafy.sharing.dao;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
+
+import com.ssafy.sharing.domain.Host;
+import com.ssafy.sharing.domain.HostImages;
+import com.ssafy.sharing.domain.HostItems;
 
 public interface HostDao {
 
@@ -16,4 +21,12 @@ public interface HostDao {
 	boolean registHostAvailableDay(Map<String,Object> insertMap);
 
 	boolean checkDuplication(String host_address);
+
+	List<Host> getHosts(String member_email);
+
+	HostImages getHostImages(int host_num);
+
+	String[] getHostAvailableDays(int host_num);
+
+	HostItems getHostProvideItems(int host_num);
 }

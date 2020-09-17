@@ -1,0 +1,28 @@
+package com.ssafy.sharing.dao;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
+
+import com.ssafy.sharing.domain.Host;
+
+public interface HostDao {
+
+	boolean registHost(Map<String, Object> map);
+
+	int getRecentHostNum(String member_email);
+
+	boolean registHostImages(Map<String, Object> map);
+
+	boolean removeHost(int host_num);
+
+	boolean registHostAvailableDay(Map<String,Object> insertMap);
+
+	boolean checkDuplication(String host_address);
+
+	List<Host> getHosts(String member_email);
+
+	String[] getHostImages(int host_num);
+
+	String[] getHostAvailableDays(int host_num);
+}
