@@ -11,7 +11,7 @@ public interface HostDao {
 
 	boolean registHostImages(Map<String, Object> map);
 
-	boolean removeHost(int host_num);
+	void removeHost(int host_num);
 
 	boolean registHostAvailableDay(Map<String,Object> insertMap);
 

@@ -74,9 +74,4 @@ public class HostServiceImpl implements HostService {
 		return false;
 	}
 
-	@Override
-	public boolean deleteHost(int host_num) {
-		return hostDao.removeHost(host_num);
-	}
-
 }
