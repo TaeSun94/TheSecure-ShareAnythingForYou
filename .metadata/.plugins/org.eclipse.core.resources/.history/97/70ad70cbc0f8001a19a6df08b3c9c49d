@@ -29,6 +29,4 @@ public interface HostDao {
 	String[] getHostAvailableDays(int host_num);
 
 	HostItems getHostProvideItems(int host_num);
-
-	boolean registHostItems(Map<String, Object> map);
 }

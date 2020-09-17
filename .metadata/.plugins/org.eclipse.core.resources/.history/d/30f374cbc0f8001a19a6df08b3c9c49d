@@ -57,17 +57,7 @@ public class HostServiceImpl implements HostService {
 					insertMap.put("list", dataList);
 
 					if (hostDao.registHostAvailableDay(insertMap)) {
-						for(int i = 1; i <= 10; i++) {
-							StringBuilder sb = new StringBuilder();
-							sb.append("item").append(i);
-							map.put(sb.toString(), host.getHost_provide_items()[i-1]);
-						}
-						if(hostDao.registHostItems(map)) {
-							return true;
-						}
-						else {
-							hostDao.removeHost(hostDao.getRecentHostNum(host.getMember_email()));
-						}
+						return true;
 					} else {
 						hostDao.removeHost(hostDao.getRecentHostNum(host.getMember_email()));
 						return false;

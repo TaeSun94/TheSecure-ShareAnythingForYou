@@ -40,10 +40,6 @@
 		</foreach>
 	</insert>
 	
-	<insert id ="registHostItems" parameterType="hashmap">
-		INSERT INTO host_provide_items (item1, item2, item3, item4, item5, item6, item7, item8, item9, item10)
-		VALUES (#{item1},#{item2},#{item3},#{item4},#{item5},#{item6},#{item7},#{item8},#{item9},#{item10})
-	</insert>
 	<select id="getHosts" parameterType="string" resultType="com.ssafy.sharing.domain.Host">
 		SELECT *
 		FROM host
