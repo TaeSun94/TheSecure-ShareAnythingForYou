@@ -10,7 +10,7 @@
 	</select>
 	
 	<insert id="insertMember" parameterType="HashMap">
-		INSERT member(member_email, member_nickname)
+		INSERT INTO member(member_email, member_nickname)
 		VALUES (#{member_email}, #{member_nickname})
 	</insert>
 </mapper>

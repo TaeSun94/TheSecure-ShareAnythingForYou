@@ -1,0 +1,43 @@
+package com.ssafy.sharing.application;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import com.ssafy.sharing.dao.HostDao;
+import com.ssafy.sharing.domain.Host;
+
+@Service
+public class HostServiceImpl implements HostService{
+
+	@Autowired
+	HostDao hostDao;
+	
+	@Override
+	public boolean registHost(Host host) {
+		try {
+			Map<String,Object> map = new HashMap<>();
+			map.put("member_email", host.getMember_email());
+			map.put("host_address", host.getHost_address());
+			map.put("host_type", host.getHost_type());
+			map.put("host_intro", host.getHost_intro());
+			// 계좌도 넣을것인가? 연락처도
+			if(hostDao.registHost(map)) {
+				int host_num = hostDao.getRecentHostNum();
+				ArrayList<String> host_images = new ArrayList<String>();
+				for(String image : host.getHost_images()) {
+					host_images.add(image);
+				}
+				hostDao.registHostImages(host_images);
+			}
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return false;
+	}
+	
+}

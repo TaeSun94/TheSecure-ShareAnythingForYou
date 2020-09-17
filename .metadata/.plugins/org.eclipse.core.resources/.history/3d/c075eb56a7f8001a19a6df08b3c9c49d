@@ -1,0 +1,30 @@
+package com.ssafy.sharing.application;
+
+import java.util.HashMap;
+import java.util.Map;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import com.ssafy.sharing.dao.HostDao;
+import com.ssafy.sharing.domain.Host;
+
+@Service
+public class HostServiceImpl implements HostService{
+
+	@Autowired
+	HostDao hostDao;
+	
+	@Override
+	public boolean registHost(Host host) {
+		try {
+			Map<String,Object> map = new HashMap<>();
+			map.put
+			hostDao.registHost();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return false;
+	}
+	
+}

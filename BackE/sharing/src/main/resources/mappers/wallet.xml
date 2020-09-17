@@ -4,7 +4,7 @@
     "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.ssafy.sharing.dao.WalletDao"> <!-- mybatis는 namespace필수!! -->
 	<insert id="createWallet" parameterType="hashmap">
-		INSERT wallet (owner_id, address, balance, receiving_count, cash)
+		INSERT INTO wallet (owner_id, address, balance, receiving_count, cash)
 		VALUES (#{owner_id}, #{address}, #{balance}, #{receiveing_count}, #{cash})
 	</insert>
 	

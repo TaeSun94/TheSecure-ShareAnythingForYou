@@ -27,6 +27,7 @@ public class WalletController {
 	public ResponseEntity<Wallet> registerWallet(@ApiParam(value = "wallet", required = true) @RequestBody Wallet wallet){
 		
 		Wallet newWallet = walletService.register(wallet);
+		
 		if(newWallet != null) {
 			return new ResponseEntity<Wallet>(newWallet, HttpStatus.OK);
 		}

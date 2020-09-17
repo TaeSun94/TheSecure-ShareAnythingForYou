@@ -1,0 +1,8 @@
+package com.ssafy.sharing.domain;
+
+public class Host {
+	private String member_email;
+	private String host_address;
+	private String host_type;
+	private String host_provide_items;
+}
