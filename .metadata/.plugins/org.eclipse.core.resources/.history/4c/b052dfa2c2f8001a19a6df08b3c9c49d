@@ -10,6 +10,4 @@ public interface HostService {
 	public boolean deleteHost(int host_num);
 
 	public List<Host> getHosts(String member_email);
-
-	public boolean updateHost(Host host);
 }

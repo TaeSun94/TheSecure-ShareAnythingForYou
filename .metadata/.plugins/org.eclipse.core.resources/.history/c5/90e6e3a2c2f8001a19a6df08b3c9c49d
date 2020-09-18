@@ -31,7 +31,7 @@ public class HostController {
 	@Autowired
 	UserService userService;
 	
-	@ApiOperation(value = "sharing home을 등록한다.", response = Boolean.class)
+	@ApiOperation(value = "sharing home을 등록한다.", response = Host.class)
 	@PostMapping("/host/regist")
 	public ResponseEntity<Boolean> registHost(
 			@ApiParam(value = "Host object", required = true) @RequestBody Host host) {
@@ -57,14 +57,5 @@ public class HostController {
 		}
 		List<Host> host_list = hostService.getHosts(member_email);
 		return new ResponseEntity<>(host_list, HttpStatus.OK);
-	}
-	
-	@ApiOperation(value = "등록된 sharing home의 특정 부분을 수정한다.", response = Boolean.class)
-	@PutMapping("/host/update")
-	public ResponseEntity<Boolean> updateHost(@ApiParam(value = "", required = true)@RequestBody Host host){
-		if(host == null) {
-			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-		}
-		return new ResponseEntity<>(hostService.updateHost(host), HttpStatus.OK);
 	}
 }

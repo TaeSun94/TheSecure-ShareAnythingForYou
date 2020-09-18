@@ -74,10 +74,5 @@
 		WHERE host_num = #{host_num}
 	</update>
 	
-	<select id="getHost" parameterType="_int">
-		SELECT *
-		FROM host
-		WHERE host_num = #{host_num}
-	</select>
 	
 </mapper>

@@ -67,17 +67,4 @@
 		FROM host_provide_items
 		WHERE host_num = #{host_num}
 	</select>
-	
-	<update id="updateHost" parameterType="hashmap">
-		UPDATE host
-		SET member_email = #{member_email}, host_address=#{host_address}, host_type=#{host_type}, host_intro=#{host_intro}
-		WHERE host_num = #{host_num}
-	</update>
-	
-	<select id="getHost" parameterType="_int">
-		SELECT *
-		FROM host
-		WHERE host_num = #{host_num}
-	</select>
-	
 </mapper>

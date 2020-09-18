@@ -57,14 +57,15 @@ public class HostServiceImpl implements HostService {
 					insertMap.put("list", dataList);
 
 					if (hostDao.registHostAvailableDay(insertMap)) {
-						for (int i = 1; i <= 10; i++) {
+						for(int i = 1; i <= 10; i++) {
 							StringBuilder sb = new StringBuilder();
 							sb.append("item").append(i);
-							map.put(sb.toString(), host.getHost_provide_items()[i - 1]);
+							map.put(sb.toString(), host.getHost_provide_items()[i-1]);
 						}
-						if (hostDao.registHostItems(map)) {
+						if(hostDao.registHostItems(map)) {
 							return true;
-						} else {
+						}
+						else {
 							hostDao.removeHost(hostDao.getRecentHostNum(host.getMember_email()));
 						}
 					} else {
@@ -99,12 +100,12 @@ public class HostServiceImpl implements HostService {
 	public List<Host> getHosts(String member_email) {
 		try {
 			List<Host> host_list = hostDao.getHosts(member_email);
-			for (Host host : host_list) {
+			for(Host host : host_list) {
 				HostImages hostimages = hostDao.getHostImages(host.getHost_num());
 				String[] img_list = new String[6];
-				setHostImages(hostimages, img_list);
+				setHostImages(hostimages,img_list);
 				host.setHost_images(img_list);
-
+				
 				host.setHost_available_day(hostDao.getHostAvailableDays(host.getHost_num()));
 
 				HostItems hostitems = hostDao.getHostProvideItems(host.getHost_num());
@@ -113,29 +114,10 @@ public class HostServiceImpl implements HostService {
 				host.setHost_provide_items(item_list);
 			}
 			return host_list;
-		} catch (Exception e) {
+		}catch (Exception e) {
 			e.printStackTrace();
 		}
 		return null;
-	}
-
-	@Override
-	public boolean updateHost(Host host) {
-		try {
-			// 계좌도 넣을것인가? 연락처도
-			Map<String, Object> map = new HashMap<>();
-			map.put("host_num", host.getHost_num());
-			map.put("member_email", host.getMember_email());
-			map.put("host_address", host.getHost_address());
-			map.put("host_type", host.getHost_type());
-			map.put("host_intro", host.getHost_intro());
-			hostDao.updateHost(map);
-
-			// 아이템, 날짜, 사진
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		return false;
 	}
 
 	private void setHostImages(HostImages hostImages, String[] tmp) {
@@ -146,7 +128,7 @@ public class HostServiceImpl implements HostService {
 		tmp[4] = hostImages.getImg5();
 		tmp[5] = hostImages.getImg6();
 	}
-
+	
 	private void setHostItems(HostItems hostItems, boolean[] tmp) {
 		tmp[0] = hostItems.isItme1();
 		tmp[1] = hostItems.isItme2();
@@ -159,5 +141,4 @@ public class HostServiceImpl implements HostService {
 		tmp[8] = hostItems.isItme9();
 		tmp[9] = hostItems.isItme10();
 	}
-
 }

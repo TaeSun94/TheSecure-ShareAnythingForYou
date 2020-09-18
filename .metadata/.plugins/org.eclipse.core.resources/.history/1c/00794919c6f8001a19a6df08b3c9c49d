@@ -130,8 +130,6 @@ public class HostServiceImpl implements HostService {
 			map.put("host_type", host.getHost_type());
 			map.put("host_intro", host.getHost_intro());
 			hostDao.updateHost(map);
-
-			// 아이템, 날짜, 사진
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

@@ -33,6 +33,4 @@ public interface HostDao {
 	boolean registHostItems(Map<String, Object> map);
 
 	void updateHost(Map<String, Object> map);
-
-	Host getHost(int host_num);
 }

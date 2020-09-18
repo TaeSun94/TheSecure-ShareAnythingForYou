@@ -125,13 +125,12 @@ public class HostServiceImpl implements HostService {
 			// 계좌도 넣을것인가? 연락처도
 			Map<String, Object> map = new HashMap<>();
 			map.put("host_num", host.getHost_num());
+			
 			map.put("member_email", host.getMember_email());
 			map.put("host_address", host.getHost_address());
 			map.put("host_type", host.getHost_type());
 			map.put("host_intro", host.getHost_intro());
 			hostDao.updateHost(map);
-
-			// 아이템, 날짜, 사진
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
