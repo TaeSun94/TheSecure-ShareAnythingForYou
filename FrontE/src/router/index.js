@@ -3,6 +3,8 @@ import VueRouter from 'vue-router'
 import Cover from '../views/Cover.vue'
 import Login from '../components/Login.vue'
 import Home from '../views/Home.vue'
+import Sharing from '../views/Sharing.vue'
+import HomeContents from '../views/HomeContents.vue'
 
 Vue.use(VueRouter)
 
@@ -19,9 +21,22 @@ const routes = [
   },
   {
     path: '/home',
-    name: 'Home',
-    component: Home
-  }
+    // name: 'Home',
+    component: Home,
+    children:[
+      {
+        path: '/',
+        name: 'HomeContents',
+        component: HomeContents
+      },
+      {
+        path: '/sharing',
+        name: 'Sharing',
+        component: Sharing
+      },
+    ]
+  },
+  ,
   // {
   //   path: '/about',
   //   name: 'About',

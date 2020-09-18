@@ -1,7 +1,6 @@
 <template>
     <div class="home_container">
         <v-app>
-            
             <v-navigation-drawer app
             v-model="drawer"
             permanent = "permanent">
@@ -24,14 +23,13 @@
                     v-for="item in items"
                     :key="item.title"
                     link
-                    @click="excuteMenu(item.title)"
                 >
                     <v-list-item-icon>
                     <v-icon>{{ item.icon }}</v-icon>
                     </v-list-item-icon>
         
-                    <v-list-item-content >
-                    <v-list-item-title >{{ item.title }}</v-list-item-title>
+                    <v-list-item-content>
+                    <v-list-item-title @click="excuteMenu(item.title)">{{ item.title }}</v-list-item-title>
                     </v-list-item-content>
                 </v-list-item>
                 </v-list>
@@ -45,9 +43,38 @@
             <v-main>
 
                 <!-- Provides the application the proper gutter -->
-                <v-container fluid style="padding-top:0px; padding-bottom:0px;">
+                <v-container fluid>
                     <!-- If using vue-router -->
                     <router-view></router-view>
+                    <v-carousel
+                        cycle
+                        height="100%"
+                        hide-delimiter-background
+                        show-arrows-on-hover="vertical"
+                        interval="3000"
+                        vertical="true"
+                        vertical-delimiters="right"
+                    >
+                        <v-carousel-item
+                        v-for="(slide, i) in slides"
+                        :key="i"
+                        >
+                        <v-sheet
+                            :color="colors[i]"
+                            height="95vh"
+                        >
+                            <v-row
+                            class="fill-height"
+                            align="center"
+                            justify="center"
+                            >
+                            <!-- 페이지 별 내용 입력 -->
+                            <!-- <div class="display-3">{{ slide }}</div>  -->
+                            <div class="display-3">{{ slide }}</div> 
+                            </v-row>
+                        </v-sheet>
+                        </v-carousel-item>
+                    </v-carousel> 
                 </v-container>
             </v-main>
 
@@ -60,7 +87,7 @@
 </template>
 <script>
 import {mapMutations} from 'vuex'
-import HomeContents from './HomeContents.vue'
+
 export default {
     data () {
     return {
@@ -68,7 +95,6 @@ export default {
         permanent : true,
         expandOnHover : true,
         items: [
-            { title: 'Our Service', icon: 'mdi-view-dashboard'},
             { title: 'Reservation', icon: 'mdi-image' },
             { title: 'Home-Sharing', icon: 'mdi-help-box' },
             { title: 'Review', icon: 'mdi-view-dashboard' },
@@ -76,6 +102,20 @@ export default {
             { title: 'Logout', icon:'mdi-exit-run'},
         ],
         right: null,
+        colors: [
+          'indigo',
+          'warning',
+          'pink darken-2',
+          'red lighten-1',
+          'deep-purple accent-4',
+        ],
+        slides: [
+          'Introduction',
+          'Reservation',
+          'Home_Sharing',
+          'Leave a Review',
+          'FAQ',
+        ],
         }
     },
     methods:{
@@ -83,10 +123,6 @@ export default {
         excuteMenu(menu) {
             switch(menu){
                 // 로그아웃
-                case "Our Service":
-                    this.$router.push({ path: '/home' })
-                    .catch(()=>{});
-                    break;
                 case "Logout":
                     this.$cookies.remove("code");
                     this.$router.push({ name : 'Cover'})
@@ -94,12 +130,9 @@ export default {
                     this.setisLogin(false);
                     break;
                 case "Home-Sharing":
-                    //window.addEventListener('mousewheel',function(e){return true;})
-                    this.$router.push({name : 'Sharing'})
-                    .catch(()=>{});
-                    break;
+                    this.$router.push({name : 'HomeSharing'})
             }
-        },
+        }
     },
 }
 </script>
@@ -110,5 +143,4 @@ export default {
 v-footer{
     background-color: black;
 }
-
 </style>
