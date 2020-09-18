@@ -35,29 +35,18 @@
 <script>
 export default {
     name: 'HomeContents',
-    
     methods:{
-    },
-    computed:{
-        // curPos(){
-        //     curPos = Math.floor($(document).scrollTop() / 100)
-        //     if()
-        // }
+        listener(e) {
+            e.preventDefault();
+            e.stopPropagation();
+        },
     },
     mounted(){
-        document.documentElement.scrollTop = 0;
+        
         var f = true
         $(window).bind('mousewheel', function(e) {
-        // window.addEventListener('mousewheel', function(e) {
                 console.log("scroll!")
                 if(f){
-                    // console.log("현재위치 : " + $(document).scrollTop());
-                    // console.log("1 : "+ $('#introduction').offset().top);
-                    // console.log("2 : "+ $('#reservation').offset().top);
-                    // console.log("3 : "+ $('#homesharing').offset().top);
-                    // console.log("4 : "+ $('#review').offset().top);
-                    // console.log("5 : "+ $('#faq').offset().top);
-                    // f = false;
                     f = false
                     if (e.originalEvent.wheelDelta >= 0) {
 
@@ -100,15 +89,14 @@ export default {
         window.addEventListener('resize', function() {
             document.documentElement.scrollTop = 0;
         }, true);
-        function listener(e){
-            e.preventDefault();
-            e.stopPropagation();
-        }
-        window.addEventListener('mousewheel',listener,{passive:false});
-
-
-        
-    }
+        window.addEventListener('mousewheel',this.listener,{passive:false});
+        document.documentElement.scrollTop = 0;
+    },
+    beforeDestroy() {
+        window.removeEventListener("mousewheel", this.listener);
+        $(window).unbind();
+        console.log("destroy");
+    },
 }
 </script>
 

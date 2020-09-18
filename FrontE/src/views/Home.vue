@@ -1,6 +1,7 @@
 <template>
     <div class="home_container">
         <v-app>
+            
             <v-navigation-drawer app
             v-model="drawer"
             permanent = "permanent">
@@ -90,16 +91,12 @@ export default {
                     this.$cookies.remove("code");
                     this.$router.push({ name : 'Cover'})
                     //this.$cookies.remove("token");
-                    $(window).unbind();
-                    $(window).off('mousewheel', 'html,body', function(e){e.preventDefault()});
-                    // window.removeEventListener('mousewheel',this.window)
                     this.setisLogin(false);
                     break;
                 case "Home-Sharing":
-                    $(window).unbind();
                     //window.addEventListener('mousewheel',function(e){return true;})
                     this.$router.push({name : 'Sharing'})
-                    .catch(()=>{this.$router.go()});
+                    .catch(()=>{});
                     break;
             }
         },
