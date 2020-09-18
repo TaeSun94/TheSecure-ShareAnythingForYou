@@ -3,14 +3,14 @@
 <!DOCTYPE mapper  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.ssafy.sharing.dao.LoginDao"> <!-- mybatis는 namespace필수!! -->
-	<select id="checkMember" parameterType="String" resultType="_boolean">
+	<select id="checkMember" parameterType="string" resultType="_boolean">
 		SELECT IF(COUNT(*) != 0, true, false)
 		FROM member
 		WHERE member_email = #{member_email}	
 	</select>
 	
-	<insert id="insertMember" parameterType="HashMap">
-		INSERT member(member_email, member_nickname)
+	<insert id="insertMember" parameterType="hashMap">
+		INSERT INTO member(member_email, member_nickname)
 		VALUES (#{member_email}, #{member_nickname})
 	</insert>
 </mapper>

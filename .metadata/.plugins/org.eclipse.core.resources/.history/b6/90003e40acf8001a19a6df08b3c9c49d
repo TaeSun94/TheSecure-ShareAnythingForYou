@@ -1,0 +1,11 @@
+package com.ssafy.sharing.dao;
+
+import java.util.Map;
+
+public interface HostDao {
+
+	boolean registHost(Map<String, Object> map);
+
+	boolean registHostImages(String[] host_images);
+
+}

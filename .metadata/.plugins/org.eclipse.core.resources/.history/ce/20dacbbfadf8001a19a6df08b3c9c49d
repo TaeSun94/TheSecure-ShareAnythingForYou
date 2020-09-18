@@ -1,0 +1,14 @@
+package com.ssafy.sharing.dao;
+
+import java.util.ArrayList;
+import java.util.Map;
+
+public interface HostDao {
+
+	boolean registHost(Map<String, Object> map);
+
+	boolean registHostImages(ArrayList<String> host_images);
+
+	int getRecentHostNum(String member_email);
+
+}

@@ -1,0 +1,18 @@
+package com.ssafy.sharing.application;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import com.ssafy.sharing.domain.Wallet;
+
+@Service
+public class WalletServiceImpl implements WalletService{
+	@Autowired
+	WalletDao walletDao;
+	@Override
+	public Wallet register(Wallet wallet) {
+		int wallet_id = walletDao.create(wallet);
+		return null;
+	}
+
+}

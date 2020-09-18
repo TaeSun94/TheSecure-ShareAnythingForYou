@@ -1,0 +1,8 @@
+package com.ssafy.sharing.domain;
+
+import java.util.ArrayList;
+
+public class Host {
+	private String member_id;
+	private ArrayList<Home> host_provide_items;
+}

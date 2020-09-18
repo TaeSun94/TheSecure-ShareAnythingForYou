@@ -1,0 +1,36 @@
+package com.ssafy.sharing.api;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+import com.ssafy.sharing.application.WalletService;
+import com.ssafy.sharing.domain.Wallet;
+
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiParam;
+
+@CrossOrigin(origins = "*", allowedHeaders = "*")
+@RequestMapping("/api")
+@RestController
+public class WalletController {
+	@Autowired
+	WalletService walletService;
+	
+	@ApiOperation(value = "user의 지갑을 등록한다.", response = Wallet.class)
+	@PutMapping("/wallet/register")
+	public ResponseEntity<Wallet> registerWallet(@ApiParam(value = "wallet", required = true) @RequestBody Wallet wallet){
+		
+		Wallet newWallet = walletService.register(wallet);
+		
+		if(newWallet != null) {
+			return new ResponseEntity<Wallet>(newWallet, HttpStatus.OK);
+		}
+		return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+	}
+}

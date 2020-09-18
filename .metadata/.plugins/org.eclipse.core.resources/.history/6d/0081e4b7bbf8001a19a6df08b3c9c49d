@@ -1,0 +1,87 @@
+package com.ssafy.sharing.application;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import com.ssafy.sharing.dao.HostDao;
+import com.ssafy.sharing.domain.Host;
+
+@Service
+public class HostServiceImpl implements HostService {
+
+	@Autowired
+	HostDao hostDao;
+
+	@Override
+	public boolean registHost(Host host) {
+		try {
+			if (hostDao.checkDuplication(host.getHost_address())) {
+				return false;
+			}
+
+			// 계좌도 넣을것인가? 연락처도
+			Map<String, Object> map = new HashMap<>();
+			map.put("member_email", host.getMember_email());
+			map.put("host_address", host.getHost_address());
+			map.put("host_type", host.getHost_type());
+			map.put("host_intro", host.getHost_intro());
+
+			if (hostDao.registHost(map)) {
+				int host_num = hostDao.getRecentHostNum(host.getMember_email());
+				map.put("host_num", host_num);
+				for (int i = 1; i <= 6; i++) {
+					StringBuilder sb = new StringBuilder();
+					sb.append("img").append(i);
+					if (host.getHost_images().length < i)
+						map.put(sb.toString(), null);
+					else
+						map.put(sb.toString(), host.getHost_images()[i - 1]);
+				}
+				if (hostDao.registHostImages(map)) {
+					List<Map<String, Object>> dataList = new ArrayList<Map<String, Object>>();
+
+					for (String day : host.getHost_available_day()) {
+						dataList.add(new HashMap<String, Object>());
+						dataList.get(dataList.size() - 1).put("host_num", host_num);
+						dataList.get(dataList.size() - 1).put("host_available_day", day);
+					}
+
+					Map<String, Object> insertMap = new HashMap<String, Object>();
+					insertMap.put("list", dataList);
+
+					if (hostDao.registHostAvailableDay(insertMap)) {
+						return true;
+					} else {
+						hostDao.removeHost(hostDao.getRecentHostNum(host.getMember_email()));
+						return false;
+					}
+				} else {
+					hostDao.removeHost(hostDao.getRecentHostNum(host.getMember_email()));
+					return false;
+				}
+			} else {
+				return false;
+			}
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return false;
+	}
+
+	@Override
+	public boolean deleteHost(int host_num) {
+		try {
+			return hostDao.removeHost(host_num);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return false;
+	}
+
+}

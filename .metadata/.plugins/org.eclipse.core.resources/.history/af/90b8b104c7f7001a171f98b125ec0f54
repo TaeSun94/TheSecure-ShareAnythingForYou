@@ -1,0 +1,5 @@
+package com.ssafy.sharing.api;
+
+public class UserController {
+
+}

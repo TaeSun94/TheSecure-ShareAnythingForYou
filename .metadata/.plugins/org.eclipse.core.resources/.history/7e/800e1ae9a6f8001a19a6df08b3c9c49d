@@ -1,0 +1,13 @@
+package com.ssafy.sharing.domain;
+
+import java.util.ArrayList;
+
+public class Host {
+	private String member_email;
+	private String host_address;
+	private String host_type;
+	private String host_intro;
+	private String[] host_provide_items;
+	private String[] host_images;
+	private String[] host_available_day;
+}
