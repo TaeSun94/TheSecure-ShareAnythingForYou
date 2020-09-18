@@ -5,12 +5,16 @@ import org.junit.runner.RunWith;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.web3j.protocol.Web3j;
+import org.web3j.protocol.admin.Admin;
+import org.web3j.protocol.admin.methods.response.PersonalUnlockAccount;
 import org.web3j.protocol.core.methods.response.Web3ClientVersion;
 import org.web3j.protocol.http.HttpService;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
 public class EtherServiceTest {
+    Admin web3j = Admin.build(new HttpService());
+//    PersonalUnlockAccount personalUnlockAccount = web3j.personalUnlockAccount();
     @Test
     public void getEthClientVersionSync() throws Exception{
         Web3j web3j = Web3j.build(new HttpService());
