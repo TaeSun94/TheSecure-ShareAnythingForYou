@@ -40,4 +40,6 @@ public interface HostDao {
 	Host getHost(int host_num);
 
 	int checkAvailableDay(Map<String, Object> map);
+
+	List<Host> getLatelyHosts();
 }

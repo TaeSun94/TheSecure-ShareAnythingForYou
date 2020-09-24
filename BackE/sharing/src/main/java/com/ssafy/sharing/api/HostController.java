@@ -49,13 +49,23 @@ public class HostController {
 		return new ResponseEntity<>(hostService.deleteHost(host_num),HttpStatus.OK);
 	}
 
-	@ApiOperation(value = "등록된 sharing home 리스트를 불러온다.", response = Host.class)
+	@ApiOperation(value = "내가 등록한 sharing home 리스트를 불러온다.", response = Host.class)
 	@GetMapping("/host/read")
 	public ResponseEntity<List<Host>> getHosts(@ApiParam(value = "member_email", required = true)@RequestBody String member_email){
 		if(!userService.checkMember(member_email)) {
 			return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
 		}
 		List<Host> host_list = hostService.getHosts(member_email);
+		return new ResponseEntity<>(host_list, HttpStatus.OK);
+	}
+
+	@ApiOperation(value = "등록된 sharing home 중 가장 최근 8개에 대한 리스트를 불러온다.", response = Host.class)
+	@GetMapping("/host/rately")
+	public ResponseEntity<List<Host>> getLatelyHosts(@ApiParam(value = "member_email", required = true)@RequestBody String member_email){
+		if(!userService.checkMember(member_email)) {
+			return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
+		}
+		List<Host> host_list = hostService.getLatelyHosts();
 		return new ResponseEntity<>(host_list, HttpStatus.OK);
 	}
 	
@@ -67,4 +77,5 @@ public class HostController {
 		}
 		return new ResponseEntity<>(hostService.updateHost(host), HttpStatus.OK);
 	}
+	
 }

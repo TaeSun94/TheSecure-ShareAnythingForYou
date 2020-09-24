@@ -14,4 +14,6 @@ public interface HostService {
 	public boolean updateHost(Host host);
 	
 	public Host getHost(int host_num);
+	
+	public List<Host> getLatelyHosts();
 }
