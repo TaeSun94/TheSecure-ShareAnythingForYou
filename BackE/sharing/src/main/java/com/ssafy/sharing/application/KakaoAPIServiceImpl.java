@@ -7,24 +7,30 @@ import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.util.HashMap;
+import java.util.Map;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.ws.transport.http.HttpUrlConnection;
 
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
+import com.ssafy.sharing.dao.HostDao;
+import com.ssafy.sharing.domain.Host;
 import com.ssafy.sharing.domain.Member;
+import com.ssafy.sharing.domain.Reservation;
 
 @Service
-public class KakaoAPIServiceImpl implements KakaoAPIService{
+public class KakaoAPIServiceImpl implements KakaoAPIService {
+
+	@Autowired
+	HostDao hostDao;
 
 	/*
-	 * 카카오 api code를 통해 access token을 얻는 기능
-	 * parameterType : String authorize_code
-	 * resultType : String access_token
-	 * 작성자 : 이한별
-	 * 수정일 : 2020-09-07 (월)
+	 * 카카오 api code를 통해 access token을 얻는 기능 parameterType : String authorize_code
+	 * resultType : String access_token 작성자 : 이한별 수정일 : 2020-09-07 (월)
 	 */
 	@Override
 	public String getAccessToken(String authorize_code) {
@@ -72,13 +78,10 @@ public class KakaoAPIServiceImpl implements KakaoAPIService{
 
 		return access_Token;
 	}
-	
+
 	/*
-	 * 위에서 얻은 access token를 통해 실제 유저 정보를 가져오는 기능
-	 * parameterType : String access_token
-	 * resultType : Member
-	 * 작성자 : 이한별
-	 * 수정일 : 2020-09-07 (월)
+	 * 위에서 얻은 access token를 통해 실제 유저 정보를 가져오는 기능 parameterType : String access_token
+	 * resultType : Member 작성자 : 이한별 수정일 : 2020-09-07 (월)
 	 */
 	@Override
 	public Member getUserInfo(String access_Token) {
@@ -120,5 +123,84 @@ public class KakaoAPIServiceImpl implements KakaoAPIService{
 		}
 
 		return member;
+	}
+
+	@Override
+	public JsonObject getPayment(Reservation info) {
+		try {
+			URL url = new URL("https://kapi.kakao.com/v1/payment/ready");
+			HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+			conn.setRequestMethod("POST");
+			conn.setRequestProperty("Authorization", "KakaoAK 0c41b4d5630d03f84648f01601d86b11");
+			conn.setRequestProperty("Content-Type", "application/x-www-form-urlencoded;charset=UTF-8");
+			conn.setDoInput(true);
+			conn.setDoOutput(true);
+
+			Host host = hostDao.getHost(info.getHost_num());
+			Map<String, String> params = new HashMap<String, String>();
+			params.put("cid", "TC0ONETIME");
+			params.put("partner_order_id", host.getMember_email());
+			params.put("partner_user_id", info.getMember_email());
+			params.put("item_name", host.getHost_address());
+			params.put("quantity", Integer.toString(info.getReserve_day().length));
+			params.put("total_amount", Integer.toString(host.getHost_price() * info.getReserve_day().length));
+			params.put("tax_free_amount", Integer.toString(0));
+			params.put("vat_amount", Integer.toString(0));
+			params.put("approval_url", "http://localhost:3000/payment/approval");
+			params.put("cancel_url", "http://localhost:3000/payment/cancel");
+			params.put("fail_url", "http://localhost:3000/payment/fail");
+
+			String string_params = new String();
+			for (Map.Entry<String, String> elem : params.entrySet()) {
+				string_params += (elem.getKey() + "=" + elem.getValue() + "&");
+			}
+
+			conn.getOutputStream().write(string_params.getBytes());
+
+			BufferedReader in = new BufferedReader(new InputStreamReader(conn.getInputStream()));
+
+			JsonParser parser = new JsonParser();
+			JsonObject obj = (JsonObject) parser.parse(in);
+			return obj;
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
+
+	@Override
+	public JsonObject done(JsonObject obj) {
+		try {
+			URL url = new URL("https://kapi.kakao.com/v1/payment/approve");
+			HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+			conn.setRequestMethod("POST");
+			conn.setRequestProperty("Authorization", "KakaoAK 0c41b4d5630d03f84648f01601d86b11");
+			conn.setRequestProperty("Content-Type", "application/x-www-form-urlencoded;charset=UTF-8");
+			conn.setDoInput(true);
+			conn.setDoOutput(true);
+
+			Map<String, String> params = new HashMap<String, String>();
+			params.put("cid", "TC0ONETIME");
+			params.put("tid", obj.get("tid").toString());
+			params.put("partner_order_id", obj.get("partner_order_id").toString());
+			params.put("partner_user_id", obj.get("partner_user_id").toString());
+			params.put("pg_token", obj.get("pg_token").toString());
+
+			String string_params = new String();
+			for (Map.Entry<String, String> elem : params.entrySet()) {
+				string_params += (elem.getKey() + "=" + elem.getValue() + "&");
+			}
+
+			conn.getOutputStream().write(string_params.getBytes());
+
+			BufferedReader in = new BufferedReader(new InputStreamReader(conn.getInputStream()));
+
+			JsonParser parser = new JsonParser();
+			JsonObject retObj = (JsonObject) parser.parse(in);
+			return retObj;
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return null;
 	}
 }

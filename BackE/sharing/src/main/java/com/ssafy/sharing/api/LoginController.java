@@ -29,6 +29,8 @@ public class LoginController {
 	private KakaoAPIService kakaoService;
 	@Autowired
 	private LoginService loginService;
+	@Autowired
+	private UserService userService;
 	
 	@ApiOperation(value = "카카오 API code의 값을 전달받아서 userinfo를 얻은 후 email과 nickname이 담겨있는 member객체를 반환한다..", response = Member.class)
 	@PostMapping("/login")
@@ -38,8 +40,8 @@ public class LoginController {
 		Member member = kakaoService.getUserInfo(access_Token);
 		if(member.getMember_email() != null) {
 			loginService.signupMember(member);
-			
-			return new ResponseEntity<>(member, HttpStatus.OK);
+
+			return new ResponseEntity<>(userService.getUserinfo(member.getMember_email()), HttpStatus.OK);
 		}
 		return new ResponseEntity<>(null, HttpStatus.UNAUTHORIZED);
 	}

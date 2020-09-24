@@ -25,14 +25,13 @@ public class HostServiceImpl implements HostService {
 			if (hostDao.checkDuplication(host.getHost_address())) {
 				return false;
 			}
-
 			// 계좌도 넣을것인가? 연락처도
 			Map<String, Object> map = new HashMap<>();
 			map.put("member_email", host.getMember_email());
 			map.put("host_address", host.getHost_address());
 			map.put("host_type", host.getHost_type());
 			map.put("host_intro", host.getHost_intro());
-
+			map.put("host_price", host.getHost_price());
 			if (hostDao.registHost(map)) {
 				int host_num = hostDao.getRecentHostNum(host.getMember_email());
 				map.put("host_num", host_num);
@@ -120,6 +119,30 @@ public class HostServiceImpl implements HostService {
 	}
 
 	@Override
+	public List<Host> getLatelyHosts() {
+		try {
+			List<Host> host_list = hostDao.getLatelyHosts();
+			for (Host host : host_list) {
+				HostImages hostimages = hostDao.getHostImages(host.getHost_num());
+				String[] img_list = new String[6];
+				setHostImages(hostimages, img_list);
+				host.setHost_images(img_list);
+
+				host.setHost_available_day(hostDao.getHostAvailableDays(host.getHost_num()));
+
+				HostItems hostitems = hostDao.getHostProvideItems(host.getHost_num());
+				boolean[] item_list = new boolean[10];
+				setHostItems(hostitems, item_list);
+				host.setHost_provide_items(item_list);
+			}
+			return host_list;
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
+	
+	@Override
 	public boolean updateHost(Host host) {
 		try {
 			// 계좌도 넣을것인가? 연락처도
@@ -138,6 +161,16 @@ public class HostServiceImpl implements HostService {
 		return false;
 	}
 
+	@Override
+	public Host getHost(int host_num) {
+		try {
+			return hostDao.getHost(host_num);
+		}catch (Exception e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
+	
 	private void setHostImages(HostImages hostImages, String[] tmp) {
 		tmp[0] = hostImages.getImg1();
 		tmp[1] = hostImages.getImg2();
@@ -159,5 +192,9 @@ public class HostServiceImpl implements HostService {
 		tmp[8] = hostItems.isItme9();
 		tmp[9] = hostItems.isItme10();
 	}
+
+
+
+
 
 }
