@@ -5,6 +5,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -25,9 +26,9 @@ public class UserController {
 	UserService userService;
 
 	@ApiOperation(value = "member_email을 통해 개인 정보를 조회한다.", response = String.class)
-	@GetMapping("/user/info")
+	@GetMapping("/user/info/{member_email:.+}/")
 	public ResponseEntity<Member> getUserinfo(
-			@ApiParam(value = "useremail", required = true) @RequestBody String member_email) {
+			@ApiParam(value = "useremail", required = true) @PathVariable String member_email) {
 		if (!member_email.isEmpty()) {
 			Member member = userService.getUserinfo(member_email);
 			if (member == null) {

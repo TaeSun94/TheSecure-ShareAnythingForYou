@@ -1,5 +1,6 @@
 package com.ssafy.sharing.domain;
 
+import org.springframework.web.multipart.MultipartFile;
 
 public class Host {
 	private int host_num;
@@ -7,21 +8,55 @@ public class Host {
 	private String host_address;
 	private String host_type;
 	private String host_intro;
-	private boolean[] host_provide_items;
+	private int host_price;
+	private String host_capacity;
+	private boolean[] host_provide_items = new boolean[10];
 	private String[] host_images;
+	private MultipartFile[] files;
 	private String[] host_available_day;
 
 	public Host() {}
 
-	public Host(String member_email, String host_address, String host_type, String host_intro,
-			boolean[] host_provide_items, String[] host_images, String[] host_available_day) {
+	public Host(int host_num, String member_email, String host_address, String host_type, String host_intro,
+			int host_price, String host_capacity, boolean[] host_provide_items, String[] host_images,
+			MultipartFile[] files, String[] host_available_day) {
+		super();
+		this.host_num = host_num;
 		this.member_email = member_email;
 		this.host_address = host_address;
 		this.host_type = host_type;
 		this.host_intro = host_intro;
+		this.host_price = host_price;
+		this.host_capacity = host_capacity;
 		this.host_provide_items = host_provide_items;
 		this.host_images = host_images;
+		this.files = files;
 		this.host_available_day = host_available_day;
+	}
+
+
+	public MultipartFile[] getFiles() {
+		return files;
+	}
+
+	public void setFiles(MultipartFile[] files) {
+		this.files = files;
+	}
+
+	public int getHost_price() {
+		return host_price;
+	}
+
+	public void setHost_price(int host_price) {
+		this.host_price = host_price;
+	}
+
+	public String getHost_capacity() {
+		return host_capacity;
+	}
+
+	public void setHost_capacity(String host_capacity) {
+		this.host_capacity = host_capacity;
 	}
 
 	public int getHost_num() {

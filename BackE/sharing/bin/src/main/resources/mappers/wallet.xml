@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- mappers/user.xml -->
+<!DOCTYPE mapper  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ssafy.sharing.dao.WalletDao"> <!-- mybatis는 namespace필수!! -->
+	<insert id="createWallet" parameterType="hashmap">
+		INSERT INTO wallet (owner_id, address, balance, receiving_count, cash)
+		VALUES (#{owner_id}, #{address}, #{balance}, #{receiveing_count}, #{cash})
+	</insert>
+	
+	<select id="getWallet" parameterType="string" resultType="com.ssafy.sharing.domain.Wallet">
+		SELECT *
+		FROM wallet
+		WHERE owner_id = #{owner_id}
+		ORDER BY wallet_id DESC
+		LIMIT 1
+	</select>
+	
+</mapper>
