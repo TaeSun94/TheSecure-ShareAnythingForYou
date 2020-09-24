@@ -126,6 +126,7 @@
 </template>
 <script>
 import SharingStep from '@/components/SharingStep.vue'
+
 export default {
     data(){
         return{
