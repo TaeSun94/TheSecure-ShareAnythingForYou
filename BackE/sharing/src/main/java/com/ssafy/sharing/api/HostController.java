@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.ssafy.sharing.application.FileService;
 import com.ssafy.sharing.application.HostService;
 import com.ssafy.sharing.application.UserService;
 import com.ssafy.sharing.domain.Host;
@@ -31,6 +32,8 @@ public class HostController {
 	HostService hostService;
 	@Autowired
 	UserService userService;
+	@Autowired
+	FileService fileService;
 	
 	@ApiOperation(value = "sharing home을 등록한다.", response = Boolean.class)
 	@PostMapping("/host/regist")
@@ -39,6 +42,7 @@ public class HostController {
 		if (host == null) {
 			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
 		}
+//		host.setHost_images(fileService.uploadFile(host.getFiles()));
 		return new ResponseEntity<>(hostService.registHost(host),HttpStatus.OK);
 
 	}
