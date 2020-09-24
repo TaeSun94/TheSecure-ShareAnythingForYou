@@ -1,5 +1,7 @@
 package com.ssafy.sharing.domain;
 
+import java.util.Arrays;
+
 import org.springframework.web.multipart.MultipartFile;
 
 public class Host {
@@ -121,6 +123,15 @@ public class Host {
 
 	public void setHost_available_day(String[] host_available_day) {
 		this.host_available_day = host_available_day;
+	}
+
+	@Override
+	public String toString() {
+		return "Host [host_num=" + host_num + ", member_email=" + member_email + ", host_address=" + host_address
+				+ ", host_type=" + host_type + ", host_intro=" + host_intro + ", host_price=" + host_price
+				+ ", host_capacity=" + host_capacity + ", host_provide_items=" + Arrays.toString(host_provide_items)
+				+ ", host_images=" + Arrays.toString(host_images) + ", files=" + Arrays.toString(files)
+				+ ", host_available_day=" + Arrays.toString(host_available_day) + "]";
 	}
 
 }
