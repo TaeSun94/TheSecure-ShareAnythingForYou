@@ -15,7 +15,7 @@
 		INSERT INTO host
 		(member_email, host_address, host_type, host_intro, host_price)
 		VALUES
-		(#{member_email},#{host_address},#{host_type},#{host_intro},#{host_price))
+		(#{member_email},#{host_address},#{host_type},#{host_intro},#{host_price})
 	</insert>
 
 	<select id="getRecentHostNum" parameterType="string"
