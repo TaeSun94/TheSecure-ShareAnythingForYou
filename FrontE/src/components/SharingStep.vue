@@ -64,7 +64,15 @@
             <div v-else-if = "e1 === 2">
                 <sharing-step-2/>
             </div>
-
+            <div v-else-if = "e1 === 3">
+                <sharing-step-3/>
+            </div>
+            <div v-else-if = "e1 === 4">
+                <sharing-step-4/>
+            </div>
+            <div v-else>
+                <sharing-step-5/>
+            </div>
             <v-btn
               v-if="e1 > 1"
               color="secondary"
@@ -95,7 +103,12 @@
 </template>
 <script>
 import {mapState,mapMutations,mapActions} from 'vuex'
-import SharingStep2 from './SharingStep2.vue'
+import SharingStep2 from './AddressStep.vue'
+import SharingStep3 from './ImageStep.vue'
+import SharingStep4 from './CalenderStep.vue'
+import SharingStep5 from './PriceStep.vue'
+
+
     export default {
         data () {
             return {
@@ -106,14 +119,31 @@ import SharingStep2 from './SharingStep2.vue'
                 altLabels: false,
                 editable: false,
                 agreement: false,
-                houseData : [],
+                houseData : {
+                  member_email : '',
+                  host_address : '',
+                  host_type : '',
+                  host_intro : '',
+                  host_price : '',
+                  host_capacity :'',
+                  host_provide_items : [],
+                  host_images : '',
+                  host_available_day : [],
+                },
             }
         },
         components:{
             SharingStep2,
+            SharingStep3,
+            SharingStep4,
+            SharingStep5
         },
         computed:{
           ...mapState({
+            house : state => state.house.houseData,
+            houseDates : state => state.house.houseDates,
+            houseImage : state => state.house.houseImage,
+            // housePrice : state => state.house.housePrice,
             formValid : state => state.formValid
           })
         },
@@ -126,8 +156,9 @@ import SharingStep2 from './SharingStep2.vue'
         },
 
         methods: {
-          ...mapMutations('house',['setHouseData','initHouseData']),
-          
+          ...mapMutations('house',['setHouseData','initHouseData','setHouseDates','setHousePrice']),
+          ...mapMutations(['setFormValid']),
+          ...mapActions('house',['imageUpload']),
           onInput (val) {
               this.steps = parseInt(val)
           },
@@ -146,10 +177,30 @@ import SharingStep2 from './SharingStep2.vue'
                 break
               case 2 :
                 if(this.formValid == true){
+                  // console.log(this.house.address +" " + this.house.detail)
+                  // this.houseData.address = this.house.address
+                  // this.houseData.detail = this.house.detail
                   this.e1 = n + 1
+                  this.setFormValid(false)
                 }else{
                   alert("상세주소를 입력해야합니다.")
-                } 
+                }
+                break
+              case 3 :
+                if(this.house.imageUrl == null || this.house.imageUrl =='' || this.house.imageUrl == undefined){
+                  alert("숙소사진을 등록해야합니다.")
+                }else{
+                  this.e1 = n + 1
+                }
+                break
+              case 4 :
+                if(this.houseDates.length <= 0){
+                  alert("최소 하루이상의 날짜를 선택해야합니다")
+                }else{
+                  // this.houseData.dates = this.houseDates
+                  this.e1 = n + 1
+                }
+                break
             }
           },
           prevStep (n) {
@@ -159,20 +210,57 @@ import SharingStep2 from './SharingStep2.vue'
                   this.e1 = n - 1
               }
           },
-          save(){
-              alert("완료되었습니다.")
-              this.closeModal()
-              // setTimeout(function(){this.e1 = 1, this.agreement = false,alert("init"+this.e1)}, 500)
+          async save(){
+              if(this.house.price == '' || this.house.price == undefined || this.house.price == null){
+                alert("가격은(는) 필수입력 값입니다.")
+              }else{
+                if(this.checkPrice(this.house.price) == false){
+                  alert("가격은 숫자여야 합니다.")
+                }else{
+                  // console.log(this.house)
+                  this.saveData()
+                  // await this.imageUpload(this.house.img)
+                  this.initHouseData()
+                  this.setHouseData(this.houseData)
+                  console.log(this.house)
+                  alert("완료되었습니다.")
+                  this.closeModal()
+                }
+              }
           },
           closeModal(){
               this.$emit('closeModal')
               this.initHouseData()
+              this.setHouseDates([])
+              // this.setHousePrice()
               this.e1 = 1,
               this.agreement = false
           },
-        },
-        created(){
-          console.log('test')
+          checkPrice(val){
+            if(/^(\-|\+)?([0-9]+)$/.test(val) && parseInt(val) > 0) return true
+            else return false
+          },
+          // houseData : {
+          //         member_email : '',
+          //         host_address : '',
+          //         host_type : '',
+          //         host_intro : '',
+          //         host_price : '',
+          //         host_capacity :'',
+          //         host_provide_items : [],
+          //         host_images : '',
+          //         host_available_day : [],
+          //       },
+          saveData(){
+            // this.member_email = this.$cookies.get('id')
+            this.houseData.host_address = this.house.address + " " + this.house.detail
+            this.houseData.host_type = this.house.select
+            if(this.houseData.host_intro == '') this.houseData.host_intro = '편히 쉬다가세요'
+            this.houseData.host_price = this.house.price
+            this.houseData.host_capacity = this.house.select_number
+            this.houseData.host_provide_items = this.house.options
+            this.houseData.host_available_day = this.houseDates
+          }
         },
     }
 </script>
