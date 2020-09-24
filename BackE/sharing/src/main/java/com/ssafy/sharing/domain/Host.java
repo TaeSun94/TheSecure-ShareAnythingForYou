@@ -7,9 +7,10 @@ public class Host {
 	private String host_address;
 	private String host_type;
 	private String host_intro;
-	private boolean[] host_provide_items;
+	private boolean[] host_provide_items = new boolean[10];
 	private String[] host_images;
 	private String[] host_available_day;
+	private int host_price;
 
 	public Host() {}
 
@@ -22,6 +23,14 @@ public class Host {
 		this.host_provide_items = host_provide_items;
 		this.host_images = host_images;
 		this.host_available_day = host_available_day;
+	}
+
+	public int getHost_price() {
+		return host_price;
+	}
+
+	public void setHost_price(int host_price) {
+		this.host_price = host_price;
 	}
 
 	public int getHost_num() {

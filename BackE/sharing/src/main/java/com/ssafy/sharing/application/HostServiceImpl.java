@@ -25,14 +25,13 @@ public class HostServiceImpl implements HostService {
 			if (hostDao.checkDuplication(host.getHost_address())) {
 				return false;
 			}
-
 			// 계좌도 넣을것인가? 연락처도
 			Map<String, Object> map = new HashMap<>();
 			map.put("member_email", host.getMember_email());
 			map.put("host_address", host.getHost_address());
 			map.put("host_type", host.getHost_type());
 			map.put("host_intro", host.getHost_intro());
-
+			map.put("host_price", host.getHost_price());
 			if (hostDao.registHost(map)) {
 				int host_num = hostDao.getRecentHostNum(host.getMember_email());
 				map.put("host_num", host_num);
@@ -138,6 +137,16 @@ public class HostServiceImpl implements HostService {
 		return false;
 	}
 
+	@Override
+	public Host getHost(int host_num) {
+		try {
+			return hostDao.getHost(host_num);
+		}catch (Exception e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
+	
 	private void setHostImages(HostImages hostImages, String[] tmp) {
 		tmp[0] = hostImages.getImg1();
 		tmp[1] = hostImages.getImg2();
@@ -159,5 +168,7 @@ public class HostServiceImpl implements HostService {
 		tmp[8] = hostItems.isItme9();
 		tmp[9] = hostItems.isItme10();
 	}
+
+
 
 }

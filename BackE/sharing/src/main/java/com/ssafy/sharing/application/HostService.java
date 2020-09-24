@@ -12,4 +12,6 @@ public interface HostService {
 	public List<Host> getHosts(String member_email);
 
 	public boolean updateHost(Host host);
+	
+	public Host getHost(int host_num);
 }

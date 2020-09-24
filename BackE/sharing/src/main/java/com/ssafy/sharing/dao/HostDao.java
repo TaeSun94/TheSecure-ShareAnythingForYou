@@ -4,10 +4,13 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.ibatis.annotations.Mapper;
+
 import com.ssafy.sharing.domain.Host;
 import com.ssafy.sharing.domain.HostImages;
 import com.ssafy.sharing.domain.HostItems;
 
+@Mapper
 public interface HostDao {
 
 	boolean registHost(Map<String, Object> map);
@@ -35,4 +38,6 @@ public interface HostDao {
 	void updateHost(Map<String, Object> map);
 
 	Host getHost(int host_num);
+
+	int checkAvailableDay(Map<String, Object> map);
 }

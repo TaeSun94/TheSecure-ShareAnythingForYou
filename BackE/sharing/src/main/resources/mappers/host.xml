@@ -10,11 +10,11 @@
 	</select>
 	
 	<insert id="registHost" parameterType="hashmap">
-		INSERT INTO host (member_email, host_address, host_type, host_intro)
-		VALUES (#{member_email},#{host_address},#{host_type},#{host_intro})
+		INSERT INTO host (member_email, host_address, host_type, host_intro, host_price)
+		VALUES (#{member_email},#{host_address},#{host_type},#{host_intro},#{host_price))
 	</insert>
 	
-	<select id="getRecentHostNum" parameterType="string">
+	<select id="getRecentHostNum" parameterType="string" resultType="_int">
 		SELECT host_num
 		FROM host
 		WHERE member_email = #{member_email}
@@ -23,7 +23,7 @@
 	</select>
 	
 	<insert id="registHostImages" parameterType="hashmap">
-		INSERT INTO host_imgs (host_num, img1, img2, img3, img4, img5, img6)
+		INSERT INTO host_images (host_num, img1, img2, img3, img4, img5, img6)
 		VALUES (#{host_num}, #{img1}, #{img2}, #{img3}, #{img4}, #{img5}, #{img6}) 
 	</insert>
 	
@@ -41,8 +41,8 @@
 	</insert>
 	
 	<insert id ="registHostItems" parameterType="hashmap">
-		INSERT INTO host_provide_items (item1, item2, item3, item4, item5, item6, item7, item8, item9, item10)
-		VALUES (#{item1},#{item2},#{item3},#{item4},#{item5},#{item6},#{item7},#{item8},#{item9},#{item10})
+		INSERT INTO host_provide_items (host_num, item1, item2, item3, item4, item5, item6, item7, item8, item9, item10)
+		VALUES (#{host_num},#{item1},#{item2},#{item3},#{item4},#{item5},#{item6},#{item7},#{item8},#{item9},#{item10})
 	</insert>
 	<select id="getHosts" parameterType="string" resultType="com.ssafy.sharing.domain.Host">
 		SELECT *
@@ -78,6 +78,17 @@
 		SELECT *
 		FROM host
 		WHERE host_num = #{host_num}
+	</select>
+	
+	<select id="checkAvailableDay" parameterType="hashmap" resultType="_int">
+		SELECT COUNT(*)
+		FROM host_available_days
+		WHERE host_num = #{host_nume} 
+			AND is_reservation = FALSE 
+			AND host_available_day IN
+				<foreach collection="host_available_day" item="day" open="(" close=")" separator=",">
+					#{day}
+				</foreach>
 	</select>
 	
 </mapper>

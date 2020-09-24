@@ -4,6 +4,15 @@ public class Member {
 	
 	private String member_email;
 	private String member_nickname;
+	private String public_key;
+	
+	public String getPublic_key() {
+		return public_key;
+	}
+
+	public void setPublic_key(String public_key) {
+		this.public_key = public_key;
+	}
 
 	public String getMember_email() {
 		return member_email;

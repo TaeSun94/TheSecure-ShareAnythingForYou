@@ -1,5 +1,6 @@
 package com.ssafy.sharing.api;
 
+import java.util.Arrays;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -38,7 +39,6 @@ public class HostController {
 		if (host == null) {
 			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
 		}
-		
 		return new ResponseEntity<>(hostService.registHost(host),HttpStatus.OK);
 
 	}
@@ -61,7 +61,7 @@ public class HostController {
 	
 	@ApiOperation(value = "등록된 sharing home의 특정 부분을 수정한다.", response = Boolean.class)
 	@PutMapping("/host/update")
-	public ResponseEntity<Boolean> updateHost(@ApiParam(value = "", required = true)@RequestBody Host host){
+	public ResponseEntity<Boolean> updateHost(@ApiParam(value = "Host Class", required = true)@RequestBody Host host){
 		if(host == null) {
 			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
 		}
