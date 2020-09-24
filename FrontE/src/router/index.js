@@ -5,9 +5,7 @@ import Login from '../components/Login.vue'
 import Home from '../views/Home.vue'
 import Sharing from '../views/Sharing.vue'
 import HomeContents from '../views/HomeContents.vue'
-import Approval from '../views/Approval.vue'
-import Cancel from '../views/Cancel.vue'
-import Fail from '../views/Fail.vue'
+import Reservation from '../views/Reservation.vue'
 
 Vue.use(VueRouter)
 
@@ -38,21 +36,10 @@ const routes = [
         component: Sharing
       },
       {
-        path: '/payment/approval',
-        name: 'Approval',
-        component: Approval
+        path: '/reservation',
+        name: 'Reservation',
+        component: Reservation
       },
-      {
-        path: '/payment/cancel',
-        name: 'Cancel',
-        component: Cancel
-      },
-      {
-        path: '/payment/fail',
-        name: 'Fail',
-        component: Fail
-      },
-      
     ]
   },
   ,
