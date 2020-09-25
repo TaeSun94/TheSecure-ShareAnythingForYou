@@ -5,6 +5,7 @@ import Login from '../components/Login.vue'
 import Home from '../views/Home.vue'
 import Sharing from '../views/Sharing.vue'
 import HomeContents from '../views/HomeContents.vue'
+import Reservation from '../views/Reservation.vue'
 
 Vue.use(VueRouter)
 
@@ -33,6 +34,11 @@ const routes = [
         path: '/sharing',
         name: 'Sharing',
         component: Sharing
+      },
+      {
+        path: '/reservation',
+        name: 'Reservation',
+        component: Reservation
       },
     ]
   },

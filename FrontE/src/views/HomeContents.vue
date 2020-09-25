@@ -45,7 +45,7 @@ export default {
         
         var f = true
         $(window).bind('mousewheel', function(e) {
-                console.log("scroll!")
+                // console.log("scroll!")
                 if(f){
                     f = false
                     if (e.originalEvent.wheelDelta >= 0) {
@@ -95,7 +95,7 @@ export default {
     beforeDestroy() {
         window.removeEventListener("mousewheel", this.listener);
         $(window).unbind();
-        console.log("destroy");
+        // console.log("destroy");
     },
 }
 </script>

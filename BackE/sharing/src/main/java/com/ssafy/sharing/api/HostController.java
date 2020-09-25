@@ -1,5 +1,6 @@
 package com.ssafy.sharing.api;
 
+import java.util.Arrays;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.ssafy.sharing.application.FileService;
 import com.ssafy.sharing.application.HostService;
 import com.ssafy.sharing.application.UserService;
 import com.ssafy.sharing.domain.Host;
@@ -30,6 +32,8 @@ public class HostController {
 	HostService hostService;
 	@Autowired
 	UserService userService;
+	@Autowired
+	FileService fileService;
 	
 	@ApiOperation(value = "sharing home을 등록한다.", response = Boolean.class)
 	@PostMapping("/host/regist")
@@ -38,7 +42,7 @@ public class HostController {
 		if (host == null) {
 			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
 		}
-		
+//		host.setHost_images(fileService.uploadFile(host.getFiles()));
 		return new ResponseEntity<>(hostService.registHost(host),HttpStatus.OK);
 
 	}
@@ -49,7 +53,7 @@ public class HostController {
 		return new ResponseEntity<>(hostService.deleteHost(host_num),HttpStatus.OK);
 	}
 
-	@ApiOperation(value = "등록된 sharing home 리스트를 불러온다.", response = Host.class)
+	@ApiOperation(value = "내가 등록한 sharing home 리스트를 불러온다.", response = Host.class)
 	@GetMapping("/host/read")
 	public ResponseEntity<List<Host>> getHosts(@ApiParam(value = "member_email", required = true)@RequestBody String member_email){
 		if(!userService.checkMember(member_email)) {
@@ -58,13 +62,24 @@ public class HostController {
 		List<Host> host_list = hostService.getHosts(member_email);
 		return new ResponseEntity<>(host_list, HttpStatus.OK);
 	}
+
+	@ApiOperation(value = "등록된 sharing home 중 가장 최근 8개에 대한 리스트를 불러온다.", response = Host.class)
+	@GetMapping("/host/rately")
+	public ResponseEntity<List<Host>> getLatelyHosts(@ApiParam(value = "member_email", required = true)@RequestBody String member_email){
+		if(!userService.checkMember(member_email)) {
+			return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
+		}
+		List<Host> host_list = hostService.getLatelyHosts();
+		return new ResponseEntity<>(host_list, HttpStatus.OK);
+	}
 	
 	@ApiOperation(value = "등록된 sharing home의 특정 부분을 수정한다.", response = Boolean.class)
 	@PutMapping("/host/update")
-	public ResponseEntity<Boolean> updateHost(@ApiParam(value = "", required = true)@RequestBody Host host){
+	public ResponseEntity<Boolean> updateHost(@ApiParam(value = "Host Class", required = true)@RequestBody Host host){
 		if(host == null) {
 			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
 		}
 		return new ResponseEntity<>(hostService.updateHost(host), HttpStatus.OK);
 	}
+	
 }

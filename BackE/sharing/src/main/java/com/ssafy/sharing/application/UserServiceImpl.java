@@ -14,7 +14,7 @@ public class UserServiceImpl implements UserService {
 	@Override
 	public Member getUserinfo(String member_email) {
 		try {
-			Member member = userDao.getUserinfo(member_email);
+			Member member = userDao.getMember(member_email);
 			if (member.getMember_email().equals(member_email)) {
 				return member;
 			}
