@@ -34,6 +34,7 @@ public class UserController {
 			if (member == null) {
 				return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
 			} else {
+				
 				return new ResponseEntity<>(userService.getUserinfo(member_email), HttpStatus.OK);
 			}
 		}

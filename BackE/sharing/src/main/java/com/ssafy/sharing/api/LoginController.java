@@ -40,7 +40,6 @@ public class LoginController {
 		Member member = kakaoService.getUserInfo(access_Token);
 		if(member.getMember_email() != null) {
 			loginService.signupMember(member);
-
 			return new ResponseEntity<>(userService.getUserinfo(member.getMember_email()), HttpStatus.OK);
 		}
 		return new ResponseEntity<>(null, HttpStatus.UNAUTHORIZED);
