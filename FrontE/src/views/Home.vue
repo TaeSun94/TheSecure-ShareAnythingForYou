@@ -72,7 +72,7 @@ export default {
             { title: 'Reservation', icon: 'mdi-image' },
             { title: 'Home-Sharing', icon: 'mdi-help-box' },
             { title: 'Review', icon: 'mdi-view-dashboard' },
-            { title: 'FQA', icon: 'mdi-view-dashboard' },
+            { title: 'FAQ', icon: 'mdi-view-dashboard' },
             { title: 'Logout', icon:'mdi-exit-run'},
         ],
         right: null,
@@ -98,6 +98,9 @@ export default {
                     this.$router.push({name : 'Sharing'})
                     .catch(()=>{});
                     break;
+                case "Reservation":
+                    this.$router.push({name : 'Reservation'}).catch(()=>{})
+                    break
             }
         },
     },

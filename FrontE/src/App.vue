@@ -39,7 +39,7 @@ export default {
       this.$cookies.set("code",code,"1h")
       //this.getAccessToken(code)
       // user id 도 저장할거임 
-      this.$router.push({'name' : 'Home'})
+      this.$router.push({'name' : 'Cover'})
     }
 
     //
