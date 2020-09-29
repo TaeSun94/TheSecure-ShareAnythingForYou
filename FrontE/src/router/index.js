@@ -40,6 +40,11 @@ const routes = [
         name: 'Reservation',
         component: Reservation
       },
+      {
+        path: '/reservation/:house_id',
+        name: 'Reservation_detail',
+        component: () => import('../views/Reservation_detail.vue')
+      }
     ]
   },
   ,
