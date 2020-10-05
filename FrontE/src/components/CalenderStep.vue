@@ -21,6 +21,7 @@
                           v-model="dates"
                           multiple
                           chips
+                          clearable
                           label="선택하신 날짜"
                           prepend-icon="mdi-view-dashboard"
                           readonly

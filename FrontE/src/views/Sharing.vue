@@ -1,6 +1,6 @@
 <template>
     <div id = "host">
-        <v-container fluid>
+        <v-container fluid style="text-align:center;">
             <v-layout column>
                 <v-flex class="host_title">
                     <span style="margin-right : 100px;">Home Share(호스트)</span>

@@ -9,7 +9,7 @@
                 <g> <use class="stroke" xlink:href="#fade-text"/> <use class="fill" xlink:href="#fade-text"/> </g>
             </svg>
         </div>
-        <div class ="col">
+        <div class ="col" style="text-align:center;">
           <div v-if ="this.isLogin">
             <button @click="moveHome()">Home</button>
           </div>            
