@@ -208,6 +208,20 @@
                 </v-row>
             </v-container>
         </v-container>
+        <v-container>
+            <v-subheader style="margin-left:20vh;">후기</v-subheader>
+            <v-divider></v-divider>
+            <v-container>
+                <v-flex v-if="reservation.length == 0" style="height : 30vh; padding-top : 15vh;">
+                    <p class="No_review">아직 등록된 후기가 없어요!</p>
+                </v-flex>
+                <v-flex v-else>
+                    <v-col cols="6">
+
+                    </v-col>
+                </v-flex>
+            </v-container>
+        </v-container>
     </div>
 </template>
 <script>
@@ -249,6 +263,7 @@ export default {
                 reservation_days: [],
                 reservation_price : '',
             },
+            reviews : [],
         }
     },
     computed:{
@@ -358,5 +373,8 @@ export default {
 .img-btn{
     border : 0;
     outline: 0;
+}
+.No_review{
+    text-align: center;
 }
 </style>

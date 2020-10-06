@@ -6,6 +6,7 @@ import Home from '../views/Home.vue'
 import Sharing from '../views/Sharing.vue'
 import HomeContents from '../views/HomeContents.vue'
 import Reservation from '../views/Reservation.vue'
+import FAQ from '../views/FAQ.vue'
 
 Vue.use(VueRouter)
 
@@ -44,7 +45,17 @@ const routes = [
         path: '/reservation/:house_id',
         name: 'Reservation_detail',
         component: () => import('../views/Reservation_detail.vue')
-      }
+      },
+      {
+        path: '/profile',
+        name: 'Profile',
+        component: () => import('../views/Profile.vue')
+      },
+      {
+        path: '/faq',
+        name: 'FAQ',
+        component: FAQ
+      },
     ]
   },
   ,
