@@ -37,7 +37,8 @@
                     <v-sheet elevation="3" shaped>
                         <v-container style="padding : 3vh;">
                             <v-subheader>Reservation - 예약</v-subheader>
-                            <v-simple-table>
+                            <p v-if="this.reservations.length == 0">현재 예약하신 숙소가 없어요!</p>
+                            <v-simple-table v-else>
                                 <template v-slot:default>
                                 <thead>
                                     <tr>
@@ -99,27 +100,12 @@
     </div>
 </template>
 <script>
-import {mapMutations} from 'vuex'
+import {mapState,mapMutations,mapActions} from 'vuex'
 
 export default {
     data(){
         return{
             member: {},
-            reservations : 
-            [
-                {
-                    r_id : 1,
-                    r_address : "광산구 장덕동",
-                    r_dates : ['2020-09-25','2020-09-26','2020-09-27'],
-                    r_pay : 100000,
-                },
-                {
-                    r_id : 2,
-                    r_address : "광산구 장덕동 1589",
-                    r_dates : ['2020-09-27','2020-09-28','2020-09-29'],
-                    r_pay : 150000,
-                },
-            ],
             desserts: [
             {
                 name: 'Frozen Yogurt',
@@ -164,15 +150,22 @@ export default {
             ],
         }
     },
+    computed:{
+        ...mapState({
+            reservations : state => state.reservation.reservations
+        })
+    },
     methods:{
         ...mapMutations(['setpwdDialog']),
+        ...mapActions('reservation',['fetchReservationsByEmail']),
         setPassword(){
             this.setpwdDialog(true)
         }
     },
     mounted(){
         //
-        this.member = this.$cookies.get('member') 
+        this.member = this.$cookies.get('member')
+        this.fetchReservationsByEmail(this.member.member_email)
     }
 }
 </script>
