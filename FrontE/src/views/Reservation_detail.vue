@@ -188,7 +188,7 @@
                                 </v-col>
 
                                 <v-col cols="6" style="text-align:right;">
-                                    <div> &#8361; {{dates.length * house.house_price}}원</div>
+                                    <div> &#8361; {{(reservation.reservation_days.length-1) * house.house_price}}원</div>
                                 </v-col>
                             </v-row>
                             <v-divider style="margin: 1em;"></v-divider>
@@ -208,11 +208,11 @@
                 </v-row>
             </v-container>
         </v-container>
-        <v-container>
+        <!-- <v-container>
             <v-subheader style="margin-left:20vh;">후기</v-subheader>
             <v-divider></v-divider>
             <v-container>
-                <v-flex v-if="reservation.length == 0" style="height : 30vh; padding-top : 15vh;">
+                <v-flex v-if="reviews.length == 0" style="height : 30vh; padding-top : 15vh;">
                     <p class="No_review">아직 등록된 후기가 없어요!</p>
                 </v-flex>
                 <v-flex v-else>
@@ -221,7 +221,7 @@
                     </v-col>
                 </v-flex>
             </v-container>
-        </v-container>
+        </v-container> -->
     </div>
 </template>
 <script>
@@ -327,6 +327,10 @@ export default {
             // start : '2020-09-30' end : '2020-10-04' 계산하기
             //하루씩 더해가면서 다음날이 end와 같으면 거기서 종료시키기
             //같지 않으면 예약일배열에 넣기
+            if(start == end){
+                alert("이용기간을 하루이상 선택해주세요")
+                check = false
+            }
             var year = start.substr(0,4) *1
             var month = start.substr(5,2) *1 - 1
             var date = start.substr(8,2) *1

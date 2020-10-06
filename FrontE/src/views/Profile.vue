@@ -27,11 +27,43 @@
                                     <v-icon>mdi-mail</v-icon>
                                 </v-list-item-icon>
                                 <v-list-item-subtitle v-if="member.public_key !== ''">{{member.public_key}}</v-list-item-subtitle>
-                                <v-list-item-subtitle v-else><a @click.prevent="makeWallet">지갑 생성하기</a></v-list-item-subtitle>
+                                <v-list-item-subtitle v-else><a @click.prevent="setPassword">지갑 생성하기</a></v-list-item-subtitle>
                             </v-list-item>
                         </v-col>
                     </v-row>
                 </v-sheet>
+                <v-container>
+                    <v-divider style="margin : 3vh;"></v-divider>
+                    <v-sheet elevation="3" shaped>
+                        <v-container style="padding : 3vh;">
+                            <v-subheader>Reservation - 예약</v-subheader>
+                            <p v-if="this.reservations.length == 0">현재 예약하신 숙소가 없어요!</p>
+                            <v-simple-table v-else>
+                                <template v-slot:default>
+                                <thead>
+                                    <tr>
+                                    <th class="text-left">
+                                        Name
+                                    </th>
+                                    <th class="text-left">
+                                        Calories
+                                    </th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr
+                                    v-for="item in desserts"
+                                    :key="item.name"
+                                    >
+                                    <td>{{ item.name }}</td>
+                                    <td>{{ item.calories }}</td>
+                                    </tr>
+                                </tbody>
+                                </template>
+                            </v-simple-table>
+                        </v-container>
+                    </v-sheet>
+                </v-container>
                 <v-container>
                     <v-divider style="margin : 3vh;"></v-divider>
                     <v-sheet elevation="3" shaped>
@@ -63,47 +95,17 @@
                         </v-container>
                     </v-sheet>
                 </v-container>
-                <v-container>
-                    <v-divider style="margin : 3vh;"></v-divider>
-                    <v-sheet elevation="3" shaped>
-                        <v-container style="padding : 3vh;">
-                            <v-subheader>Transaction</v-subheader>
-                            <v-simple-table>
-                                <template v-slot:default>
-                                <thead>
-                                    <tr>
-                                    <th class="text-left">
-                                        Name
-                                    </th>
-                                    <th class="text-left">
-                                        Calories
-                                    </th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr
-                                    v-for="item in desserts"
-                                    :key="item.name"
-                                    >
-                                    <td>{{ item.name }}</td>
-                                    <td>{{ item.calories }}</td>
-                                    </tr>
-                                </tbody>
-                                </template>
-                            </v-simple-table>
-                        </v-container>
-                    </v-sheet>
-                </v-container>
             </v-container>
         </v-container>
     </div>
 </template>
 <script>
+import {mapState,mapMutations,mapActions} from 'vuex'
+
 export default {
     data(){
         return{
             member: {},
-            reservation : [],
             desserts: [
             {
                 name: 'Frozen Yogurt',
@@ -148,16 +150,22 @@ export default {
             ],
         }
     },
+    computed:{
+        ...mapState({
+            reservations : state => state.reservation.reservations
+        })
+    },
+    methods:{
+        ...mapMutations(['setpwdDialog']),
+        ...mapActions('reservation',['fetchReservationsByEmail']),
+        setPassword(){
+            this.setpwdDialog(true)
+        }
+    },
     mounted(){
-        this.member =
-                {
-                "member_email": "test@gmail.com",
-                "member_nickname": "testnickname",
-                "member_imgurl" : "http://k.kakaocdn.net/dn/bpLTxG/btqJRmspqjR/390YKJMfPaukWYDUbbMcz1/img_640x640.jpg",
-                "public_key": "0xA8566F6bC8FB2E46B14e9eEb282ecDc0e53AA37C",
-                "is_host" : true
-                // "public_key": ""
-                } 
+        //
+        this.member = this.$cookies.get('member')
+        this.fetchReservationsByEmail(this.member.member_email)
     }
 }
 </script>
