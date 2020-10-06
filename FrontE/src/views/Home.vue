@@ -6,14 +6,30 @@
             v-model="drawer"
             permanent = "permanent">
                 <v-list-item>
-                    <v-list-item-content>
-                        <v-list-item-title class="title">
-                        2%
-                        </v-list-item-title>
-                        <v-list-item-subtitle>
-                        당신의 숙소를 확인하세요
-                        </v-list-item-subtitle>
-                    </v-list-item-content>
+                    <v-container style="text-align:center;">
+                        <v-avatar size="6em" @click="moveProfile">
+                            <img
+                                :src= "member.member_imgurl"
+                                alt="카카오프로필이미지"
+                                
+                            >
+                        </v-avatar>
+                        <p class="profile_nickname">{{member.member_nickname}} 님</p>
+                    </v-container>
+                </v-list-item>
+                <v-divider></v-divider>
+                <v-list-item>
+                    <v-list-item-icon>
+                        <v-icon>mdi-mail</v-icon>
+                    </v-list-item-icon>
+                    <v-list-item-subtitle>{{member.member_email}}</v-list-item-subtitle>
+                </v-list-item>
+                <v-list-item>
+                    <v-list-item-icon>
+                        <v-icon>mdi-mail</v-icon>
+                    </v-list-item-icon>
+                    <v-list-item-subtitle v-if="member.public_key !== ''">{{member.public_key}}</v-list-item-subtitle>
+                    <v-list-item-subtitle v-else><a @click.prevent="makeWallet">지갑 생성하기</a></v-list-item-subtitle>
                 </v-list-item>
                 <v-divider></v-divider>
                 <v-list
@@ -76,6 +92,13 @@ export default {
             { title: 'Logout', icon:'mdi-exit-run'},
         ],
         right: null,
+        member : 
+            {
+                // member_email : '',
+                // member_nickname : '',
+                // member_email : '',
+                // member_imgurl : ''
+            }
         }
     },
     methods:{
@@ -101,9 +124,30 @@ export default {
                 case "Reservation":
                     this.$router.push({name : 'Reservation'}).catch(()=>{})
                     break
+                case "FAQ":
+                    this.$router.push({name : 'FAQ'}).catch(()=>{})
+                    break
             }
         },
+        moveProfile(){
+            this.$router.push({name : 'Profile'}).catch(()=>{});
+        },
+        makeWallet(){
+            alert("지갑 생성하기!")
+        }
     },
+    mounted(){
+        // member = this.$cookies.get('member')
+        this.member =
+                {
+                "member_email": "test@gmail.com",
+                "member_nickname": "testnickname",
+                "member_imgurl" : "http://k.kakaocdn.net/dn/bpLTxG/btqJRmspqjR/390YKJMfPaukWYDUbbMcz1/img_640x640.jpg",
+                // "public_key": "0xA8566F6bC8FB2E46B14e9eEb282ecDc0e53AA37C"
+                "public_key": ""
+                }
+        
+    }
 }
 </script>
 <style scoped>
@@ -113,5 +157,9 @@ export default {
 v-footer{
     background-color: black;
 }
-
+.profile_nickname{
+    font-size: 1em;
+    margin-top : 0.5em;
+    margin-bottom : 0.5em;
+}
 </style>
