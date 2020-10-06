@@ -29,7 +29,55 @@
                         <v-icon>mdi-mail</v-icon>
                     </v-list-item-icon>
                     <v-list-item-subtitle v-if="member.public_key !== ''">{{member.public_key}}</v-list-item-subtitle>
-                    <v-list-item-subtitle v-else><a @click.prevent="makeWallet">지갑 생성하기</a></v-list-item-subtitle>
+                    <v-list-item-subtitle v-else>
+                        <div>
+                            <v-dialog
+                            v-model="dialog"
+                            width="60vh"
+                            >
+                            <template v-slot:activator="{ on, attrs }">
+                                <a @click.prevent v-bind="attrs"
+                                v-on="on">지갑 생성하기</a>
+                            </template>
+
+                            <v-card>
+                                <v-card-title class="headline grey lighten-2">
+                                비밀번호 설정하기
+                                </v-card-title>
+
+                                <v-card-text style="padding-bottom:0; margin-top: 2vh;">
+                                    2%에서 서명에 사용되는 비밀번호입니다.<br>
+                                    <strong>잊지마세요!</strong>
+                                </v-card-text>
+                                <v-form ref="form" style="margin-top: 0; padding : 0 2vh;">
+                                    <v-text-field v-model="password" label="비밀번호" :rules="passwordRules" 
+                                    :append-icon="show1 ? 'mdi-eye' : 'mdi-eye-off'" :type="show1 ? 'text' : 'password'" @click:append="show1 = !show1"></v-text-field>
+                                    <v-text-field v-model="password_confirm" label="비밀번호 확인" :rules="passwordConfirmRule"
+                                    :append-icon="show2 ? 'mdi-eye' : 'mdi-eye-off'" :type="show2? 'text' : 'password'" @click:append="show1 = !show2"></v-text-field>
+                                </v-form>
+                                <v-divider></v-divider>
+
+                                <v-card-actions>
+                                <v-spacer></v-spacer>
+                                <v-btn
+                                    color="primary"
+                                    text
+                                    @click="setPassword"
+                                >
+                                    설정하기
+                                </v-btn>
+                                <v-btn
+                                    color="primary"
+                                    text
+                                    @click="closeDialog"
+                                >
+                                    취소
+                                </v-btn>
+                                </v-card-actions>
+                            </v-card>
+                            </v-dialog>
+                        </div>
+                    </v-list-item-subtitle>
                 </v-list-item>
                 <v-divider></v-divider>
                 <v-list
@@ -52,7 +100,7 @@
                 </v-list-item>
                 </v-list>
             </v-navigation-drawer>
-
+            
             <!-- <v-app-bar app>
                 2%
             </v-app-bar> -->
@@ -75,34 +123,68 @@
     </div>
 </template>
 <script>
-import {mapMutations} from 'vuex'
+import {mapMutations,mapActions} from 'vuex'
 import HomeContents from './HomeContents.vue'
 export default {
     data () {
     return {
+        // dialog : false,
         drawer : true,
         permanent : true,
         expandOnHover : true,
+        password : undefined,
+        password_confirm : '',
+        passwordRules: [
+            value => !!value || '비밀번호는 필수 값입니다.',
+            value => (value && value.length >= 4) || '비밀번호의 길이는 4자 이상이어야 합니다.',
+        ],
+        passwordConfirmRule : [v => (v && this.validate) || '비밀번호가 일치하지 않습니다.'],
+        show1 : false,
+        show2 : false,
         items: [
             { title: 'Our Service', icon: 'mdi-view-dashboard'},
             { title: 'Reservation', icon: 'mdi-image' },
             { title: 'Home-Sharing', icon: 'mdi-help-box' },
-            { title: 'Review', icon: 'mdi-view-dashboard' },
+            // { title: 'Review', icon: 'mdi-view-dashboard' },
             { title: 'FAQ', icon: 'mdi-view-dashboard' },
             { title: 'Logout', icon:'mdi-exit-run'},
         ],
         right: null,
         member : 
-            {
-                // member_email : '',
-                // member_nickname : '',
-                // member_email : '',
-                // member_imgurl : ''
+        {
+            // member_email : '',
+            // member_nickname : '',
+            // member_email : '',
+            // member_imgurl : ''
+        },
+        
+        }
+        
+    },
+    computed : {
+        dialog : {
+            get(){
+                return this.$store.state.pwdDialog
+            },
+            set(val){
+                return this.setpwdDialog(val)
             }
+        },
+        validate(){
+            return (this.password != undefined && this.password.length >= 4) && (this.password == this.password_confirm) 
+        }
+        
+    },
+    watch : {
+        dialog(){
+            if(this.dialog == false)
+                this.$refs.form.reset()
         }
     },
     methods:{
         ...mapMutations('member',['setisLogin']),
+        ...mapMutations(['setpwdDialog']),
+        ...mapActions('member',['setMemberPassword']),
         excuteMenu(menu) {
             switch(menu){
                 // 로그아웃
@@ -132,20 +214,36 @@ export default {
         moveProfile(){
             this.$router.push({name : 'Profile'}).catch(()=>{});
         },
-        makeWallet(){
-            alert("지갑 생성하기!")
+        setPassword(){
+            if(this.validate){
+                this.member.member_pwd = this.password
+                this.setMemberPassword(this.member)
+                this.setpwdDialog(false)
+                // this.dialog = false
+            }else{
+                alert("비밀번호를 확인하세요")
+                this.$refs.form.reset()
+                // this.password=''
+            }
+        },
+        closeDialog(){
+            // this.dialog = false
+            this.setpwdDialog(false)
+            this.$refs.form.reset()
+            // this.password=''
         }
     },
     mounted(){
-        // member = this.$cookies.get('member')
-        this.member =
-                {
-                "member_email": "test@gmail.com",
-                "member_nickname": "testnickname",
-                "member_imgurl" : "http://k.kakaocdn.net/dn/bpLTxG/btqJRmspqjR/390YKJMfPaukWYDUbbMcz1/img_640x640.jpg",
-                // "public_key": "0xA8566F6bC8FB2E46B14e9eEb282ecDc0e53AA37C"
-                "public_key": ""
-                }
+        this.member = this.$cookies.get('member')
+        console.log(this.member)
+        // this.member =
+        //         {
+        //         "member_email": "test@gmail.com",
+        //         "member_nickname": "testnickname",
+        //         "member_imgurl" : "http://k.kakaocdn.net/dn/bpLTxG/btqJRmspqjR/390YKJMfPaukWYDUbbMcz1/img_640x640.jpg",
+        //         // "public_key": "0xA8566F6bC8FB2E46B14e9eEb282ecDc0e53AA37C"
+        //         "public_key": ""
+        //         }
         
     }
 }
