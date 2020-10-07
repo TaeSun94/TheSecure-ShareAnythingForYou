@@ -32,4 +32,10 @@
 		FROM reservation_days
 		WHERE rid=#{rid}
 	</select>
+	
+	<select id="getMyReservations" parameterType="string" resultType="com.ssafy.sharing.domain.Reservation">
+		SELECT *
+		FROM reservation
+		WHERE member_email = #{member_email}
+	</select>
 </mapper>

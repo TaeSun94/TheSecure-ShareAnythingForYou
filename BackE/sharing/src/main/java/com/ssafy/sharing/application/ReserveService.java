@@ -1,5 +1,7 @@
 package com.ssafy.sharing.application;
 
+import java.util.List;
+
 import com.ssafy.sharing.domain.Reservation;
 
 public interface ReserveService {
@@ -8,4 +10,6 @@ public interface ReserveService {
 	public void reserveHost(Reservation reservation);
 
 	public Reservation getReserveInfo();
+
+	public List<Reservation> getMyReservations(String member_email);
 }

@@ -88,4 +88,26 @@ public class ReserveServiceImpl implements ReserveService {
 		return null;
 	}
 
+	@Override
+	public List<Reservation> getMyReservations(String member_email) {
+		try {
+			List<Reservation> reserve_list = new ArrayList<>();
+			reserve_list = reserveDao.getMyReservations(member_email);
+			for(Reservation reservation : reserve_list) {
+				List<String> reserve_day_list = new ArrayList<>();
+				reserve_day_list = reserveDao.getReserveDays(reservation.getRid());
+				String[] reserve_days = new String[reserve_day_list.size()];
+				for(int i = 0; i < reserve_days.length; i++) {
+					reserve_days[i] = reserve_day_list.get(i);
+				}
+				reservation.setReserve_day(reserve_days);
+			}
+			return reserve_list;
+		}catch (Exception e) {
+			// TODO: handle exception
+			e.printStackTrace();
+		}
+		return null;
+	}
+
 }

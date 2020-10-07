@@ -19,4 +19,6 @@ public interface ReserveDao {
 	Reservation getLatelyReserve();
 
 	List<String> getReserveDays(int rid);
+
+	List<Reservation> getMyReservations(String member_email);
 }
