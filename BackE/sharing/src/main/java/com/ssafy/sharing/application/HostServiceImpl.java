@@ -9,15 +9,20 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.ssafy.sharing.dao.HostDao;
+import com.ssafy.sharing.dao.UserDao;
 import com.ssafy.sharing.domain.Host;
 import com.ssafy.sharing.domain.HostImages;
 import com.ssafy.sharing.domain.HostItems;
+import com.ssafy.sharing.domain.Member;
 
 @Service
 public class HostServiceImpl implements HostService {
 
 	@Autowired
 	HostDao hostDao;
+	
+	@Autowired
+	UserDao userDao;
 
 	@Override
 	public boolean registHost(Host host) {
@@ -32,6 +37,7 @@ public class HostServiceImpl implements HostService {
 			map.put("host_type", host.getHost_type());
 			map.put("host_intro", host.getHost_intro());
 			map.put("host_price", host.getHost_price());
+			map.put("host_capacity", host.getHost_capacity());
 			if (hostDao.registHost(map)) {
 				int host_num = hostDao.getRecentHostNum(host.getMember_email());
 				map.put("host_num", host_num);
@@ -123,7 +129,6 @@ public class HostServiceImpl implements HostService {
 		try {
 			List<Host> host_list = hostDao.getLatelyHosts();
 			for (Host host : host_list) {
-				System.out.println(host.toString());
 				HostImages hostimages = hostDao.getHostImages(host.getHost_num());
 				String[] img_list = new String[6];
 				setHostImages(hostimages, img_list);
@@ -132,10 +137,14 @@ public class HostServiceImpl implements HostService {
 				host.setHost_available_day(hostDao.getHostAvailableDays(host.getHost_num()));
 
 				HostItems hostitems = hostDao.getHostProvideItems(host.getHost_num());
-				System.out.println(hostitems.toString());
 				boolean[] item_list = new boolean[10];
 				setHostItems(hostitems, item_list);
 				host.setHost_provide_items(item_list);
+				
+				Member member = userDao.getHostMember(host.getHost_num());
+				member.setPassword("");
+				member.setPublic_key("");
+				host.setMember(member);
 			}
 			return host_list;
 		} catch (Exception e) {

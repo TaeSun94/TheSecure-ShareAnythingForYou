@@ -89,9 +89,7 @@ public class HostController {
 	@GetMapping("/host/search/{keyword}/")
 	public ResponseEntity<List<Host>> searchHost(@ApiParam(value = "Host List", required=true) @PathVariable String keyword){
 		List<Host> list = hostService.searchHost(keyword);
-		for(Host host : list) {
-			System.out.println(host.toString());
-		}
 		return new ResponseEntity<>(list, HttpStatus.OK);
 	}
+	
 }
