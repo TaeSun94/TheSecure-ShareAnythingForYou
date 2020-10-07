@@ -6,6 +6,7 @@ Vue.use(Vuex)
 import member from '../store/modules/member.js'
 import house from '../store/modules/house.js'
 import reservation from '../store/modules/reservation.js'
+import transaction from '../store/modules/transaction.js'
 
 export default new Vuex.Store({
   state: {
@@ -25,6 +26,7 @@ export default new Vuex.Store({
   modules: {
     house,
     member,
-    reservation
+    reservation,
+    transaction
   }
 })
