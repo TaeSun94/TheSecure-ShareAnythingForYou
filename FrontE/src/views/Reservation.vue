@@ -60,15 +60,17 @@
                             <v-expansion-panels popout
                             focusable
                             hover>
-                            <v-expansion-panel
-                                v-for="(item,i) in 5"
-                                :key="i"
-                            >
-                                <v-expansion-panel-header>Item</v-expansion-panel-header>
-                                <v-expansion-panel-content>
-                                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
-                                </v-expansion-panel-content>
-                            </v-expansion-panel>
+                                <v-expansion-panel
+                                    v-for="(item,i) in items"
+                                    :key="i"
+                                >
+                                    <v-expansion-panel-header>
+                                        {{item.subject}}
+                                    </v-expansion-panel-header>
+                                    <v-expansion-panel-content>
+                                        {{item.text}}
+                                    </v-expansion-panel-content>
+                                </v-expansion-panel>
                             </v-expansion-panels>
                         </v-row>
                     </v-sheet>
@@ -98,6 +100,11 @@ export default {
                     src: require('../assets/겨울.jpg')
                 }
             ],
+            items:[
+                {subject: "예약 확인은 어떻게 하나요?", text:"완료된 예약의 경우 왼쪽 사이드바 상단의 프로필 사진을 클릭하면 My page로 넘어가 확인하실 수 있습니다."},
+                {subject: "게스트가 예약에 대하여 믿고 쓸 수 있을까요?", text:"예약의 경우 블록에 저장하는 데이터를 통하여 사용자들에게 신뢰를 주고 모두가 확인할 수 있어서 투명성을 보장합니다."},
+                {subject: "블록체인에 트랜잭션을 호출하기 위하여 일정량의 암호 화폐가 필요한데 충전은 어떻게 하나요?", text:"저희 서비스는 사설 이더리움 네트워크를 사용하기 때문에 수수료없이 트랜잭션을 발행할 수 있고 그로 인해 충전의 기능은 따로 제공하지 않습니다. 대신 Account 생성을 할 때 서비스 이용을 위한 소정의 Ether를 전송하여 불편함없이 이용하실 수 있습니다."},
+            ]
         }
     },
     methods:{

@@ -4,7 +4,6 @@
             <v-layout column>
                 <v-flex class="host_title">
                     <span style="margin-right : 100px;">Home Share(호스트)</span>
-                    <v-btn>시작하기</v-btn>
                 </v-flex>
                 <v-flex class="host_contents">
                     <p>호스팅 하기(도움말)</p>
@@ -22,24 +21,22 @@
                             </v-img>
                             </v-card>
                             <v-card-actions>
-                                <v-spacer></v-spacer>
-                                <v-btn icon>
-                                <v-icon>mdi-heart</v-icon>
-                                </v-btn>
-                
-                                <v-btn icon>
-                                <v-icon>mdi-bookmark</v-icon>
-                                </v-btn>
-                
-                                <v-btn icon>
-                                <v-icon>mdi-share-variant</v-icon>
-                                </v-btn>
+                                <div class="col-lg-4" style="font-size: 20px; font-weight:bolder;">
+                                    무료로 Host <br>등록하기
+                                </div>
+                                <div class="col-lg-8">
+                                    남는 방 하나부터 집 전체까지, 다양한 형태의 공간을 무료로 등록하고 공유하세요.
+                                </div>
                             </v-card-actions>
                         </v-col>
                         <v-col cols="4">
-                            <v-card-actions style ="height:30vh;">
-                                <v-spacer></v-spacer>
-                                
+                            <v-card-actions>
+                                <div class="col-lg-4" style="font-size: 20px; font-weight:bolder;  text-align: center;">
+                                    Host 세부사항<br>설정하기
+                                </div>
+                                <div class="col-lg-8">
+                                    호스팅할 수 있는 날짜, 숙소 요금, 게스트 필수요건을 선택하세요. 2%가 호스팅 전반에 걸쳐 도움을 드립니다.
+                                </div>
                             </v-card-actions>
                             <v-card>
                             <v-img
@@ -64,10 +61,12 @@
                             </v-img>
                             </v-card>
                             <v-card-actions>
-                            <v-spacer>hello</v-spacer>
-                                <v-card-text>
-                                    숙소 유형과 제공품목을 설정합니다.
-                                </v-card-text>
+                                <div class="col-lg-3" style="font-size: 20px; font-weight:bolder;  text-align: center;">
+                                    첫 게스트<br>맞이하기
+                                </div>
+                                <div class="col-lg-9">
+                                    숙소가 게시되면 설정하신 예약 조건에 부합하는 게스트가 예약을 요청할 거에요. 게스트를 맞이하기 전에 궁금한 점이 있으면 언제든 E-mail로 물어볼 수 있습니다.
+                                </div>
                             </v-card-actions>
                         </v-col>    
                         </v-row>
@@ -80,15 +79,17 @@
                             <v-expansion-panels popout
                             focusable
                             hover>
-                            <v-expansion-panel
-                                v-for="(item,i) in 5"
-                                :key="i"
-                            >
-                                <v-expansion-panel-header>Item</v-expansion-panel-header>
-                                <v-expansion-panel-content>
-                                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
-                                </v-expansion-panel-content>
-                            </v-expansion-panel>
+                                <v-expansion-panel
+                                    v-for="(item,i) in items"
+                                    :key="i"
+                                >
+                                    <v-expansion-panel-header>
+                                        {{item.subject}}
+                                    </v-expansion-panel-header>
+                                    <v-expansion-panel-content>
+                                        {{item.text}}
+                                    </v-expansion-panel-content>
+                                </v-expansion-panel>
                             </v-expansion-panels>
                         </v-row>
                     </v-sheet>
@@ -138,6 +139,11 @@ export default {
             { title: '2단계', src: 'https://cdn.vuetifyjs.com/images/cards/road.jpg', flex: 4 },
             { title: '3단계', src: 'https://cdn.vuetifyjs.com/images/cards/plane.jpg', flex: 4 },
             ],
+            items:[
+                {subject: "SSAFY 호스트가 되기 위한 조건이 있나요?", text:"대부분의 지역에서 쉽게 SSAFY 호스트가 될 수 있고, 숙소는 언제든지 무료로 등록할 수 있습니다. SSAFY를 통해 아파트와 집 전체, 개인실, 트리하우스, 성 등 다양한 숙소를 공유할 수 있습니다."},
+                {subject: "재산 피해에 대비한 보호 장치에는 어떤 것이 있나요?", text:"호스트 보호 프로그램은 현금, 증권, 수집품, 희귀 예술작품, 보석, 반려동물 또는 대인 피해에 대한 책임 배상에는 적용되지 않습니다. 따라서 숙소를 호스팅하기에 앞서 귀중품은 안전하게 보관하거나 치우실 것을 권장합니다. 또한, 이 프로그램은 마모로 인한 재산상의 손실이나 피해를 보상하지 않습니다."},
+                {subject: "숙소 등록 비용은 얼마인가요?", text:"회원 가입과 숙소 등록은 무료이지만, 예약을 받은 호스트에게는 일반적으로 일정량 서비스 수수료가 부과되어, SSAFY 운영 비용을 충당하는 데 사용됩니다."},
+            ]
         }
     },
     components:{
