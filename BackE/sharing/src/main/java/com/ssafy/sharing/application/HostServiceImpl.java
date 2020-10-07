@@ -183,16 +183,16 @@ public class HostServiceImpl implements HostService {
 	}
 
 	private void setHostItems(HostItems hostItems, boolean[] tmp) {
-		tmp[0] = hostItems.isItme1();
-		tmp[1] = hostItems.isItme2();
-		tmp[2] = hostItems.isItme3();
-		tmp[3] = hostItems.isItme4();
-		tmp[4] = hostItems.isItme5();
-		tmp[5] = hostItems.isItme6();
-		tmp[6] = hostItems.isItme7();
-		tmp[7] = hostItems.isItme8();
-		tmp[8] = hostItems.isItme9();
-		tmp[9] = hostItems.isItme10();
+		tmp[0] = hostItems.isItem1();
+		tmp[1] = hostItems.isItem2();
+		tmp[2] = hostItems.isItem3();
+		tmp[3] = hostItems.isItem4();
+		tmp[4] = hostItems.isItem5();
+		tmp[5] = hostItems.isItem6();
+		tmp[6] = hostItems.isItem7();
+		tmp[7] = hostItems.isItem8();
+		tmp[8] = hostItems.isItem9();
+		tmp[9] = hostItems.isItem10();
 	}
 
 	@Override
