@@ -36,6 +36,7 @@ export default {
                 member.public_key = account;
                 $cookies.set('member',member,'1h');
                 http.put('/user/password',member);
+                router.go()
                 })
             }catch(e){
                 console.log("비밀번호 설정중 오류")
