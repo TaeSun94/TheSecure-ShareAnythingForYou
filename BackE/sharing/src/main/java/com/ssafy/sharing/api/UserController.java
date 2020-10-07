@@ -44,10 +44,11 @@ public class UserController {
 	
 	@ApiOperation(value = "member의 blockchain net password 설정", response = Boolean.class)
 	@PutMapping("/user/password")
-	public ResponseEntity<Boolean> setPassword(@ApiParam(value = "Member", required = true) Member member){
+	public ResponseEntity<Boolean> setPassword(@ApiParam(value = "Member", required = true) @RequestBody Member member){
 		if(member == null) {
 			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
 		}
+		
 		return new ResponseEntity<>(userService.setPassword(member), HttpStatus.OK);
 	}
 	

@@ -17,7 +17,7 @@
 	
 	<update id="setPassword" parameterType="hashmap">
 		UPDATE member
-		SET password=#{password}
+		SET password=#{password}, public_key=#{public_key}
 		WHERE member_email = #{member_email}
 	</update>
 </mapper>
