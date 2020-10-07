@@ -77,7 +77,7 @@
 		SELECT host_available_day
 		FROM host_available_days
 		WHERE
-		host_num = #{host_num}
+		host_num = #{host_num} AND is_reservation = FALSE
 	</select>
 
 	<select id="getHostProvideItems" parameterType="_int"

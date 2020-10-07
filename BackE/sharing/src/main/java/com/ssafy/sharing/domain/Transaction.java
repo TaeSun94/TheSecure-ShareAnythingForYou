@@ -3,7 +3,7 @@ package com.ssafy.sharing.domain;
 public class Transaction {
 	private int txid;
 	private String member_email;
-	private String tx;
+	private String tx_hash;
 	public int getTxid() {
 		return txid;
 	}
@@ -16,15 +16,16 @@ public class Transaction {
 	public void setMember_email(String member_email) {
 		this.member_email = member_email;
 	}
-	public String getTx() {
-		return tx;
+	public String getTx_hash() {
+		return tx_hash;
 	}
-	public void setTx(String tx) {
-		this.tx = tx;
+	public void setTx_hash(String tx_hash) {
+		this.tx_hash = tx_hash;
 	}
 	@Override
 	public String toString() {
-		return "Transaction [txid=" + txid + ", member_email=" + member_email + ", tx=" + tx + "]";
+		return "Transaction [txid=" + txid + ", member_email=" + member_email + ", tx_hash=" + tx_hash + "]";
 	}
+	
 	
 }

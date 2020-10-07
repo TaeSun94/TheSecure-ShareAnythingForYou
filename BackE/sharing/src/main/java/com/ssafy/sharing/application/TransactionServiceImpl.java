@@ -36,7 +36,7 @@ public class TransactionServiceImpl implements TransactionService{
 		try {
 			Map<String, Object> map = new HashMap<>();
 			map.put("member_email", transaction.getMember_email());
-			map.put("tx", transaction.getTx());
+			map.put("tx_hash", transaction.getTx_hash());
 			return transactionDao.addTransaction(map);
 		}catch (Exception e) {
 			// TODO: handle exception

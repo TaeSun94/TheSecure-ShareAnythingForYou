@@ -192,15 +192,18 @@
                                     <div> &#8361; {{(reservation.reservation_days.length-1) * house.host_price}}원</div>
                                 </v-col>
                             </v-row>
-                            <v-divider style="margin: 1em;"></v-divider>
-                            <v-row v-if="dates.length >= 2">
+                            <v-divider></v-divider>
+                            <v-row v-if="dates.length >= 2" style="margin-top: 0;">
                                 <v-col cols="8" style="margin:auto;">
-                                    <p><strong>결제하기</strong></p>
+                                    <p style="margin:auto;"><strong>결제하기</strong></p>
                                 </v-col>
                                 <v-col cols="4" style="text-align:right;">
-                                    <button class="img-btn" @click="linkKakao()">
+                                    <!-- <button class="img-btn" @click="linkKakao()">
                                     <v-img src="../assets/kakao_payment.png"></v-img>
-                                    </button>
+                                    </button> -->
+                                    <v-btn rounded color="deep-purple accent-4" dark @click="reserve">
+                                        예약하기
+                                    </v-btn>
                                 </v-col>
                             </v-row>
                             
@@ -226,7 +229,7 @@
     </div>
 </template>
 <script>
-import {mapState} from 'vuex'
+import {mapState,mapActions} from 'vuex'
 var check = true
 export default {
     data(){
@@ -234,20 +237,6 @@ export default {
             hide : true,
             house_id : this.$route.params.house_id,
             member : {},
-            // house : {
-            //     register_id : 1,
-            //     house_images :[{ url : "https://cdn.vuetifyjs.com/images/cards/sunshine.jpg"}],
-            //     house_address : "광산구 장덕동",
-            //     house_type : "아파트",
-            //     house_capacity : "2~3인용",
-            //     house_price : "50000",
-            //     user : {
-            //         // user_img :"http://k.kakaocdn.net/dn/bpLTxG/btqJRmspqjR/390YKJMfPaukWYDUbbMcz1/img_110x110.jpg",
-            //         user_img:"http://k.kakaocdn.net/dn/bpLTxG/btqJRmspqjR/390YKJMfPaukWYDUbbMcz1/img_640x640.jpg",
-            //         user_nickname : "John",
-            //         user_email : "abcde@gmail.com"
-            //     },
-            // },
             house : {},
             rounded : true,
             options:[],
@@ -310,6 +299,7 @@ export default {
         }
     },
     methods:{
+        ...mapActions('reservation',['reserveHouses']),
         gettomorrow(){
             var today = new Date();
             var year = today.getFullYear();
@@ -360,7 +350,15 @@ export default {
                 return false
             }
         },
-        
+        reserve(){
+            var reserveData={
+                host_num : this.house.host_num,
+                member_email : this.$cookies.get('member').member_email,
+                price : this.house.host_price * (this.reservation.reservation_days.length-1),
+                reserve_day : this.reservation.reservation_days
+            }
+            this.reserveHouses(reserveData)
+        }
     },
     mounted(){
         this.gettomorrow()
