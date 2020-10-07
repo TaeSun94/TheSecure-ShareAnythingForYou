@@ -47,7 +47,7 @@ public class ReserveController {
 		return new ResponseEntity<>(ret, HttpStatus.OK);
 	}
 	
-	@ApiOperation(value = "내가 예약한 sharing home 리스트를 불러온다.", response = Host.class)
+	@ApiOperation(value = "내가 예약한 sharing home 리스트를 불러온다.", response = Reservation.class)
 	@GetMapping("/reserve/read/{member_email}/")
 	public ResponseEntity<List<Reservation>> getHosts(@ApiParam(value = "member_email", required = true)@PathVariable String member_email){
 
