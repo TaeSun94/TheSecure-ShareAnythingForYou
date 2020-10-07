@@ -120,16 +120,17 @@ import SharingStep5 from './PriceStep.vue'
                 editable: false,
                 agreement: false,
                 houseData : {
-                  member_email : '',
                   host_address : '',
-                  host_type : '',
+                  host_available_day : [],
                   host_intro : '',
                   host_price : '',
                   host_capacity :'',
                   host_provide_items : [],
-                  host_images : '',
-                  host_available_day : [],
+                  host_images : [],
+                  host_type : '',
+                  member_email : '',
                 },
+                file: [],
             }
         },
         components:{
@@ -143,7 +144,6 @@ import SharingStep5 from './PriceStep.vue'
             house : state => state.house.houseData,
             houseDates : state => state.house.houseDates,
             houseImage : state => state.house.houseImage,
-            // housePrice : state => state.house.housePrice,
             formValid : state => state.formValid
           })
         },
@@ -210,19 +210,17 @@ import SharingStep5 from './PriceStep.vue'
                   this.e1 = n - 1
               }
           },
-          async save(){
+          save(){
               if(this.house.price == '' || this.house.price == undefined || this.house.price == null){
                 alert("가격은(는) 필수입력 값입니다.")
               }else{
                 if(this.checkPrice(this.house.price) == false){
                   alert("가격은 숫자여야 합니다.")
                 }else{
-                  // console.log(this.house)
-                  this.saveData()
-                  // await this.imageUpload(this.house.img)
-                  this.initHouseData()
+                  this.file = Object.assign({},this.house)
+                  this.upload(this.file)
+                  // this.imageUpload(this.file)
                   this.setHouseData(this.houseData)
-                  console.log(this.house)
                   alert("완료되었습니다.")
                   this.closeModal()
                 }
@@ -260,6 +258,9 @@ import SharingStep5 from './PriceStep.vue'
             this.houseData.host_capacity = this.house.select_number
             this.houseData.host_provide_items = this.house.options
             this.houseData.host_available_day = this.houseDates
+          },
+          upload(file){
+            this.imageUpload(file)
           }
         },
     }

@@ -1,4 +1,6 @@
 import http from '@/util/http-common.js'
+import Vue from 'vue'
+Vue.use(require('vue-cookies'))
 
 export default {
     namespaced : true,
@@ -6,8 +8,10 @@ export default {
 	state: {
         houseData : {},
         houses : [],
+        recentHouses : [],
         houseDates : [],
-        houseImage : ''
+        houseImage : '',
+        houseFile : [],
     },
 	mutations: {
         initHouseData(state){
@@ -28,19 +32,53 @@ export default {
         },
         setHouseImage(state,payload){
             state.houseImage = payload
+        },
+        setRecentHouses(state,payload){
+            state.recentHouses = payload
         }
+
     },
 	actions: {
-        postHouseData(houseData){
-            http
-                .post('/api/host/regist', houseData)
-                .then(() => {
-                    console.log("집등록완료"),
-                    router.push({path: '/home'})
-                })
-                .catch(err => console.log(err.response))
-        },
-        fecthRecentHouses(context,payload){},
+        fetchRecentHouses(context){//payload : user.email
+            // http
+            //     .get('/reservations',payload)
+            //     .then(({data})=>{
+            //         context.commit('setReservations',data)
+            //     })
+            //     .catch(err => console.log(err.response))
+            var recentHouses = 
+            [
+                {
+                    register_id : 1,
+                    house_url :"https://cdn.vuetifyjs.com/images/cards/sunshine.jpg",
+                    house_address : "광산구 장덕동",
+                    house_type : "아파트",
+                    house_capacity : "2~3인용"
+                },
+                {
+                    register_id : 2,
+                    house_url :"https://cdn.vuetifyjs.com/images/cards/sunshine.jpg",
+                    house_address : "광산구 장덕동",
+                    house_type : "아파트",
+                    house_capacity : "2~3인용"
+                },
+                {
+                    register_id : 3,
+                    house_url :"https://cdn.vuetifyjs.com/images/cards/sunshine.jpg",
+                    house_address : "광산구 장덕동",
+                    house_type : "아파트",
+                    house_capacity : "2~3인용"
+                },
+                {
+                    register_id : 4,
+                    house_url :"https://cdn.vuetifyjs.com/images/cards/sunshine.jpg",
+                    house_address : "광산구 장덕동",
+                    house_type : "아파트",
+                    house_capacity : "2~3인용"
+                },
+            ]
+            context.commit('setRecentHouses',recentHouses)
+        },     
         fetchHousesByEmail(context,payload){//payload : user.email
             // http
             //     .get('/reservations',payload)
@@ -67,21 +105,43 @@ export default {
             ]
             context.commit('setHouses',Houses)
         },
-        async imageUpload(payload){
+        imageUpload(context,payload){
+            console.log(payload)
             const fd = new FormData()
-            if(payload.length > 0){
-                fd.append('file', payload.pop())
-                const resp = await http.post('/file/upload',fd,{
+            if(payload.img.length > 0){
+                fd.append('file', payload.img.pop())
+                http.post('/file/upload',fd,{
                     headers : {
                         'Accept' : 'application/json',
                         'Content-Type':"multipart/form-data"
                     }
+                }).then(({data}) =>{
+                    console.log(data)
+                    console.log(payload)
+                    var imgurl = [];
+                    imgurl.push(data)
+                    var hostData = 
+                    {
+                        host_address : payload.address + " " + payload.detail,
+                        host_type : payload.select,
+                        host_intro : '편히 쉬다가세요',
+                        host_price : payload.price,
+                        host_capactiy : payload.select_number,
+                        host_provide_items : payload.options,
+                        host_available_day : payload.houseDate,
+                        member_email : $cookies.get('member').member_email,
+                        host_images : imgurl,
+                    }
+                    console.log(hostData)
+                    //집등록부분
+                    http
+                        .post('/api/host/regist', hostData)
+                        .then(() => {
+                            console.log("집등록완료"),
+                            router.push({path: '/home'})
+                        })
+                        .catch(err => console.log(err.response))
                 })
-                if(resp.data.result === 'successs'){
-                    this.state.house.houseData.host_images = resp.data.string
-                    console.log(this.state.houseData)
-                    this.postHouseData(this.state.houseData)
-                }
             }
         }
     },
