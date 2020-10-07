@@ -9,7 +9,7 @@
                     <v-container style="text-align:center;">
                         <v-avatar size="6em" @click="moveProfile">
                             <img
-                                :src= "member.member_img"
+                                :src="member.member_img"
                                 alt="카카오프로필이미지"
                                 
                             >
@@ -155,7 +155,7 @@ export default {
             // member_email : '',
             // member_nickname : '',
             // member_email : '',
-            // member_imgurl : ''
+            member_img : ''
         },
         
         }
@@ -235,9 +235,8 @@ export default {
     },
     mounted(){
         this.member = this.$cookies.get('member')
-        // if(this.member.member_imgurl == '') this.member_imgurl = '../assets/avatar_default.png'
-        // this.member.member_imgurl = '../assets/avatar_default.png'
-        console.log(this.member)
+        // this.member.member_img = ''
+        if(this.member.member_img == '' || this.member.member_img == null) this.member.member_img = require('../assets/avatar_default.png')
         // this.member =
         //         {
         //         "member_email": "test@gmail.com",

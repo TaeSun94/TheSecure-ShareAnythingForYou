@@ -90,7 +90,7 @@
     </div>
 </template>
 <script>
-import {mapState} from 'vuex'
+import {mapState,mapActions} from 'vuex'
 
 export default {
     data(){
@@ -114,6 +114,7 @@ export default {
         }
     },
     methods:{
+        ...mapActions('house',['fetchRecentHouses']),
         reserve(id){
             this.$router.push({
                 name:'Reservation_detail',
@@ -125,11 +126,11 @@ export default {
     },
     computed : {
         ...mapState({
-            recent_houses : state => state.resvation.recentReservations
+            recent_houses : state => state.house.recentHouses
         })
     },
     mounted(){
-
+        this.fetchRecentHouses()
     }
 
 }

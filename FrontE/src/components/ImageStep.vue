@@ -25,7 +25,7 @@
     </v-card>
 </template>
 <script>
-import {mapState} from 'vuex'
+import {mapState,mapActions} from 'vuex'
 
 export default {
     data() {
@@ -36,7 +36,7 @@ export default {
     },
     computed:{
       ...mapState({
-        house : state => state.house.houseData
+        house : state => state.house.houseData,
       }),
     },
     methods: {
@@ -54,16 +54,17 @@ export default {
               this.house.imageUrl = this.imageUrl;
               // 기존에 파일이있엇을 경우에 일단 1장이므로 이렇게 처리
               if(this.img.length !== 0){
+                console.log("this.file.length !== 0")
                 this.img.pop()
                 this.img.push(e)
                 this.house.img = this.img
               }else{
+                console.log("else")
                 this.img.push(e)
                 this.house.img = this.img
               }
             }
-            // console.log(this.house.imageUrl);
-            // console.log(this.house.img)
+            console.log(this.house.img)
         },
         // click: function(){
         //   alert("클릭!")

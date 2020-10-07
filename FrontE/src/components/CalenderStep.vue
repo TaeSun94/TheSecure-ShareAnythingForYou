@@ -49,7 +49,7 @@ export default {
   props:['bus'],
   computed : {
     ...mapState({
-      houseDates : state => state.house.houseDates
+      houseDates : state => state.house.houseDates,
     }),
   },
   watch :{
