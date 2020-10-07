@@ -31,11 +31,13 @@ public class FileController {
 			String baseUri = "/home/ubuntu/images/";
             String fileName = RandomStringUtils.randomAlphabetic(10)+file.getOriginalFilename();
 			String filePath = baseUri + fileName;
+			
+			String fileDownloadUri = ServletUriComponentsBuilder.fromCurrentContextPath()
+					.path("/images/")
+					.path(fileName)
+					.toUriString();
+			System.out.println(fileDownloadUri);
 			file.transferTo(new File(filePath));
-            String fileDownloadUri = ServletUriComponentsBuilder.fromCurrentContextPath()
-                                .path("/resources/")
-                                .path(fileName)
-                                .toUriString();
             return new ResponseEntity<String>(fileDownloadUri, HttpStatus.OK);
 		} catch(Exception e) {
 			e.printStackTrace();
