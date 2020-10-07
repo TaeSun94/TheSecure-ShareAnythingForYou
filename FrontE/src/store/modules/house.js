@@ -43,47 +43,17 @@ export default {
         }
     },
 	actions: {
-        fetchRecentHouses(context){//payload : user.email
-            // http
-            //     .get('/reservations',payload)
-            //     .then(({data})=>{
-            //         context.commit('setReservations',data)
-            //     })
-            //     .catch(err => console.log(err.response))
-            var recentHouses = 
-            [
-                {
-                    register_id : 1,
-                    house_url :"https://cdn.vuetifyjs.com/images/cards/sunshine.jpg",
-                    house_address : "광산구 장덕동",
-                    house_type : "아파트",
-                    house_capacity : "2~3인용"
-                },
-                {
-                    register_id : 2,
-                    house_url :"https://cdn.vuetifyjs.com/images/cards/sunshine.jpg",
-                    house_address : "광산구 장덕동",
-                    house_type : "아파트",
-                    house_capacity : "2~3인용"
-                },
-                {
-                    register_id : 3,
-                    house_url :"https://cdn.vuetifyjs.com/images/cards/sunshine.jpg",
-                    house_address : "광산구 장덕동",
-                    house_type : "아파트",
-                    house_capacity : "2~3인용"
-                },
-                {
-                    register_id : 4,
-                    house_url :"https://cdn.vuetifyjs.com/images/cards/sunshine.jpg",
-                    house_address : "광산구 장덕동",
-                    house_type : "아파트",
-                    house_capacity : "2~3인용"
-                },
-            ]
-            context.commit('setRecentHouses',recentHouses)
+        fetchRecentHouses(context){
+            http
+                .get('/host/rately')
+                .then(({data})=>{
+                    console.log(data)
+                    context.commit('setRecentHouses',data)
+                })
+                .catch(err => console.log(err.response))
+            
         },     
-        fetchHousesByEmail(context,payload){
+        fetchHousesByEmail(context,payload){//payload : user.email
             console.log(payload)
             http
                 .get('/host/read/'+ payload +'/')
