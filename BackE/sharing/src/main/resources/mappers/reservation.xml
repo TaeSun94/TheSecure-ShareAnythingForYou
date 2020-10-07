@@ -3,7 +3,7 @@
 <!DOCTYPE mapper  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.ssafy.sharing.dao.ReserveDao"> <!-- mybatis는 namespace필수!! -->
-	<insert id="addReserve" parameterType="hashmap">
+	<insert id="addReservation" parameterType="hashmap">
 		INSERT INTO reservation (host_num, member_email, price)
 		VALUES (#{host_num},#{member_email},#{price})
 	</insert>
@@ -25,5 +25,11 @@
 		FROM reservation
 		ORDER BY rid DESC
 		LIMIT 1
+	</select>
+	
+	<select id="getReserveDays" parameterType="_int" resultType="string">
+		SELECT reserve_day
+		FROM reservation_days
+		WHERE rid=#{rid}
 	</select>
 </mapper>

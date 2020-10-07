@@ -40,7 +40,7 @@ public class ReserveController {
 		
 		reserveService.reserveHost(reservation);
 		Reservation ret = reserveService.getReserveInfo();
-		return new ResponseEntity<>(HttpStatus.OK);
+		return new ResponseEntity<>(ret, HttpStatus.OK);
 	}
 	
 }
