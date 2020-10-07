@@ -83,31 +83,33 @@ export default {
             ]
             context.commit('setRecentHouses',recentHouses)
         },     
-        fetchHousesByEmail(context,payload){//payload : user.email
-            // http
-            //     .get('/host/read',payload)
-            //     .then(({data})=>{
-            //         context.commit('setMyHouses',data)
-            //     })
-            //     .catch(err => console.log(err.response))
-            var myHouses = 
-            [
-                {
-                    register_id : 1,
-                    host_images : ["https://cdn.vuetifyjs.com/images/cards/sunshine.jpg"],
-                    host_address : "광산구 장덕동",
-                    host_type : "아파트",
-                    host_capacity : "2~3인용"
-                },
-                {
-                    register_id : 2,
-                    host_images :["https://cdn.vuetifyjs.com/images/cards/sunshine.jpg"],
-                    host_address : "광산구 장덕동 1589",
-                    host_type : "아파트",
-                    host_capacity : "개인실"
-                },
-            ]
-            context.commit('setMyHouses',myHouses)
+        fetchHousesByEmail(context,payload){
+            console.log(payload)
+            http
+                .get('/host/read/'+ payload +'/')
+                .then(({data})=>{
+                    console.log(data)
+                    context.commit('setMyHouses',data)
+                })
+                .catch(err => console.log(err.response))
+            // var myHouses = 
+            // [
+            //     {
+            //         register_id : 1,
+            //         host_images : ["https://cdn.vuetifyjs.com/images/cards/sunshine.jpg"],
+            //         host_address : "광산구 장덕동",
+            //         host_type : "아파트",
+            //         host_capacity : "2~3인용"
+            //     },
+            //     {
+            //         register_id : 2,
+            //         host_images :["https://cdn.vuetifyjs.com/images/cards/sunshine.jpg"],
+            //         host_address : "광산구 장덕동 1589",
+            //         host_type : "아파트",
+            //         host_capacity : "개인실"
+            //     },
+            // ]
+            // context.commit('setMyHouses',myHouses)
         },
         imageUpload(context,payload){
             console.log(payload)
