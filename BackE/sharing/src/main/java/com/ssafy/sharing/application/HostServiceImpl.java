@@ -38,6 +38,7 @@ public class HostServiceImpl implements HostService {
 			map.put("host_intro", host.getHost_intro());
 			map.put("host_price", host.getHost_price());
 			map.put("host_capacity", host.getHost_capacity());
+			System.out.println(host.getHost_capacity());
 			if (hostDao.registHost(map)) {
 				int host_num = hostDao.getRecentHostNum(host.getMember_email());
 				map.put("host_num", host_num);
@@ -154,6 +155,40 @@ public class HostServiceImpl implements HostService {
 	}
 
 	@Override
+	public List<Host> searchHost(String keyword) {
+		List<Host> list = new ArrayList<Host>();
+		try {
+			if (keyword.equals("")) {
+				list = hostDao.getAllHost();
+			} else {
+				list = hostDao.getSearchHost(keyword);
+			}
+			for (Host host : list) {
+				HostImages hostimages = hostDao.getHostImages(host.getHost_num());
+				String[] img_list = new String[6];
+				setHostImages(hostimages, img_list);
+				host.setHost_images(img_list);
+
+				host.setHost_available_day(hostDao.getHostAvailableDays(host.getHost_num()));
+
+				HostItems hostitems = hostDao.getHostProvideItems(host.getHost_num());
+				boolean[] item_list = new boolean[10];
+				setHostItems(hostitems, item_list);
+				host.setHost_provide_items(item_list);
+				
+				Member member = userDao.getHostMember(host.getHost_num());
+				member.setPassword("");
+				member.setPublic_key("");
+				host.setMember(member);
+			}
+			return list;
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
+	
+	@Override
 	public boolean updateHost(Host host) {
 		try {
 			// 계좌도 넣을것인가? 연락처도
@@ -204,34 +239,7 @@ public class HostServiceImpl implements HostService {
 		tmp[9] = hostItems.isItem10();
 	}
 
-	@Override
-	public List<Host> searchHost(String keyword) {
-		List<Host> list = new ArrayList<Host>();
-		try {
-			if (keyword.equals("")) {
-				list = hostDao.getAllHost();
-			} else {
-				list = hostDao.getSearchHost(keyword);
-			}
-			for (Host host : list) {
-				HostImages hostimages = hostDao.getHostImages(host.getHost_num());
-				String[] img_list = new String[6];
-				setHostImages(hostimages, img_list);
-				host.setHost_images(img_list);
 
-				host.setHost_available_day(hostDao.getHostAvailableDays(host.getHost_num()));
-
-				HostItems hostitems = hostDao.getHostProvideItems(host.getHost_num());
-				boolean[] item_list = new boolean[10];
-				setHostItems(hostitems, item_list);
-				host.setHost_provide_items(item_list);
-			}
-			return list;
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		return null;
-	}
 
 	@Override
 	public Host getLatelyHost() {
