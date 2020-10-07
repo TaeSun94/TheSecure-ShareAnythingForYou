@@ -6,6 +6,7 @@ export default {
 	state: {
         reservation : {},
         reservations : [],
+        recentReservations : [],
     },
 	mutations: {
         setReservation(state,payload){
@@ -13,6 +14,9 @@ export default {
         },
         setReservations(state,payload){
             state.reservations = payload
+        },
+        setRecentReservations(state,payload){
+            state.recentReservations = payload
         }
 
     },
@@ -41,22 +45,48 @@ export default {
             ]
             context.commit('setReservations',reservations)
         },
-         
+        fetchRecentReservations(context,payload){//payload : user.email
+            // http
+            //     .get('/reservations',payload)
+            //     .then(({data})=>{
+            //         context.commit('setReservations',data)
+            //     })
+            //     .catch(err => console.log(err.response))
+            var recentReservations = 
+            [
+                {
+                    register_id : 1,
+                    house_url :"https://cdn.vuetifyjs.com/images/cards/sunshine.jpg",
+                    house_address : "광산구 장덕동",
+                    house_type : "아파트",
+                    house_capacity : "2~3인용"
+                },
+                {
+                    register_id : 2,
+                    house_url :"https://cdn.vuetifyjs.com/images/cards/sunshine.jpg",
+                    house_address : "광산구 장덕동",
+                    house_type : "아파트",
+                    house_capacity : "2~3인용"
+                },
+                {
+                    register_id : 3,
+                    house_url :"https://cdn.vuetifyjs.com/images/cards/sunshine.jpg",
+                    house_address : "광산구 장덕동",
+                    house_type : "아파트",
+                    house_capacity : "2~3인용"
+                },
+                {
+                    register_id : 4,
+                    house_url :"https://cdn.vuetifyjs.com/images/cards/sunshine.jpg",
+                    house_address : "광산구 장덕동",
+                    house_type : "아파트",
+                    house_capacity : "2~3인용"
+                },
+            ]
+            context.commit('setRecentReservations',recentReservations)
+        },     
         
-    //    async setMemberPassword(context,member){
-    //        var mem = member
-    //        try{
-    //            //이부분에 public key 만들서 계정 생성해줘야함 
-    //            var key = 'asdf'
-    //            //만들어와서 mem에 퍼블릭키 집어넣어주기 
-    //            mem.public_key = key 
-    //            const resp = await http.put('/user/update',mem)
-    //            alert("설정완료"+ resp.data)
-    //        }catch(e){
-    //             // console.log(e.response)
-    //             console.log("비밀번호 설정중 오류")
-    //        }
-    //    }
+    
     },
 	getters: {
 
