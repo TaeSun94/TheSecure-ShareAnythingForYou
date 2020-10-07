@@ -9,7 +9,7 @@
                     <v-container style="text-align:center;">
                         <v-avatar size="6em" @click="moveProfile">
                             <img
-                                :src= "member.member_imgurl"
+                                :src= "member.member_img"
                                 alt="카카오프로필이미지"
                                 
                             >
