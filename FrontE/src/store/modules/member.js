@@ -1,6 +1,7 @@
 import http from '@/util/http-common.js'
 import router from '@/router'
 import Vue from 'vue'
+import membershipEthereum from '../../ethereum/membershipEthereum';
 
 Vue.use(require('vue-cookies'))
 
@@ -29,19 +30,16 @@ export default {
            // 깊은복사
            var member = Object.assign({},memberData)
            try{
-               //이부분에 public key 만들서 계정 생성해줘야함 
-               var key = '0xA8566F6bC8FB2E46B14e9eEb282ecDc0e53AA37C'
-               //만들어와서 mem에 퍼블릭키 집어넣어주기 
-               member.public_key = key 
-               $cookies.set('member',member,'1h')
-            // router.go()
-               console.log(member)
-               const resp = await http.put('/user/password',member)
-               console.log(resp.data)
-               alert("response : "+ resp.data)
-           }catch(e){
+            //이부분에 public key 만들서 계정 생성해줘야함
+            membershipEthereum.createAccount(member.password).then(value=>{
+                var account = value;
+                member.public_key = account;
+                $cookies.set('member',member,'1h');
+                http.put('/user/password',member);
+                })
+            }catch(e){
                 console.log("비밀번호 설정중 오류")
-           }
+            }
        }
     },
 	getters: {
