@@ -61,6 +61,9 @@ public class HostController {
 			return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
 		}
 		List<Host> host_list = hostService.getHosts(member_email);
+		for(Host host : host_list) {
+			System.out.println(host.toString());
+		}
 		return new ResponseEntity<>(host_list, HttpStatus.OK);
 	}
 
