@@ -1,5 +1,6 @@
 package com.ssafy.sharing.dao;
 
+import java.util.List;
 import java.util.Map;
 
 import org.apache.ibatis.annotations.Mapper;
@@ -16,4 +17,6 @@ public interface ReserveDao {
 	void addReserveDay(Map<String, Object> map);
 
 	Reservation getLatelyReserve();
+
+	List<String> getReserveDays(int rid);
 }
