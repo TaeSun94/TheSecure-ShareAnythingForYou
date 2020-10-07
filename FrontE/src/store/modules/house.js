@@ -134,14 +134,14 @@ export default {
                         host_price : payload.price,
                         host_capactiy : payload.select_number,
                         host_provide_items : payload.options,
-                        host_available_day : payload.houseDate,
+                        host_available_day : payload.dates,
                         member_email : $cookies.get('member').member_email,
                         host_images : imgurl,
                     }
                     console.log(hostData)
                     //집등록부분
                     http
-                        .post('/api/host/regist', hostData)
+                        .post('/host/regist', hostData)
                         .then(() => {
                             console.log("집등록완료"),
                             router.push({path: '/home'})
