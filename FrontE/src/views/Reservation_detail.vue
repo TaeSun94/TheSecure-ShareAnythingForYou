@@ -3,11 +3,12 @@
         <v-container>
             <v-subheader style="margin-left:20vh;">숙소 사진</v-subheader>
             <v-divider></v-divider>
-            <v-carousel style="width:60%; margin: 2em auto;">
+            <v-carousel style="width:60%; margin: 2em auto;"
+            :hide-delimiter-background="hide">
                 <v-carousel-item
-                v-for="(item,i) in house.house_images"
+                v-for="(item,i) in house.host_images"
                 :key="i"
-                :src="item.url"
+                :src="item"
                 ></v-carousel-item>
             </v-carousel>
         </v-container>
@@ -23,26 +24,26 @@
                             <v-list-item-icon>
                                 <v-icon>mdi-send</v-icon>
                             </v-list-item-icon>
-                            <v-list-item-subtitle>{{house.house_address}}</v-list-item-subtitle>
+                            <v-list-item-subtitle>{{house.host_address}}</v-list-item-subtitle>
                         </v-list-item> 
 
                         <v-list-item>
                             <v-list-item-icon>
                                 <v-icon>mdi-send</v-icon>
                             </v-list-item-icon>
-                            <v-list-item-subtitle>{{house.house_type}}</v-list-item-subtitle>
+                            <v-list-item-subtitle>{{house.host_type}}</v-list-item-subtitle>
                         </v-list-item> 
 
                         <v-list-item>
                             <v-list-item-icon>
                                 <v-icon>mdi-send</v-icon>
                             </v-list-item-icon>
-                            <v-list-item-subtitle>{{house.house_capacity}}</v-list-item-subtitle>
+                            <v-list-item-subtitle>{{house.host_capacity}}</v-list-item-subtitle>
                         </v-list-item> 
                         </v-col>
                         <v-col cols="4" class="display-1" align-self="center">
                             <v-subheader>1박 비용</v-subheader>
-                            {{house.house_price}}  원
+                            {{house.host_price}}  원
                         </v-col>
                         </v-row>
                         
@@ -52,7 +53,7 @@
                             <v-row align="center">
                                 <v-col cols="6">
                                 <v-checkbox style="margin-top:0;"
-                                    v-model.lazy="options[0]"
+                                    v-model="options[0]"
                                     label="TV"
                                     color="red"
                                     hide-details
@@ -134,17 +135,17 @@
                         <v-container style="text-align:center;">
                         <v-avatar size="8em">
                             <img
-                                :src= "house.user.user_img"
+                                :src= "member.member_img"
                                 alt="John"
                             >
                         </v-avatar>
-                        <p class="profile_nickname">{{house.user.user_nickname}}</p>
+                        <p class="profile_nickname">{{member.member_nickname}}</p>
                         <v-divider></v-divider>
                         <v-list-item>
                             <v-list-item-icon>
                                 <v-icon>mdi-mail</v-icon>
                             </v-list-item-icon>
-                            <v-list-item-subtitle>{{house.user.user_email}}</v-list-item-subtitle>
+                            <v-list-item-subtitle>{{member.member_email}}</v-list-item-subtitle>
                         </v-list-item>
                         </v-container>
                     </v-sheet>
@@ -184,11 +185,11 @@
                             ></v-text-field>
                             <v-row style="height: 15vh;" v-if="dates.length >= 2">
                                 <v-col cols="6">
-                                <div> &#8361;{{house.house_price}} X {{reservation.reservation_days.length-1}}박</div>
+                                <div> &#8361;{{house.host_price}} X {{reservation.reservation_days.length-1}}박</div>
                                 </v-col>
 
                                 <v-col cols="6" style="text-align:right;">
-                                    <div> &#8361; {{(reservation.reservation_days.length-1) * house.house_price}}원</div>
+                                    <div> &#8361; {{(reservation.reservation_days.length-1) * house.host_price}}원</div>
                                 </v-col>
                             </v-row>
                             <v-divider style="margin: 1em;"></v-divider>
@@ -230,26 +231,29 @@ var check = true
 export default {
     data(){
         return{
+            hide : true,
             house_id : this.$route.params.house_id,
-            house : {
-                register_id : 1,
-                house_images :[{ url : "https://cdn.vuetifyjs.com/images/cards/sunshine.jpg"}],
-                house_address : "광산구 장덕동",
-                house_type : "아파트",
-                house_capacity : "2~3인용",
-                house_price : "50000",
-                user : {
-                    // user_img :"http://k.kakaocdn.net/dn/bpLTxG/btqJRmspqjR/390YKJMfPaukWYDUbbMcz1/img_110x110.jpg",
-                    user_img:"http://k.kakaocdn.net/dn/bpLTxG/btqJRmspqjR/390YKJMfPaukWYDUbbMcz1/img_640x640.jpg",
-                    user_nickname : "John",
-                    user_email : "abcde@gmail.com"
-                },
-            },
+            member : {},
+            // house : {
+            //     register_id : 1,
+            //     house_images :[{ url : "https://cdn.vuetifyjs.com/images/cards/sunshine.jpg"}],
+            //     house_address : "광산구 장덕동",
+            //     house_type : "아파트",
+            //     house_capacity : "2~3인용",
+            //     house_price : "50000",
+            //     user : {
+            //         // user_img :"http://k.kakaocdn.net/dn/bpLTxG/btqJRmspqjR/390YKJMfPaukWYDUbbMcz1/img_110x110.jpg",
+            //         user_img:"http://k.kakaocdn.net/dn/bpLTxG/btqJRmspqjR/390YKJMfPaukWYDUbbMcz1/img_640x640.jpg",
+            //         user_nickname : "John",
+            //         user_email : "abcde@gmail.com"
+            //     },
+            // },
+            house : {},
             rounded : true,
-            options:[false,false,false,false,false,false,false,false,false,false],
+            options:[],
             //달력
             dates: [],
-            allowedDates : ['2020-09-30','2020-09-31','2020-10-01','2020-10-02','2020-10-04','2020-10-05','2020-10-06'],
+            allowedDates : [],
             showCurrent:true,
             
             //가격
@@ -360,6 +364,11 @@ export default {
     },
     mounted(){
         this.gettomorrow()
+        this.house = this.$route.params.house
+        if(this.house.member.member_img == '' || this.house.member.member_img == undefined) this.house.member.member_img = require('../assets/avatar_default.png')
+        this.allowedDates = this.house.host_available_day
+        this.options = this.house.host_provide_items
+        this.member = this.house.member
     }
 }
 </script>
