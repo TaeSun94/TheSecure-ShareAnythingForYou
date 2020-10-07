@@ -1,16 +1,16 @@
 <template>
     <div>
-        <div id="introduction">
-            <img src="../assets/main1.png">
+        <div>
+            <img src="../assets/main1.png" id="introduction">
         </div>
-        <div class="container_contents" id="reservation">
-            <img src="../assets/main2.png">
+        <div>
+            <img src="../assets/main2.png" id="reservation">
         </div>
-        <div class="container_contents" id="homesharing">
-            <img src="../assets/main3.png">
+        <div>
+            <img src="../assets/main3.png" id="homesharing">
         </div>
-        <div class="container_contents" id="review">
-            <img src="../assets/main4.png">
+        <div>
+            <img src="../assets/main4.png" id="review">
         </div>
     </div>
 </template>

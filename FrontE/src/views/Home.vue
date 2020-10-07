@@ -109,7 +109,7 @@
             <v-main>
 
                 <!-- Provides the application the proper gutter -->
-                <v-container fluid style="padding-top:0px; padding-bottom:0px;">
+                <v-container fluid style="padding: 0px;">
                     <!-- If using vue-router -->
                     <router-view></router-view>
                 </v-container>
