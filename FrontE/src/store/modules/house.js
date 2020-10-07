@@ -1,5 +1,6 @@
 import http from '@/util/http-common.js'
 import Vue from 'vue'
+import hostEthereum from '../../ethereum/hostEthereum';
 Vue.use(require('vue-cookies'))
 
 export default {
@@ -82,7 +83,7 @@ export default {
             // context.commit('setMyHouses',myHouses)
         },
         imageUpload(context,payload){
-            console.log(payload)
+            // console.log(payload)
             const fd = new FormData()
             if(payload.img.length > 0){
                 fd.append('file', payload.img.pop())
@@ -92,8 +93,8 @@ export default {
                         'Content-Type':"multipart/form-data"
                     }
                 }).then(({data}) =>{
-                    console.log(data)
-                    console.log(payload)
+                    // console.log(data)
+                    // console.log(payload)
                     var imgurl = [];
                     imgurl.push(data)
                     var hostData = 
@@ -108,11 +109,20 @@ export default {
                         member_email : $cookies.get('member').member_email,
                         host_images : imgurl,
                     }
-                    console.log(hostData)
+                    // console.log(hostData)
                     //집등록부분
                     http
                         .post('/host/regist', hostData)
-                        .then(() => {
+                        .then((data) => {
+                            hostEthereum.registerHost($cookies.get('member'),data.data).then(value=>{
+                                console.log(value);
+                                var transaction = {
+                                    member_email : $cookies.get('member').member_email,
+                                    tx_hash: value
+                                }
+                                http.post('/transaction/insert',transaction);
+                            })
+                            // console.log(data);
                             console.log("집등록완료"),
                             router.push({path: '/home'})
                         })
