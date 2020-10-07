@@ -36,7 +36,6 @@ public class FileController {
                                 .path("/resources/")
                                 .path(fileName)
                                 .toUriString();
-            System.out.println(fileDownloadUri);
             return new ResponseEntity<String>(fileDownloadUri, HttpStatus.OK);
 		} catch(Exception e) {
 			e.printStackTrace();

@@ -20,4 +20,10 @@
 		SET password=#{password}, public_key=#{public_key}
 		WHERE member_email = #{member_email}
 	</update>
+	
+	<select id="test" resultType="com.ssafy.sharing.domain.Member">
+		SELECT *
+		FROM member
+		LIMIT 1
+	</select>
 </mapper>
