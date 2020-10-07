@@ -1,4 +1,5 @@
 import http from '@/util/http-common.js'
+import router from '@/router'
 
 export default {
     namespaced : true,
@@ -40,9 +41,14 @@ export default {
             ]
             context.commit('setReservations',reservations)
         },
-        
-        
-    
+        reserveHouses(context,payload){
+            http
+                .post('/reserve/done',payload)
+                .then(({data})=>{
+                    alert("예약이 완료되었습니다.")
+                    router.push({ path: '/home' })
+                }).catch(err => console.log(err.response))
+        }
     },
 	getters: {
 
