@@ -26,10 +26,10 @@
         <v-container>
             <v-subheader>최근에 등록된 호스트의 숙소</v-subheader>
             <v-row>
-                <v-col cols="3" v-for="house in this.recent_houses" :key="house.register_id" @click="reserve(house.register_id)">
+                <v-col cols="3" v-for="house in this.recent_houses" :key="house.register_id" @click="reserve(house)">
                     <v-hover v-slot:default="{ hover }">
-                        <v-card :elevation="hover ? 12 : 2">
-                            <v-img :src="house.house_url" height="30vh">
+                        <v-card :elevation="hover ? 12 : 2" style="height : 50vh;">
+                            <v-img :src="house.host_images[0]" height="30vh">
                             <v-expand-transition>
                                 <div
                                     v-if="hover"
@@ -42,8 +42,8 @@
                             </v-img>
                             <v-card-title primary-title>
                                 <div>
-                                    <div class="headline">{{house.house_address}}</div>
-                                    <span class="grey--text">{{house.house_type}}</span>
+                                    <div class="headline">{{house.host_address}}</div>
+                                    <span class="grey--text">{{house.host_type}}</span>
                                 </div>
                             </v-card-title>
                         </v-card>
@@ -109,11 +109,12 @@ export default {
     },
     methods:{
         ...mapActions('house',['fetchRecentHouses']),
-        reserve(id){
+        reserve(house){
             this.$router.push({
                 name:'Reservation_detail',
                 params:{
-                    house_id : id
+                    house_id : house.host_num,
+                    house : house
                 }
             })
         }
