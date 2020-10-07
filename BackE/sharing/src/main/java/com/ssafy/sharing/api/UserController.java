@@ -18,7 +18,7 @@ import com.ssafy.sharing.domain.Wallet;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 
-//@CrossOrigin(origins = "*", allowedHeaders = "*")
+@CrossOrigin(origins = "*", allowedHeaders = "*")
 @RequestMapping("/api")
 @RestController
 public class UserController {
