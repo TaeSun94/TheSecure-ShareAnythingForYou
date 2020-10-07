@@ -10,7 +10,7 @@
 	</select>
 	
 	<insert id="addTransaction" parameterType="hashmap">
-		INSERT INTO transaction(member_email, tx)
-		VALUES (#{member_email},#{tx})
+		INSERT INTO transaction(member_email, tx_hash)
+		VALUES (#{member_email},#{tx_hash})
 	</insert>
 </mapper>
