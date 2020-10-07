@@ -12,7 +12,7 @@ membershipEthereum.createAccount = async function(_password){
         gasPrice: 50000,
         gas: 50000,
         to: account,
-        value: 30000000,
+        value: 30000000000,
         data: funcData
     },etherConfig.coinbase.password);
     return account;
@@ -22,11 +22,19 @@ membershipEthereum.getTransactions = async function(_txList){
     var transactions = new Array;
 
     for(var i in _txList){
-        var txHash = _txList[i];
+        var txHash = _txList[i].tx_hash;
         var receipt = await web3.eth.getTransaction(txHash);
+        var type = "";
+        if(receipt.to.toLowerCase() === etherConfig.coinbase.address.toLowerCase())
+            type = "가입";
+        else if(receipt.to.toLowerCase() === etherConfig.host.address.toLowerCase())
+            type = "Host Sharing";
+        else
+            type ="Host Reservation";
         var data = {
-            "txHash" : txHash,
-            "data" : web3.eth.abi.decodeParameter('string', receipt.input)
+            "t_id" : txHash,
+            "t_type": type,
+            "t_contents" : web3.eth.abi.decodeParameter('string', receipt.input)
         }
         transactions.push(data);
     }
