@@ -37,9 +37,9 @@
         </v-container>
         <v-divider></v-divider>
         <v-container>
-             <v-subheader>최근에 등록된 호스트의 숙소</v-subheader>
+            <v-subheader>최근에 등록된 호스트의 숙소</v-subheader>
             <v-row>
-                <v-col cols="3" v-for="house in recent_houses" :key="house.register_id" @click="reserve(house.register_id)">
+                <v-col cols="3" v-for="house in this.recent_houses" :key="house.register_id" @click="reserve(house.register_id)">
                     <v-hover v-slot:default="{ hover }">
                         <v-card :elevation="hover ? 12 : 2">
                             <v-img :src="house.house_url" height="30vh">
@@ -90,6 +90,8 @@
     </div>
 </template>
 <script>
+import {mapState} from 'vuex'
+
 export default {
     data(){
         return{
@@ -109,38 +111,6 @@ export default {
             'Leave a Review',
             'FAQ',
             ],
-
-            recent_houses: 
-            [
-                {
-                    register_id : 1,
-                    house_url :"https://cdn.vuetifyjs.com/images/cards/sunshine.jpg",
-                    house_address : "광산구 장덕동",
-                    house_type : "아파트",
-                    house_capacity : "2~3인용"
-                },
-                {
-                    register_id : 2,
-                    house_url :"https://cdn.vuetifyjs.com/images/cards/sunshine.jpg",
-                    house_address : "광산구 장덕동",
-                    house_type : "아파트",
-                    house_capacity : "2~3인용"
-                },
-                {
-                    register_id : 3,
-                    house_url :"https://cdn.vuetifyjs.com/images/cards/sunshine.jpg",
-                    house_address : "광산구 장덕동",
-                    house_type : "아파트",
-                    house_capacity : "2~3인용"
-                },
-                {
-                    register_id : 4,
-                    house_url :"https://cdn.vuetifyjs.com/images/cards/sunshine.jpg",
-                    house_address : "광산구 장덕동",
-                    house_type : "아파트",
-                    house_capacity : "2~3인용"
-                },
-            ],
         }
     },
     methods:{
@@ -152,6 +122,14 @@ export default {
                 }
             })
         }
+    },
+    computed : {
+        ...mapState({
+            recent_houses : state => state.resvation.recentReservations
+        })
+    },
+    mounted(){
+
     }
 
 }
