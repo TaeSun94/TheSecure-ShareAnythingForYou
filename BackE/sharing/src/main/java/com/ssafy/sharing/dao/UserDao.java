@@ -13,6 +13,8 @@ public interface UserDao {
 	boolean checkMember(String member_email);
 
 	boolean setPassword(Map<String,Object> map);
-
+	
+	Member getHostMember(int host_num);
+	
 	Member test();
 }

@@ -13,9 +13,9 @@
 
 	<insert id="registHost" parameterType="hashmap">
 		INSERT INTO host
-		(member_email, host_address, host_type, host_intro, host_price)
+		(member_email, host_address, host_type, host_intro, host_price, host_capacity)
 		VALUES
-		(#{member_email},#{host_address},#{host_type},#{host_intro},#{host_price})
+		(#{member_email},#{host_address},#{host_type},#{host_intro},#{host_price},#{host_capacity})
 	</insert>
 
 	<select id="getRecentHostNum" parameterType="string"
