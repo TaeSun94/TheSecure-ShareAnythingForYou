@@ -38,6 +38,7 @@ public class HostServiceImpl implements HostService {
 			map.put("host_intro", host.getHost_intro());
 			map.put("host_price", host.getHost_price());
 			map.put("host_capacity", host.getHost_capacity());
+			System.out.println(host.getHost_capacity());
 			if (hostDao.registHost(map)) {
 				int host_num = hostDao.getRecentHostNum(host.getMember_email());
 				map.put("host_num", host_num);
