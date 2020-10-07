@@ -41,7 +41,6 @@ public class LoginController {
 		if(member.getMember_email() != null) {
 			loginService.signupMember(member);
 			Member ret = userService.getUserinfo(member.getMember_email());
-			ret.setPassword(null);
 			return new ResponseEntity<>(ret, HttpStatus.OK);
 		}
 		
