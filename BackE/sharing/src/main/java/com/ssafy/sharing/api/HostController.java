@@ -38,14 +38,16 @@ public class HostController {
 	
 	@ApiOperation(value = "sharing home을 등록한다.", response = Boolean.class)
 	@PostMapping("/host/regist")
-	public ResponseEntity<Boolean> registHost(
+	public ResponseEntity<Host> registHost(
 			@ApiParam(value = "Host object", required = true) @RequestBody Host host) {
 		if (host == null) {
 			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
 		}
-//		host.setHost_images(fileService.uploadFile(host.getFiles()));
-		return new ResponseEntity<>(hostService.registHost(host),HttpStatus.OK);
-
+		if(hostService.registHost(host)) {
+			Host ret = hostService.getLatelyHost();
+			return new ResponseEntity<>(ret,HttpStatus.OK);
+		}
+		return new ResponseEntity<>(HttpStatus.EXPECTATION_FAILED);
 	}
 	
 	@ApiOperation(value = "등록된 sharing home을 제거한다.", response = Boolean.class)

@@ -128,9 +128,9 @@ public class HostServiceImpl implements HostService {
 				String[] img_list = new String[6];
 				setHostImages(hostimages, img_list);
 				host.setHost_images(img_list);
-				
+
 				host.setHost_available_day(hostDao.getHostAvailableDays(host.getHost_num()));
-				
+
 				HostItems hostitems = hostDao.getHostProvideItems(host.getHost_num());
 				System.out.println(hostitems.toString());
 				boolean[] item_list = new boolean[10];
@@ -219,6 +219,28 @@ public class HostServiceImpl implements HostService {
 			}
 			return list;
 		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
+
+	@Override
+	public Host getLatelyHost() {
+		try {
+			Host host = hostDao.getLatelyHost();
+			HostImages hostimages = hostDao.getHostImages(host.getHost_num());
+			String[] img_list = new String[6];
+			setHostImages(hostimages, img_list);
+			
+			host.setHost_available_day(hostDao.getHostAvailableDays(host.getHost_num()));
+			
+			HostItems hostitems = hostDao.getHostProvideItems(host.getHost_num());
+			boolean[] item_list = new boolean[10];
+			setHostItems(hostitems, item_list);
+			host.setHost_provide_items(item_list);
+			return host;
+		} catch (Exception e) {
+			// TODO: handle exception
 			e.printStackTrace();
 		}
 		return null;
