@@ -3,7 +3,7 @@
 <!DOCTYPE mapper  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.ssafy.sharing.dao.ReserveDao"> <!-- mybatis는 namespace필수!! -->
-	<insert id="addReserve" parameterType="hashmap">
+	<insert id="addReservation" parameterType="hashmap">
 		INSERT INTO reservation (host_num, member_email, price)
 		VALUES (#{host_num},#{member_email},#{price})
 	</insert>
