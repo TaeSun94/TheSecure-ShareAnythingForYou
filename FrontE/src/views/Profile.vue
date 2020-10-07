@@ -104,7 +104,7 @@
                                                 <v-avatar left>
                                                     <v-icon>mdi-checkbox-marked-circle</v-icon>
                                                 </v-avatar>
-                                                체크인 : {{reservation.r_dates[0]}}
+                                                체크인 : {{reservation.reserve_day[0]}}
                                             </v-chip>
                                             <v-chip
                                                 class="ma-2"
@@ -121,13 +121,13 @@
                                                 <v-avatar left>
                                                     <v-icon>mdi-checkbox-marked-circle</v-icon>
                                                 </v-avatar>
-                                                체크아웃 : {{reservation.r_dates[reservation.r_dates.length-1]}}
+                                                체크아웃 : {{reservation.reserve_day[reservation.reserve_day.length-1]}}
                                             </v-chip>
                                         </v-card-text>
                                     </div>
                                     <div>
                                         <v-subheader style=" margin-right : 10vh; margin-top: 4vh;">결제 금액</v-subheader>
-                                        <p style="font-size: 4vh;" >{{reservation.r_pay}}원</p>
+                                        <p style="font-size: 4vh;" >{{reservation.price}}원</p>
                                     </div>
                                     <!-- <v-avatar
                                         class="ma-5"
@@ -205,7 +205,7 @@ export default {
     },
     computed:{
         ...mapState({
-            reservations : state => state.reservation.reservations,
+            reservations : state => state.reservation.myReservations,
             houses : state => state.house.myHouses,
             transactions : state => state.transaction.transactions
         })
@@ -223,8 +223,8 @@ export default {
         //
         this.member = this.$cookies.get('member')
         if(this.member.member_img == '' || this.member.member_img == null) this.member.member_img = require('../assets/avatar_default.png')
-        this.fetchReservationsByEmail(this.member.member_email)
         this.fetchHousesByEmail(this.member.member_email)
+        this.fetchReservationsByEmail(this.member.member_email)
         this.fetchTransactionsByEmail(this.member.member_email)
     }
 }
