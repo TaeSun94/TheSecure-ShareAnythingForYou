@@ -46,6 +46,9 @@ public class ReserveServiceImpl implements ReserveService {
 			map.put("tid", tid);
 			map.put("member_email", reservation_info.getMember_email());
 			map.put("host_num", reservation_info.getHost_num());
+			reserveDao.addReservation(map);
+			int rid = reserveDao.getRid(tid);
+			map.put("rid", rid);
 			for(int i = 0; i < reservation_info.getReserve_day().length; i++) {
 				if(map.containsKey("reserve_day")) {
 					map.replace("reserve_day", reservation_info.getReserve_day()[i]);
@@ -53,7 +56,7 @@ public class ReserveServiceImpl implements ReserveService {
 				else {
 					map.put("reserve_day", reservation_info.getReserve_day()[i]);
 				}
-				reserveDao.addReservation(map);
+				reserveDao.addReserveDay(map);
 			}
 		} catch (Exception e) {
 			e.printStackTrace();

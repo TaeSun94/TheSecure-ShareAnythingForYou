@@ -25,12 +25,14 @@ public class LoginServiceImpl implements LoginService {
 	public void signupMember(Member member) {
 		String member_email = member.getMember_email();
 		String member_nickname = member.getMember_nickname();
+		String member_img = member.getMember_img();
 		try {
 			boolean isMember = loginDao.checkMember(member_email);
 			if(!isMember) {
 				Map<String, Object> map = new HashMap<>();
 				map.put("member_email", member_email);
 				map.put("member_nickname", member_nickname);
+				map.put("member_img", member_img);
 				loginDao.insertMember(map);
 			}
 			

@@ -14,4 +14,10 @@
 		FROM member
 		WHERE member_email = #{member_email}
 	</select>
+	
+	<update id="setPassword" parameterType="hashmap">
+		UPDATE member
+		SET password=#{password}
+		WHERE member_email = #{member_email}
+	</update>
 </mapper>

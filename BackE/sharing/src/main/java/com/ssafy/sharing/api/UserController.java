@@ -38,9 +38,17 @@ public class UserController {
 				return new ResponseEntity<>(userService.getUserinfo(member_email), HttpStatus.OK);
 			}
 		}
-
+		
 		return new ResponseEntity<>(null, HttpStatus.UNAUTHORIZED);
 	}
 	
+	@ApiOperation(value = "member의 blockchain net password 설정", response = Boolean.class)
+	@PutMapping("/user/password")
+	public ResponseEntity<Boolean> setPassword(@ApiParam(value = "Member", required = true) Member member){
+		if(member == null) {
+			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+		}
+		return new ResponseEntity<>(userService.setPassword(member), HttpStatus.OK);
+	}
 	
 }
