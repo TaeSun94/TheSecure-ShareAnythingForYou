@@ -68,7 +68,7 @@
 	<select id="getHostImages" parameterType="_int"
 		resultType="com.ssafy.sharing.domain.HostImages">
 		SELECT img1, img2, img3, img4, img5, img6
-		FROM host_imgs
+		FROM host_images
 		WHERE host_num = #{host_num}
 	</select>
 
@@ -80,7 +80,7 @@
 		host_num = #{host_num}
 	</select>
 
-	<select id="getHostItems" parameterType="_int"
+	<select id="getHostProvideItems" parameterType="_int"
 		resultType="com.ssafy.sharing.domain.HostItems">
 		SELECT item1, item2, item3, item4, item5, item6, item7,
 		item8, item9, item10
@@ -117,7 +117,7 @@
 		</foreach>
 	</select>
 
-	<select id="getLatelyHost" parameterType="_int">
+	<select id="getLatelyHosts" parameterType="_int" resultType="com.ssafy.sharing.domain.Host">
 		SELECT *
 		FROM host
 		ORDER BY host_num DESC

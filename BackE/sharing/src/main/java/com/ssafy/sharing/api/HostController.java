@@ -66,10 +66,7 @@ public class HostController {
 
 	@ApiOperation(value = "등록된 sharing home 중 가장 최근 8개에 대한 리스트를 불러온다.", response = Host.class)
 	@GetMapping("/host/rately")
-	public ResponseEntity<List<Host>> getLatelyHosts(@ApiParam(value = "member_email", required = true)@RequestBody String member_email){
-		if(!userService.checkMember(member_email)) {
-			return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
-		}
+	public ResponseEntity<List<Host>> getLatelyHosts(){
 		List<Host> host_list = hostService.getLatelyHosts();
 		return new ResponseEntity<>(host_list, HttpStatus.OK);
 	}
@@ -87,6 +84,9 @@ public class HostController {
 	@GetMapping("/host/search/{keyword}/")
 	public ResponseEntity<List<Host>> searchHost(@ApiParam(value = "Host List", required=true) @PathVariable String keyword){
 		List<Host> list = hostService.searchHost(keyword);
+		for(Host host : list) {
+			System.out.println(host.toString());
+		}
 		return new ResponseEntity<>(list, HttpStatus.OK);
 	}
 }
