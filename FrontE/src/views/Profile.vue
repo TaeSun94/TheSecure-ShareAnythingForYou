@@ -91,7 +91,7 @@
                                     <div>
                                         <v-card-title
                                         class="headline"
-                                        v-text="reservation.r_address"
+                                        v-text="reservation.host.host_address"
                                         ></v-card-title>
 
                                         <v-card-subtitle > 체크인 날짜와 체크아웃 날짜를 확인하세요 </v-card-subtitle>

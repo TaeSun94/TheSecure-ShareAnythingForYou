@@ -363,6 +363,7 @@ export default {
     mounted(){
         this.gettomorrow()
         this.house = this.$route.params.house
+        console.log(this.house)
         if(this.house.member.member_img == '' || this.house.member.member_img == undefined) this.house.member.member_img = require('../assets/avatar_default.png')
         this.allowedDates = this.house.host_available_day
         this.options = this.house.host_provide_items

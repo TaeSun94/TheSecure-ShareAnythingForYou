@@ -19,20 +19,51 @@
             <v-container id=""></v-container>
         </v-container>
         <div id="cover" style="margin-top : -40vh;">
-            <form method="get" action="">
+            <div>
                 <div class="tb">
-                <div class="td"><input type="text" placeholder="Search" required id="search_input"></div>
+                <div class="td"><input type="text" placeholder="Search" required id="search_input" v-model="keyword"></div>
                 <div class="td" id="s-cover">
-                    <button id="search">
+                    <button id="search" @click="search">
                     <div id="s-circle"></div>
                     <span></span>
                     </button>
                 </div>
                 </div>
-            </form>
+            </div>
         </div>
         <v-container class="recent_host">
             <p>원하는 숙소 예약하기</p>
+        </v-container>
+        <v-container v-if="this.houses.length > 0">
+            <v-divider></v-divider>
+            <v-container>
+                <v-subheader>검색 결과 : {{result_keyword}}</v-subheader>
+                <v-row>
+                    <v-col cols="3" v-for="house in this.houses" :key="house.register_id" @click="reserve(house)">
+                        <v-hover v-slot:default="{ hover }">
+                            <v-card :elevation="hover ? 12 : 2" style="height : 50vh;">
+                                <v-img :src="house.host_images[0]" height="30vh">
+                                <v-expand-transition>
+                                    <div
+                                        v-if="hover"
+                                        class="d-flex transition-fast-in-fast-out blue darken-2 v-card--reveal display-3 white--text"
+                                        style="height: 100%;"
+                                    >
+                                        <v-btn color="deep-purple accent-4" class="btn-1" rounded height="4em"><p class="btn-name">예약하기</p></v-btn>
+                                    </div>
+                                </v-expand-transition>    
+                                </v-img>
+                                <v-card-title primary-title>
+                                    <div>
+                                        <div class="headline">{{house.host_address}}</div>
+                                        <span class="grey--text">{{house.host_type}}</span>
+                                    </div>
+                                </v-card-title>
+                            </v-card>
+                        </v-hover>
+                    </v-col>
+                </v-row>
+            </v-container>    
         </v-container>
         <v-divider></v-divider>
         <v-container>
@@ -91,7 +122,7 @@
     </div>
 </template>
 <script>
-import {mapState,mapActions} from 'vuex'
+import {mapState,mapActions,mapMutations} from 'vuex'
 
 export default {
     data(){
@@ -116,11 +147,14 @@ export default {
                 {subject: "예약 확인은 어떻게 하나요?", text:"완료된 예약의 경우 왼쪽 사이드바 상단의 프로필 사진을 클릭하면 My page로 넘어가 확인하실 수 있습니다."},
                 {subject: "게스트가 예약에 대하여 믿고 쓸 수 있을까요?", text:"예약의 경우 블록에 저장하는 데이터를 통하여 사용자들에게 신뢰를 주고 모두가 확인할 수 있어서 투명성을 보장합니다."},
                 {subject: "블록체인에 트랜잭션을 호출하기 위하여 일정량의 암호 화폐가 필요한데 충전은 어떻게 하나요?", text:"저희 서비스는 사설 이더리움 네트워크를 사용하기 때문에 수수료없이 트랜잭션을 발행할 수 있고 그로 인해 충전의 기능은 따로 제공하지 않습니다. 대신 Account 생성을 할 때 서비스 이용을 위한 소정의 Ether를 전송하여 불편함없이 이용하실 수 있습니다."},
-            ]
+            ],
+            keyword : '',
+            result_keyword : '',
         }
     },
     methods:{
-        ...mapActions('house',['fetchRecentHouses']),
+        ...mapActions('house',['fetchRecentHouses','fetchHouseByKeyword']),
+        ...mapMutations('house',['initHouses']),
         reserve(house){
             this.$router.push({
                 name:'Reservation_detail',
@@ -129,17 +163,25 @@ export default {
                     house : house
                 }
             })
+        },
+        search(){
+            this.result_keyword = this.keyword
+            this.fetchHouseByKeyword(this.keyword)
+            this.keyword=''
         }
     },
     computed : {
         ...mapState({
-            recent_houses : state => state.house.recentHouses
+            recent_houses : state => state.house.recentHouses,
+            houses : state => state.house.houses
         })
     },
     mounted(){
         this.fetchRecentHouses()
+    },
+    beforeDestroy(){
+        this.initHouses()
     }
-
 }
 </script>
 <style scoped>
@@ -231,10 +273,10 @@ body
     transform: scale(0.6);
 }
 
-form
+/* form
 {
     height: 96px;
-}
+} */
 
 #search_input[type="text"]
 {
