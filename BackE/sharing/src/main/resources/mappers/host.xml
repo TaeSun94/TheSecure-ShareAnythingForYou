@@ -98,7 +98,7 @@
 		#{host_num}
 	</update>
 
-	<select id="getHost" parameterType="_int">
+	<select id="getHost" parameterType="_int" resultType="com.ssafy.sharing.domain.Host">
 		SELECT *
 		FROM host
 		WHERE host_num = #{host_num}
@@ -141,4 +141,10 @@
 		ORDER BY host_num DESC
 		LIMIT 1
 	</select>
+	
+	<update id="updateAvailableDay" parameterType="hashmap">
+		UPDATE host_available_days
+		SET is_reservation = TRUE
+		WHERE host_num = #{host_num} AND host_available_day = #{reserve_day}
+	</update>
 </mapper>

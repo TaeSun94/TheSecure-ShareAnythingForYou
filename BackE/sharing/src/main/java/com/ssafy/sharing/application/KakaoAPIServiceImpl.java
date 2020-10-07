@@ -140,6 +140,7 @@ public class KakaoAPIServiceImpl implements KakaoAPIService {
 			conn.setRequestProperty("Content-Type", "application/x-www-form-urlencoded;charset=UTF-8");
 			conn.setDoInput(true);
 			conn.setDoOutput(true);
+			System.out.println(info.toString());
 
 			Host host = hostDao.getHost(info.getHost_num());
 			Map<String, String> params = new HashMap<String, String>();
@@ -159,7 +160,6 @@ public class KakaoAPIServiceImpl implements KakaoAPIService {
 			for (Map.Entry<String, String> elem : params.entrySet()) {
 				string_params += (elem.getKey() + "=" + elem.getValue() + "&");
 			}
-
 			conn.getOutputStream().write(string_params.getBytes());
 
 			BufferedReader in = new BufferedReader(new InputStreamReader(conn.getInputStream()));

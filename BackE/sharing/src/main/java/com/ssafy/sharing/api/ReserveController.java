@@ -36,8 +36,10 @@ public class ReserveController {
 	// 1. 예약 하기
 	@ApiOperation(value = "결제가 완료 된 예약 데이터 처리", response = Boolean.class)
 	@PostMapping("/reserve/done")
-	public ResponseEntity<JsonObject> addReserve(@ApiParam(value = "Payment JsonObject", required = true) @RequestBody JsonObject obj){
+	public ResponseEntity<Reservation> addReserve(@ApiParam(value = "Payment JsonObject", required = true) @RequestBody Reservation reservation){
 		
+		reserveService.reserveHost(reservation);
+		Reservation ret = reserveService.getReserveInfo();
 		return new ResponseEntity<>(HttpStatus.OK);
 	}
 	

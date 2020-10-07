@@ -48,4 +48,6 @@ public interface HostDao {
 	List<Host> getSearchHost(String keyword);
 
 	Host getLatelyHost();
+
+	void updateAvailableDay(Map<String, Object> map);
 }

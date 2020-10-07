@@ -4,18 +4,26 @@
     "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.ssafy.sharing.dao.ReserveDao"> <!-- mybatis는 namespace필수!! -->
 	<insert id="addReserve" parameterType="hashmap">
-		INSERT INTO reservation (tid, host_num, member_email)
-		VALUES (#{tid},#{host_num},#{member_email})
+		INSERT INTO reservation (host_num, member_email, price)
+		VALUES (#{host_num},#{member_email},#{price})
 	</insert>
 	
 	<select id="getRid" parameterType="String" resultType="_int">
 		SELECT rid
 		FROM reservation
-		WHERE tid = #{tid}
+		ORDER BY rid DESC
+		LIMIT 1
 	</select>
 	
 	<insert id="addReserveDay" parameterType="hashmap">
 		INSERT INTO reservation_days (rid, reserve_day)
 		VALUES(#{rid}, #{reserve_day})
 	</insert>
+	
+	<select id="getLatelyReserve" resultType = "com.ssafy.sharing.domain.Reservation">
+		SELECT *
+		FROM reservation
+		ORDER BY rid DESC
+		LIMIT 1
+	</select>
 </mapper>
