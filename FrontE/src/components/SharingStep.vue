@@ -197,7 +197,7 @@ import SharingStep5 from './PriceStep.vue'
                 if(this.houseDates.length <= 0){
                   alert("최소 하루이상의 날짜를 선택해야합니다")
                 }else{
-                  // this.houseData.dates = this.houseDates
+                  this.house.dates = this.houseDates
                   this.e1 = n + 1
                 }
                 break

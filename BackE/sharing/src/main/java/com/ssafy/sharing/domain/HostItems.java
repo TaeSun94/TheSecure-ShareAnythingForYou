@@ -112,4 +112,11 @@ public class HostItems {
 		this.itme10 = itme10;
 	}
 
+	@Override
+	public String toString() {
+		return "HostItems [itme1=" + itme1 + ", itme2=" + itme2 + ", itme3=" + itme3 + ", itme4=" + itme4 + ", itme5="
+				+ itme5 + ", itme6=" + itme6 + ", itme7=" + itme7 + ", itme8=" + itme8 + ", itme9=" + itme9
+				+ ", itme10=" + itme10 + "]";
+	}
+
 }
