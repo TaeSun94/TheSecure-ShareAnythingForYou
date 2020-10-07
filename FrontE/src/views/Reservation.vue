@@ -12,21 +12,8 @@
                 <v-carousel-item
                 v-for="(slide, i) in slides"
                 :key="i"
+                :src="slide.src"
                 >
-                <v-sheet
-                    :color="colors[i]"
-                    height="95vh"
-                >
-                    <v-row
-                    class="fill-height"
-                    align="center"
-                    justify="center"
-                    >
-                    <!-- 페이지 별 내용 입력 -->
-                    <!-- <div class="display-3">{{ slide }}</div>  -->
-                    <div class="display-3">{{ slide }}</div> 
-                    </v-row>
-                </v-sheet>
                 </v-carousel-item>
             </v-carousel>
             <v-container id=""></v-container>
@@ -97,19 +84,19 @@ export default {
         return{
             vartical : false,
             showArrow : false,
-            colors: [
-            'indigo',
-            'warning',
-            'pink darken-2',
-            'red lighten-1',
-            'deep-purple accent-4',
-            ],
             slides: [
-            'Introduction',
-            'Reservation',
-            'Home_Sharing',
-            'Leave a Review',
-            'FAQ',
+                {
+                    src: require('../assets/봄.jpg')
+                },
+                {
+                    src: require('../assets/여름.jpg')
+                },
+                {
+                    src: require('../assets/가을.jpg')
+                },
+                {
+                    src: require('../assets/겨울.jpg')
+                }
             ],
         }
     },
