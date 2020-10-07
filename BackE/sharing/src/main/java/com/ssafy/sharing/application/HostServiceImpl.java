@@ -141,7 +141,7 @@ public class HostServiceImpl implements HostService {
 		}
 		return null;
 	}
-	
+
 	@Override
 	public boolean updateHost(Host host) {
 		try {
@@ -165,12 +165,12 @@ public class HostServiceImpl implements HostService {
 	public Host getHost(int host_num) {
 		try {
 			return hostDao.getHost(host_num);
-		}catch (Exception e) {
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
 		return null;
 	}
-	
+
 	private void setHostImages(HostImages hostImages, String[] tmp) {
 		tmp[0] = hostImages.getImg1();
 		tmp[1] = hostImages.getImg2();
@@ -193,8 +193,33 @@ public class HostServiceImpl implements HostService {
 		tmp[9] = hostItems.isItme10();
 	}
 
+	@Override
+	public List<Host> searchHost(String keyword) {
+		List<Host> list = new ArrayList<Host>();
+		try {
+			if (keyword.equals("")) {
+				list = hostDao.getAllHost();
+			} else {
+				list = hostDao.getSearchHost(keyword);
+			}
+			for (Host host : list) {
+				HostImages hostimages = hostDao.getHostImages(host.getHost_num());
+				String[] img_list = new String[6];
+				setHostImages(hostimages, img_list);
+				host.setHost_images(img_list);
 
+				host.setHost_available_day(hostDao.getHostAvailableDays(host.getHost_num()));
 
-
+				HostItems hostitems = hostDao.getHostProvideItems(host.getHost_num());
+				boolean[] item_list = new boolean[10];
+				setHostItems(hostitems, item_list);
+				host.setHost_provide_items(item_list);
+			}
+			return list;
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
 
 }

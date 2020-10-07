@@ -9,6 +9,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -82,4 +83,10 @@ public class HostController {
 		return new ResponseEntity<>(hostService.updateHost(host), HttpStatus.OK);
 	}
 	
+	@ApiOperation(value = "입력한 검색어로 숙소를 조회한다.", response = Host.class)
+	@GetMapping("/host/search/{keyword}/")
+	public ResponseEntity<List<Host>> searchHost(@ApiParam(value = "Host List", required=true) @PathVariable String keyword){
+		List<Host> list = hostService.searchHost(keyword);
+		return new ResponseEntity<>(list, HttpStatus.OK);
+	}
 }

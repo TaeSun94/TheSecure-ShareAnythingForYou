@@ -16,4 +16,6 @@ public interface HostService {
 	public Host getHost(int host_num);
 	
 	public List<Host> getLatelyHosts();
+
+	public List<Host> searchHost(String keyword);
 }
