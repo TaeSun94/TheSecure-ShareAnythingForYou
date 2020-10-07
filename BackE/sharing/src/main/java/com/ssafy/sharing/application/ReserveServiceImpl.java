@@ -40,23 +40,23 @@ public class ReserveServiceImpl implements ReserveService {
 	}
 
 	@Override
-	public void reserveHost(String tid, Reservation reservation_info) {
+	public void reserveHost(Reservation reservation) {
 		Map<String, Object> map = new HashMap<>();
 		try {
-			map.put("tid", tid);
-			map.put("member_email", reservation_info.getMember_email());
-			map.put("host_num", reservation_info.getHost_num());
+			map.put("member_email", reservation.getMember_email());
+			map.put("host_num", reservation.getHost_num());
 			reserveDao.addReservation(map);
-			int rid = reserveDao.getRid(tid);
+			int rid = reserveDao.getRid();
 			map.put("rid", rid);
-			for(int i = 0; i < reservation_info.getReserve_day().length; i++) {
+			for(int i = 0; i < reservation.getReserve_day().length; i++) {
 				if(map.containsKey("reserve_day")) {
-					map.replace("reserve_day", reservation_info.getReserve_day()[i]);
+					map.replace("reserve_day", reservation.getReserve_day()[i]);
 				}
 				else {
-					map.put("reserve_day", reservation_info.getReserve_day()[i]);
+					map.put("reserve_day", reservation.getReserve_day()[i]);
 				}
 				reserveDao.addReserveDay(map);
+				hostDao.updateAvailableDay(map);
 			}
 		} catch (Exception e) {
 			e.printStackTrace();

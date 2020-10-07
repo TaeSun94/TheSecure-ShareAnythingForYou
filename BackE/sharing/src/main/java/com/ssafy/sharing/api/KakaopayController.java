@@ -49,9 +49,10 @@ public class KakaopayController {
 		}
 		JsonObject obj = kakaoAPIService.getPayment(reservation_info);
 		obj.add("pg_token", null);
+		System.out.println(obj.toString());
 //		String tid = obj.get("tid").toString();
 //		reserveService.reserveHost(tid, reservation_info);
-		return new ResponseEntity<>(obj,HttpStatus.OK);
+		return new ResponseEntity<JsonObject>(obj,HttpStatus.OK);
 	}
 	
 	@ApiOperation(value = "결제 승인 후 완료 과정", response = String.class)

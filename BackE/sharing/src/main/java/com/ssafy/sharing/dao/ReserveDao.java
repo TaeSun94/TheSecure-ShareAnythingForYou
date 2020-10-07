@@ -8,6 +8,6 @@ import org.apache.ibatis.annotations.Mapper;
 public interface ReserveDao {
 
 	void addReservation(Map<String, Object> map);
-	int getRid(String tid);
+	int getRid();
 	void addReserveDay(Map<String, Object> map);
 }
