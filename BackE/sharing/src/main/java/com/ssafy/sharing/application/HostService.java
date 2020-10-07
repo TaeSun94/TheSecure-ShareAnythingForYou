@@ -18,4 +18,6 @@ public interface HostService {
 	public List<Host> getLatelyHosts();
 
 	public List<Host> searchHost(String keyword);
+
+	public Host getLatelyHost();
 }
