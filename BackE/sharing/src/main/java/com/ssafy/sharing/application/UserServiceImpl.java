@@ -44,6 +44,7 @@ public class UserServiceImpl implements UserService {
 			Map<String,Object> map = new HashMap<>();
 			map.put("member_email", member.getMember_email());
 			map.put("password", member.getPassword());
+			map.put("public_key", member.getPublic_key());
 			
 			return userDao.setPassword(map);
 		}catch (Exception e) {

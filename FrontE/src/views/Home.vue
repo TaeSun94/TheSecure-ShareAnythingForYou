@@ -9,7 +9,7 @@
                     <v-container style="text-align:center;">
                         <v-avatar size="6em" @click="moveProfile">
                             <img
-                                :src= "member.member_imgurl"
+                                :src= "member.member_img"
                                 alt="카카오프로필이미지"
                                 
                             >
@@ -28,7 +28,7 @@
                     <v-list-item-icon>
                         <v-icon>mdi-mail</v-icon>
                     </v-list-item-icon>
-                    <v-list-item-subtitle v-if="member.public_key !== ''">{{member.public_key}}</v-list-item-subtitle>
+                    <v-list-item-subtitle v-if="member.public_key !== null">{{member.public_key}}</v-list-item-subtitle>
                     <v-list-item-subtitle v-else>
                         <div>
                             <v-dialog
@@ -216,7 +216,7 @@ export default {
         },
         setPassword(){
             if(this.validate){
-                this.member.member_pwd = this.password
+                this.member.password = this.password
                 this.setMemberPassword(this.member)
                 this.setpwdDialog(false)
                 // this.dialog = false
@@ -235,6 +235,8 @@ export default {
     },
     mounted(){
         this.member = this.$cookies.get('member')
+        // if(this.member.member_imgurl == '') this.member_imgurl = '../assets/avatar_default.png'
+        // this.member.member_imgurl = '../assets/avatar_default.png'
         console.log(this.member)
         // this.member =
         //         {

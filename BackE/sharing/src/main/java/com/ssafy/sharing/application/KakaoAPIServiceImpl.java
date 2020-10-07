@@ -105,25 +105,23 @@ public class KakaoAPIServiceImpl implements KakaoAPIService {
 				while ((line = br.readLine()) != null) {
 					result += line;
 				}
-				System.out.println(result);
 				JsonParser parser = new JsonParser();
 				JsonElement element = parser.parse(result);
 
 				JsonObject properties = element.getAsJsonObject().get("properties").getAsJsonObject();
 				JsonObject kakao_account = element.getAsJsonObject().get("kakao_account").getAsJsonObject();
-
 				String nickname = properties.getAsJsonObject().get("nickname").toString();
+				JsonObject profile = kakao_account.getAsJsonObject().get("profile").getAsJsonObject();
 //				String email = kakao_account.getAsJsonObject().get("email").toString();
 				String email = element.getAsJsonObject().get("id").toString();
 				String img = "";
-				if (properties.getAsJsonObject().get("profile_image") != null) {
-					img = properties.getAsJsonObject().get("profile_image").toString();
+				if (profile.getAsJsonObject().get("profile_image_url") != null) {
+					img = profile.getAsJsonObject().get("profile_image_url").toString();
+					img = img.substring(1,img.length()-1);
 				}
-				System.out.println(nickname + " " + email + " " + img);
 				member.setMember_email(email);
 				member.setMember_nickname(nickname);
 				member.setMember_img(img);
-				System.out.println(member.toString());
 			}
 		} catch (IOException e) {
 			e.printStackTrace();
