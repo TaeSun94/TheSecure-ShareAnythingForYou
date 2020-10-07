@@ -8,4 +8,6 @@ public interface UserService {
 	public boolean checkMember(String member_email);
 
 	public boolean setPassword(Member member);
+
+	public Member test();
 }

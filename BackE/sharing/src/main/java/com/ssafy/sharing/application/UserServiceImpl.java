@@ -53,4 +53,9 @@ public class UserServiceImpl implements UserService {
 		return false;
 	}
 
+	@Override
+	public Member test() {
+		return userDao.test();
+	}
+
 }
