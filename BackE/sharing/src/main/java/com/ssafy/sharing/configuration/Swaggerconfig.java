@@ -29,6 +29,8 @@ public class Swaggerconfig extends WebMvcConfigurationSupport {
 	protected void addResourceHandlers(ResourceHandlerRegistry registry) {
 		registry.addResourceHandler("swagger-ui.html").addResourceLocations("classpath:/META-INF/resources/");
 		registry.addResourceHandler("/webjars/**").addResourceLocations("classpath:/META-INF/resources/webjars/");
+		registry.addResourceHandler("/images/**").addResourceLocations("file:/home/ubuntu/images/"); // 리눅스 root에서 시작하는
+																										// 폴더 경로
 	}
 
 	private Predicate<String> postPaths() {
