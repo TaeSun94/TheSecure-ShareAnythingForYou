@@ -9,15 +9,20 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.ssafy.sharing.dao.HostDao;
+import com.ssafy.sharing.dao.UserDao;
 import com.ssafy.sharing.domain.Host;
 import com.ssafy.sharing.domain.HostImages;
 import com.ssafy.sharing.domain.HostItems;
+import com.ssafy.sharing.domain.Member;
 
 @Service
 public class HostServiceImpl implements HostService {
 
 	@Autowired
 	HostDao hostDao;
+	
+	@Autowired
+	UserDao userDao;
 
 	@Override
 	public boolean registHost(Host host) {
@@ -32,6 +37,7 @@ public class HostServiceImpl implements HostService {
 			map.put("host_type", host.getHost_type());
 			map.put("host_intro", host.getHost_intro());
 			map.put("host_price", host.getHost_price());
+			map.put("host_capacity", host.getHost_capacity());
 			if (hostDao.registHost(map)) {
 				int host_num = hostDao.getRecentHostNum(host.getMember_email());
 				map.put("host_num", host_num);
@@ -123,19 +129,22 @@ public class HostServiceImpl implements HostService {
 		try {
 			List<Host> host_list = hostDao.getLatelyHosts();
 			for (Host host : host_list) {
-				System.out.println(host.toString());
 				HostImages hostimages = hostDao.getHostImages(host.getHost_num());
 				String[] img_list = new String[6];
 				setHostImages(hostimages, img_list);
 				host.setHost_images(img_list);
-				
+
 				host.setHost_available_day(hostDao.getHostAvailableDays(host.getHost_num()));
-				
+
 				HostItems hostitems = hostDao.getHostProvideItems(host.getHost_num());
-				System.out.println(hostitems.toString());
 				boolean[] item_list = new boolean[10];
 				setHostItems(hostitems, item_list);
 				host.setHost_provide_items(item_list);
+				
+				Member member = userDao.getHostMember(host.getHost_num());
+				member.setPassword("");
+				member.setPublic_key("");
+				host.setMember(member);
 			}
 			return host_list;
 		} catch (Exception e) {
@@ -183,16 +192,16 @@ public class HostServiceImpl implements HostService {
 	}
 
 	private void setHostItems(HostItems hostItems, boolean[] tmp) {
-		tmp[0] = hostItems.isItme1();
-		tmp[1] = hostItems.isItme2();
-		tmp[2] = hostItems.isItme3();
-		tmp[3] = hostItems.isItme4();
-		tmp[4] = hostItems.isItme5();
-		tmp[5] = hostItems.isItme6();
-		tmp[6] = hostItems.isItme7();
-		tmp[7] = hostItems.isItme8();
-		tmp[8] = hostItems.isItme9();
-		tmp[9] = hostItems.isItme10();
+		tmp[0] = hostItems.isItem1();
+		tmp[1] = hostItems.isItem2();
+		tmp[2] = hostItems.isItem3();
+		tmp[3] = hostItems.isItem4();
+		tmp[4] = hostItems.isItem5();
+		tmp[5] = hostItems.isItem6();
+		tmp[6] = hostItems.isItem7();
+		tmp[7] = hostItems.isItem8();
+		tmp[8] = hostItems.isItem9();
+		tmp[9] = hostItems.isItem10();
 	}
 
 	@Override
@@ -219,6 +228,28 @@ public class HostServiceImpl implements HostService {
 			}
 			return list;
 		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
+
+	@Override
+	public Host getLatelyHost() {
+		try {
+			Host host = hostDao.getLatelyHost();
+			HostImages hostimages = hostDao.getHostImages(host.getHost_num());
+			String[] img_list = new String[6];
+			setHostImages(hostimages, img_list);
+			
+			host.setHost_available_day(hostDao.getHostAvailableDays(host.getHost_num()));
+			
+			HostItems hostitems = hostDao.getHostProvideItems(host.getHost_num());
+			boolean[] item_list = new boolean[10];
+			setHostItems(hostitems, item_list);
+			host.setHost_provide_items(item_list);
+			return host;
+		} catch (Exception e) {
+			// TODO: handle exception
 			e.printStackTrace();
 		}
 		return null;

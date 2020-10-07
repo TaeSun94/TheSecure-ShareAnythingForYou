@@ -46,4 +46,6 @@ public interface HostDao {
 	List<Host> getAllHost();
 	
 	List<Host> getSearchHost(String keyword);
+
+	Host getLatelyHost();
 }

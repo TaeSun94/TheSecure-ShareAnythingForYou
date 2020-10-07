@@ -26,4 +26,10 @@
 		FROM member
 		LIMIT 1
 	</select>
+	
+	<select id="getHostMember" parameterType="_int" resultType="com.ssafy.sharing.domain.Member">
+		SELECT *
+		FROM member
+		WHERE member_email = (SELECT member_email FROM host WHERE host_num = #{host_num})
+	</select>
 </mapper>

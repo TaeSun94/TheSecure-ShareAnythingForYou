@@ -13,9 +13,9 @@
 
 	<insert id="registHost" parameterType="hashmap">
 		INSERT INTO host
-		(member_email, host_address, host_type, host_intro, host_price)
+		(member_email, host_address, host_type, host_intro, host_price, host_capacity)
 		VALUES
-		(#{member_email},#{host_address},#{host_type},#{host_intro},#{host_price})
+		(#{member_email},#{host_address},#{host_type},#{host_intro},#{host_price},#{host_capacity})
 	</insert>
 
 	<select id="getRecentHostNum" parameterType="string"
@@ -121,7 +121,7 @@
 		SELECT *
 		FROM host
 		ORDER BY host_num DESC
-		LIMIT 8;
+		LIMIT 8
 	</select>
 	
 	<select id="getAllHost" resultType="com.ssafy.sharing.domain.Host">
@@ -135,4 +135,10 @@
 		WHERE host_address LIKE CONCAT('%',#{keyword},'%')
 	</select>
 
+	<select id="getLatelyHost" resultType="com.ssafy.sharing.domain.Host">
+		SELECT *
+		FROM host
+		ORDER BY host_num DESC
+		LIMIT 1
+	</select>
 </mapper>

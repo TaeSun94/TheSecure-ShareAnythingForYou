@@ -38,7 +38,6 @@ public class ReserveController {
 	@PostMapping("/reserve/done")
 	public ResponseEntity<JsonObject> addReserve(@ApiParam(value = "Payment JsonObject", required = true) @RequestBody JsonObject obj){
 		
-		
 		return new ResponseEntity<>(HttpStatus.OK);
 	}
 	

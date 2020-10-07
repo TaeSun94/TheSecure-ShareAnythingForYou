@@ -7,6 +7,7 @@ import org.springframework.web.multipart.MultipartFile;
 public class Host {
 	private int host_num;
 	private String member_email;
+	private Member member;
 	private String host_address;
 	private String host_type;
 	private String host_intro;
@@ -17,14 +18,16 @@ public class Host {
 	private MultipartFile[] files;
 	private String[] host_available_day;
 
-	public Host() {}
+	public Host() {
+	}
 
-	public Host(int host_num, String member_email, String host_address, String host_type, String host_intro,
-			int host_price, String host_capacity, boolean[] host_provide_items, String[] host_images,
+	public Host(int host_num, String member_email, Member member, String host_address, String host_type,
+			String host_intro, int host_price, String host_capacity, boolean[] host_provide_items, String[] host_images,
 			MultipartFile[] files, String[] host_available_day) {
 		super();
 		this.host_num = host_num;
 		this.member_email = member_email;
+		this.member = member;
 		this.host_address = host_address;
 		this.host_type = host_type;
 		this.host_intro = host_intro;
@@ -36,6 +39,13 @@ public class Host {
 		this.host_available_day = host_available_day;
 	}
 
+	public Member getMember() {
+		return member;
+	}
+
+	public void setMember(Member member) {
+		this.member = member;
+	}
 
 	public MultipartFile[] getFiles() {
 		return files;
@@ -127,11 +137,11 @@ public class Host {
 
 	@Override
 	public String toString() {
-		return "Host [host_num=" + host_num + ", member_email=" + member_email + ", host_address=" + host_address
-				+ ", host_type=" + host_type + ", host_intro=" + host_intro + ", host_price=" + host_price
-				+ ", host_capacity=" + host_capacity + ", host_provide_items=" + Arrays.toString(host_provide_items)
-				+ ", host_images=" + Arrays.toString(host_images) + ", files=" + Arrays.toString(files)
-				+ ", host_available_day=" + Arrays.toString(host_available_day) + "]";
+		return "Host [host_num=" + host_num + ", member_email=" + member_email + ", member=" + member
+				+ ", host_address=" + host_address + ", host_type=" + host_type + ", host_intro=" + host_intro
+				+ ", host_price=" + host_price + ", host_capacity=" + host_capacity + ", host_provide_items="
+				+ Arrays.toString(host_provide_items) + ", host_images=" + Arrays.toString(host_images) + ", files="
+				+ Arrays.toString(files) + ", host_available_day=" + Arrays.toString(host_available_day) + "]";
 	}
 
 }
