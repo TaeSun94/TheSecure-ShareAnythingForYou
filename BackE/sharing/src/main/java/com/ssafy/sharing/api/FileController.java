@@ -29,14 +29,14 @@ public class FileController {
         if(file == null) return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         try {
 			String baseUri = "/home/ubuntu/images/";
-            String fileName = RandomStringUtils.randomAlphabetic(10)+file.getOriginalFilename();;
+            String fileName = RandomStringUtils.randomAlphabetic(10)+file.getOriginalFilename();
 			String filePath = baseUri + fileName;
 			file.transferTo(new File(filePath));
             String fileDownloadUri = ServletUriComponentsBuilder.fromCurrentContextPath()
                                 .path("/resources/")
                                 .path(fileName)
                                 .toUriString();
-
+            System.out.println(fileDownloadUri);
             return new ResponseEntity<String>(fileDownloadUri, HttpStatus.OK);
 		} catch(Exception e) {
 			e.printStackTrace();
