@@ -41,6 +41,5 @@ public class ReserveController {
 		
 		return new ResponseEntity<>(HttpStatus.OK);
 	}
-	// 2. 예약 취소
 	
 }

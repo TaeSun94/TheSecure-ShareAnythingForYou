@@ -105,7 +105,6 @@ public class KakaoAPIServiceImpl implements KakaoAPIService {
 				while ((line = br.readLine()) != null) {
 					result += line;
 				}
-				System.out.println(result);
 				JsonParser parser = new JsonParser();
 				JsonElement element = parser.parse(result);
 
@@ -120,7 +119,6 @@ public class KakaoAPIServiceImpl implements KakaoAPIService {
 					img = profile.getAsJsonObject().get("profile_image_url").toString();
 					img = img.substring(1,img.length()-1);
 				}
-				System.out.println(img);
 				member.setMember_email(email);
 				member.setMember_nickname(nickname);
 				member.setMember_img(img);

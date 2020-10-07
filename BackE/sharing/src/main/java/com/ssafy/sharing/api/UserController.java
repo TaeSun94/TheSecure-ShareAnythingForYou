@@ -18,7 +18,7 @@ import com.ssafy.sharing.domain.Wallet;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 
-@CrossOrigin(origins = "*", allowedHeaders = "*")
+//@CrossOrigin(origins = "*", allowedHeaders = "*")
 @RequestMapping("/api")
 @RestController
 public class UserController {
@@ -52,4 +52,9 @@ public class UserController {
 		return new ResponseEntity<>(userService.setPassword(member), HttpStatus.OK);
 	}
 	
+	@ApiOperation(value = "테스트", response = Member.class)
+	@GetMapping("/test")
+	public ResponseEntity<Member> test(){
+		return new ResponseEntity<Member>(userService.test(), HttpStatus.OK);
+	}
 }
