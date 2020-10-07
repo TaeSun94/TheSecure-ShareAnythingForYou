@@ -50,7 +50,6 @@ public class ReserveServiceImpl implements ReserveService {
 			map.put("price", reservation.getPrice());
 			reserveDao.addReservation(map);
 			int rid = reserveDao.getRid();
-			System.out.println(rid);
 			map.put("rid", rid);
 			for(int i = 0; i < reservation.getReserve_day().length; i++) {
 				if(map.containsKey("reserve_day")) {
@@ -78,7 +77,7 @@ public class ReserveServiceImpl implements ReserveService {
 			for(int i = 0; i < reserve_days.length; i++) {
 				reserve_days[i] = reserve_day_list.get(i);
 			}
-			
+			ret.setHost(hostDao.getHost(ret.getHost_num()));
 			ret.setReserve_day(reserve_days);
 			return ret;
 		}catch (Exception e) {
@@ -100,6 +99,7 @@ public class ReserveServiceImpl implements ReserveService {
 				for(int i = 0; i < reserve_days.length; i++) {
 					reserve_days[i] = reserve_day_list.get(i);
 				}
+				reservation.setHost(hostDao.getHost(reservation.getHost_num()));
 				reservation.setReserve_day(reserve_days);
 			}
 			return reserve_list;

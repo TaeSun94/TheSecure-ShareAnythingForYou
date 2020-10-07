@@ -5,6 +5,7 @@ import java.util.Arrays;
 public class Reservation {
 	
 	private String member_email;
+	private Host host;
 	private int host_num;
 	private String[] reserve_day;
 	private int rid;
@@ -51,10 +52,14 @@ public class Reservation {
 		this.price = price;
 	}
 
-	@Override
-	public String toString() {
-		return "Reservation [member_email=" + member_email + ", host_num=" + host_num + ", reserve_day="
-				+ Arrays.toString(reserve_day) + ", rid=" + rid + ", price=" + price + "]";
+	public Host getHost() {
+		return host;
 	}
+
+	public void setHost(Host host) {
+		this.host = host;
+	}
+
+
 
 }
