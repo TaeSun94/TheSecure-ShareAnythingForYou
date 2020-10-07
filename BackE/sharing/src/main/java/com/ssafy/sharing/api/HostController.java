@@ -55,8 +55,8 @@ public class HostController {
 	}
 
 	@ApiOperation(value = "내가 등록한 sharing home 리스트를 불러온다.", response = Host.class)
-	@GetMapping("/host/read")
-	public ResponseEntity<List<Host>> getHosts(@ApiParam(value = "member_email", required = true)@RequestBody String member_email){
+	@GetMapping("/host/read/{member_email}/")
+	public ResponseEntity<List<Host>> getHosts(@ApiParam(value = "member_email", required = true)@PathVariable String member_email){
 		if(!userService.checkMember(member_email)) {
 			return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
 		}
