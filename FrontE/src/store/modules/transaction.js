@@ -4,42 +4,36 @@ export default {
     namespaced : true,
 
 	state: {
-        reservation : {},
-        reservations : [],
+        transactions : [],
     },
 	mutations: {
-        setReservation(state,payload){
-            state.reservation = payload
-        },
-        setReservations(state,payload){
-            state.reservations = payload
+        setTransactions(state,payload){
+            state.transactions = payload
         }
 
     },
 	actions: {
-        fetchReservationsByEmail(context,payload){//payload : user.email
+        fetchTransactionsByEmail(context,payload){//payload : user.email
             // http
-            //     .get('/reservations',payload)
+            //     .get('/transactions',payload)
             //     .then(({data})=>{
             //         context.commit('setReservations',data)
             //     })
             //     .catch(err => console.log(err.response))
-            var reservations = 
+            var transactions = 
             [
                 {
-                    r_id : 1,
-                    r_address : "광산구 장덕동",
-                    r_dates : ['2020-09-25','2020-09-26','2020-09-27'],
-                    r_pay : 100000,
+                    t_id : 1,
+                    t_contents : "광산구 장덕동의 숙소를 예약 하셨습니다.",
+                    t_type : "예약",
                 },
                 {
-                    r_id : 2,
-                    r_address : "광산구 장덕동 1589",
-                    r_dates : ['2020-09-27','2020-09-28','2020-09-29'],
-                    r_pay : 150000,
+                    t_id : 2,
+                    t_contents : "광산구 장덕동 1589의 숙소를 등록 하셨습니다.",
+                    t_type : "등록",
                 },
             ]
-            context.commit('setReservations',reservations)
+            context.commit('setTransactions',transactions)
         },
          
         
