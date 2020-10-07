@@ -12,6 +12,8 @@ export default {
         houseDates : [],
         houseImage : '',
         houseFile : [],
+        myHouses : [],
+        
     },
 	mutations: {
         initHouseData(state){
@@ -35,8 +37,10 @@ export default {
         },
         setRecentHouses(state,payload){
             state.recentHouses = payload
+        },
+        setMyHouses(state,payload){
+            state.myHouses = payload
         }
-
     },
 	actions: {
         fetchRecentHouses(context){//payload : user.email
@@ -81,29 +85,29 @@ export default {
         },     
         fetchHousesByEmail(context,payload){//payload : user.email
             // http
-            //     .get('/reservations',payload)
+            //     .get('/host/read',payload)
             //     .then(({data})=>{
-            //         context.commit('setReservations',data)
+            //         context.commit('setMyHouses',data)
             //     })
             //     .catch(err => console.log(err.response))
-            var Houses = 
+            var myHouses = 
             [
                 {
                     register_id : 1,
-                    house_url :"https://cdn.vuetifyjs.com/images/cards/sunshine.jpg",
-                    house_address : "광산구 장덕동",
-                    house_type : "아파트",
-                    house_capacity : "2~3인용"
+                    host_images : ["https://cdn.vuetifyjs.com/images/cards/sunshine.jpg"],
+                    host_address : "광산구 장덕동",
+                    host_type : "아파트",
+                    host_capacity : "2~3인용"
                 },
                 {
                     register_id : 2,
-                    house_url :"https://cdn.vuetifyjs.com/images/cards/sunshine.jpg",
-                    house_address : "광산구 장덕동 1589",
-                    house_type : "아파트",
-                    house_capacity : "개인실"
+                    host_images :["https://cdn.vuetifyjs.com/images/cards/sunshine.jpg"],
+                    host_address : "광산구 장덕동 1589",
+                    host_type : "아파트",
+                    host_capacity : "개인실"
                 },
             ]
-            context.commit('setHouses',Houses)
+            context.commit('setMyHouses',myHouses)
         },
         imageUpload(context,payload){
             console.log(payload)

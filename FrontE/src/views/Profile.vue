@@ -10,7 +10,7 @@
                         <v-col cols="4" >
                             <v-avatar size="30vh">
                                 <img
-                                    :src= "member.member_imgurl"
+                                    :src="member.member_img"
                                 >
                             </v-avatar>
                         </v-col>
@@ -26,7 +26,7 @@
                                 <v-list-item-icon>
                                     <v-icon>mdi-mail</v-icon>
                                 </v-list-item-icon>
-                                <v-list-item-subtitle v-if="member.public_key !== ''">{{member.public_key}}</v-list-item-subtitle>
+                                <v-list-item-subtitle v-if="member.public_key !== null">{{member.public_key}}</v-list-item-subtitle>
                                 <v-list-item-subtitle v-else><a @click.prevent="setPassword">지갑 생성하기</a></v-list-item-subtitle>
                             </v-list-item>
                         </v-col>
@@ -52,18 +52,18 @@
                                     <div>
                                         <v-card-title
                                         class="headline"
-                                        v-text="house.house_address"
+                                        v-text="house.host_address"
                                         ></v-card-title>
 
-                                        <v-card-subtitle v-text="house.house_type"></v-card-subtitle>
-                                        <v-card-text style="padding : 2.5vh;" v-text="house.house_capacity"></v-card-text>
+                                        <v-card-subtitle v-text="house.host_type"></v-card-subtitle>
+                                        <v-card-text style="padding : 2.5vh;" v-text="house.host_capacity"></v-card-text>
                                     </div>
                                     <v-avatar
                                         class="ma-4"
                                         size="125"
                                         tile
                                     >
-                                        <v-img :src="house.house_url"></v-img>
+                                        <v-img :src="house.host_images[0]"></v-img>
                                     </v-avatar>
                                     </div>
                                 </v-card>
@@ -201,68 +201,12 @@ export default {
     data(){
         return{
             member: {},
-            desserts: [
-            {
-                name: 'Frozen Yogurt',
-                calories: 159,
-            },
-            {
-                name: 'Ice cream sandwich',
-                calories: 237,
-            },
-            {
-                name: 'Eclair',
-                calories: 262,
-            },
-            {
-                name: 'Cupcake',
-                calories: 305,
-            },
-            {
-                name: 'Gingerbread',
-                calories: 356,
-            },
-            {
-                name: 'Jelly bean',
-                calories: 375,
-            },
-            {
-                name: 'Lollipop',
-                calories: 392,
-            },
-            {
-                name: 'Honeycomb',
-                calories: 408,
-            },
-            {
-                name: 'Donut',
-                calories: 452,
-            },
-            {
-                name: 'KitKat',
-                calories: 518,
-            },
-            ],
-            items: [
-                {
-                color: '#1F7087',
-                src: 'https://cdn.vuetifyjs.com/images/cards/foster.jpg',
-                title: 'Supermodel',
-                artist: 'Foster the People',
-                },
-                {
-                color: '#952175',
-                src: 'https://cdn.vuetifyjs.com/images/cards/halcyon.png',
-                title: 'Halcyon Days',
-                artist: 'Ellie Goulding',
-                },
-            ],
         }
     },
     computed:{
         ...mapState({
             reservations : state => state.reservation.reservations,
-            houses : state => state.house.houses,
+            houses : state => state.house.myHouses,
             transactions : state => state.transaction.transactions
         })
     },
@@ -278,6 +222,7 @@ export default {
     mounted(){
         //
         this.member = this.$cookies.get('member')
+        if(this.member.member_img == '' || this.member.member_img == null) this.member.member_img = require('../assets/avatar_default.png')
         this.fetchReservationsByEmail(this.member.member_email)
         this.fetchHousesByEmail(this.member.member_email)
         this.fetchTransactionsByEmail(this.member.member_email)
