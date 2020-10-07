@@ -21,9 +21,9 @@
         <div id="cover" style="margin-top : -40vh;">
             <form method="get" action="">
                 <div class="tb">
-                <div class="td"><input type="text" placeholder="Search" required style=""></div>
+                <div class="td"><input type="text" placeholder="Search" required id="search_input"></div>
                 <div class="td" id="s-cover">
-                    <button type="submit">
+                    <button id="search">
                     <div id="s-circle"></div>
                     <span></span>
                     </button>
@@ -48,7 +48,7 @@
                                     class="d-flex transition-fast-in-fast-out blue darken-2 v-card--reveal display-3 white--text"
                                     style="height: 100%;"
                                 >
-                                    <v-btn color="deep-purple accent-4" class="btn-1" rounded height="4em"><span class="btn-name">예약하기</span></v-btn>
+                                    <v-btn color="deep-purple accent-4" class="btn-1" rounded height="4em"><p class="btn-name">예약하기</p></v-btn>
                                 </div>
                             </v-expand-transition>    
                             </v-img>
@@ -178,16 +178,14 @@ p{
     font-size: 1em;
     font-style: unset;
 }
+
+
 *
 {
     outline: none;
 }
 
-html, body
-{
-    height: 100%;
-    min-height: 100%;
-}
+
 
 body
 {
@@ -207,7 +205,7 @@ body
     vertical-align: middle;
 }
 
-input, button
+#search_input, #search
 {
     color: #fff;
     font-family: Nunito;
@@ -238,7 +236,7 @@ form
     height: 96px;
 }
 
-input[type="text"]
+#search_input[type="text"]
 {
     width: 100%;
     height: 96px;
@@ -246,7 +244,7 @@ input[type="text"]
     line-height: 1;
 }
 
-input[type="text"]::placeholder
+#search_input[type="text"]::placeholder
 {
     /* color: #e16868; */
     color:whitesmoke;
@@ -258,7 +256,7 @@ input[type="text"]::placeholder
     padding-left: 35px;
 }
 
-button
+#search
 {
     position: relative;
     display: block;
