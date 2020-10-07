@@ -26,4 +26,10 @@
 		ORDER BY rid DESC
 		LIMIT 1
 	</select>
+	
+	<select id="getReserveDays" parameterType="_int" resultType="string">
+		SELECT reserve_day
+		FROM reservation_days
+		WHERE rid=#{rid}
+	</select>
 </mapper>

@@ -70,7 +70,7 @@ public class ReserveServiceImpl implements ReserveService {
 		try {
 			Reservation ret = reserveDao.getLatelyReserve();
 			List<String> reserve_day_list = new ArrayList<>();
-//			reserve_day_list = reserveDao.getReserveDays()
+			reserve_day_list = reserveDao.getReserveDays(ret.getRid());
 //			ret.setReserve_day(reserve_day);
 			return ret;
 		}catch (Exception e) {
