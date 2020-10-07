@@ -237,15 +237,6 @@ export default {
         this.member = this.$cookies.get('member')
         // this.member.member_img = ''
         if(this.member.member_img == '' || this.member.member_img == null) this.member.member_img = require('../assets/avatar_default.png')
-        // this.member =
-        //         {
-        //         "member_email": "test@gmail.com",
-        //         "member_nickname": "testnickname",
-        //         "member_imgurl" : "http://k.kakaocdn.net/dn/bpLTxG/btqJRmspqjR/390YKJMfPaukWYDUbbMcz1/img_640x640.jpg",
-        //         // "public_key": "0xA8566F6bC8FB2E46B14e9eEb282ecDc0e53AA37C"
-        //         "public_key": ""
-        //         }
-        
     }
 }
 </script>
