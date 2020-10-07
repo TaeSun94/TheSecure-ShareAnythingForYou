@@ -12,7 +12,7 @@ membershipEthereum.createAccount = async function(_password){
         gasPrice: 50000,
         gas: 50000,
         to: account,
-        value: 30000000,
+        value: 30000000000,
         data: funcData
     },etherConfig.coinbase.password);
     return account;
