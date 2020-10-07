@@ -6,4 +6,6 @@ public interface ReserveService {
 	public boolean checkReserve(Reservation info);
 
 	public void reserveHost(Reservation reservation);
+
+	public Reservation getReserveInfo();
 }

@@ -3,10 +3,11 @@ package com.ssafy.sharing.domain;
 import java.util.Arrays;
 
 public class Reservation {
+	
 	private String member_email;
 	private int host_num;
 	private String[] reserve_day;
-	private String tid;
+	private int rid;
 	private int price;
 
 	public String getMember_email() {
@@ -33,12 +34,13 @@ public class Reservation {
 		this.reserve_day = reserve_day;
 	}
 
-	public String getTid() {
-		return tid;
+
+	public int getRid() {
+		return rid;
 	}
 
-	public void setTid(String tid) {
-		this.tid = tid;
+	public void setRid(int rid) {
+		this.rid = rid;
 	}
 
 	public int getPrice() {
@@ -52,7 +54,7 @@ public class Reservation {
 	@Override
 	public String toString() {
 		return "Reservation [member_email=" + member_email + ", host_num=" + host_num + ", reserve_day="
-				+ Arrays.toString(reserve_day) + ", tid=" + tid + "]";
+				+ Arrays.toString(reserve_day) + ", rid=" + rid + ", price=" + price + "]";
 	}
 
 }

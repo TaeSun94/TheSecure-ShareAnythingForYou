@@ -1,6 +1,8 @@
 package com.ssafy.sharing.application;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -61,6 +63,21 @@ public class ReserveServiceImpl implements ReserveService {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+	}
+
+	@Override
+	public Reservation getReserveInfo() {
+		try {
+			Reservation ret = reserveDao.getLatelyReserve();
+			List<String> reserve_day_list = new ArrayList<>();
+//			reserve_day_list = reserveDao.getReserveDays()
+//			ret.setReserve_day(reserve_day);
+			return ret;
+		}catch (Exception e) {
+			// TODO: handle exception
+			e.printStackTrace();
+		}
+		return null;
 	}
 
 }
