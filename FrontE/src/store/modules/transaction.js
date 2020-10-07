@@ -1,5 +1,5 @@
 import http from '@/util/http-common.js'
-
+import membershipEthereum from "../../ethereum/membershipEthereum";
 export default {
     namespaced : true,
 
@@ -14,26 +14,16 @@ export default {
     },
 	actions: {
         fetchTransactionsByEmail(context,payload){//payload : user.email
-            // http
-            //     .get('/transactions',payload)
-            //     .then(({data})=>{
-            //         context.commit('setReservations',data)
-            //     })
-            //     .catch(err => console.log(err.response))
-            var transactions = 
-            [
-                {
-                    t_id : 1,
-                    t_contents : "광산구 장덕동의 숙소를 예약 하셨습니다.",
-                    t_type : "예약",
-                },
-                {
-                    t_id : 2,
-                    t_contents : "광산구 장덕동 1589의 숙소를 등록 하셨습니다.",
-                    t_type : "등록",
-                },
-            ]
-            context.commit('setTransactions',transactions)
+            http
+                .get('/transaction/'+payload+'/')
+                .then(({data})=>{
+                    // context.commit('setReservations',data)
+                    membershipEthereum.getTransactions(data).then(value=>{
+                        console.log(value);
+                        context.commit('setTransactions',value);
+                    })
+                })
+                .catch(err => console.log(err.response))
         },
          
         

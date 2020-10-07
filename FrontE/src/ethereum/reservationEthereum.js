@@ -5,7 +5,7 @@ var reservationEthereum = {};
 
 //누가 pk번호 집을 무엇을 하였다.
 reservationEthereum.registerReservation = async function(_member,_host){
-    var str = _member.member_email + "가 "+_host.host_num+"을 예약하였습니다.";
+    var str = _member.member_nickname + "가 예약 번호 "+_host.rid+"을 예약하였습니다.";
     var funcData = web3.eth.abi.encodeParameter('string',str);
     web3.eth.personal.unlockAccount(_member.public_key,_member.password);
     var hostTx = await web3.eth.personal.sendTransaction({

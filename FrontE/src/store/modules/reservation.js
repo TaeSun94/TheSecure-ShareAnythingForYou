@@ -1,5 +1,6 @@
 import http from '@/util/http-common.js'
 import router from '@/router'
+import reservationEthereum from '../../ethereum/reservationEthereum';
 
 export default {
     namespaced : true,
@@ -45,6 +46,15 @@ export default {
             http
                 .post('/reserve/done',payload)
                 .then(({data})=>{
+                    reservationEthereum.registerReservation($cookies.get('member'),data).then(value=>{
+                        console.log(value);
+                            var transaction = {
+                                member_email : $cookies.get('member').member_email,
+                                tx_hash: value
+                            }
+                            http.post('/transaction/insert',transaction);
+                    })
+
                     alert("예약이 완료되었습니다.")
                     router.push({ path: '/home' })
                 }).catch(err => console.log(err.response))
