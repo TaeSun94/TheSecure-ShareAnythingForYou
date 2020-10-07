@@ -22,6 +22,9 @@ export default {
             // state.detail=''
             state.houseData = {}
         },
+        initHouses(state){
+            state.house = []
+        },
         setHouseData(state,payload){
             state.houseData = payload
             // state.houseData.address = payload.address,
@@ -53,6 +56,14 @@ export default {
                 })
                 .catch(err => console.log(err.response))
             
+        },
+        fetchHouseByKeyword(context,payload){
+            http
+                .get('/host/search/'+payload + '/')
+                .then(({data})=>{
+                    console.log(data)
+                    context.commit('setHouses',data)
+                }).catch(err => console.log(err.response))
         },     
         fetchHousesByEmail(context,payload){//payload : user.email
             console.log(payload)
