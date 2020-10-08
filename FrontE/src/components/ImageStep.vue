@@ -25,7 +25,7 @@
     </v-card>
 </template>
 <script>
-import {mapState} from 'vuex'
+import {mapState,mapActions} from 'vuex'
 
 export default {
     data() {
@@ -36,7 +36,7 @@ export default {
     },
     computed:{
       ...mapState({
-        house : state => state.house.houseData
+        house : state => state.house.houseData,
       }),
     },
     methods: {
@@ -44,8 +44,6 @@ export default {
             this.$refs.imageInput.click();
         },
         onChangeImages(e) {
-            // console.log(e.target.files)
-            // const file = e.target.files[0];
             if(e == undefined){
               this.imageUrl = ''
               this.house.imageUrl = ''
@@ -62,8 +60,6 @@ export default {
                 this.house.img = this.img
               }
             }
-            // console.log(this.house.imageUrl);
-            // console.log(this.house.img)
         },
         // click: function(){
         //   alert("클릭!")

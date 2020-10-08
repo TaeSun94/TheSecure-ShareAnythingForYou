@@ -49,11 +49,12 @@ public class KakaoAPIServiceImpl implements KakaoAPIService {
 			StringBuilder sb = new StringBuilder();
 			sb.append("grant_type=authorization_code");
 			sb.append("&client_id=f67bfd6f7cdb600868d04a4e1408199f");
-			sb.append("&redirect_uri=http://localhost:8080/api/login");
+			sb.append("&redirect_uri=http://j3c201.p.ssafy.io/login");
+//			sb.append("&redirect_uri=http://localhost:3000/login");
+
 			sb.append("&code=" + authorize_code);
 			bw.write(sb.toString());
 			bw.flush();
-
 			int responseCode = conn.getResponseCode();
 			if (responseCode == 200) {
 				BufferedReader br = new BufferedReader(new InputStreamReader(conn.getInputStream()));
@@ -92,7 +93,6 @@ public class KakaoAPIServiceImpl implements KakaoAPIService {
 			URL url = new URL(reqURL);
 			HttpURLConnection conn = (HttpURLConnection) url.openConnection();
 			conn.setRequestMethod("POST");
-
 			conn.setRequestProperty("Authorization", "Bearer " + access_Token);
 
 			int responseCode = conn.getResponseCode();
@@ -105,18 +105,23 @@ public class KakaoAPIServiceImpl implements KakaoAPIService {
 				while ((line = br.readLine()) != null) {
 					result += line;
 				}
-
 				JsonParser parser = new JsonParser();
 				JsonElement element = parser.parse(result);
 
 				JsonObject properties = element.getAsJsonObject().get("properties").getAsJsonObject();
 				JsonObject kakao_account = element.getAsJsonObject().get("kakao_account").getAsJsonObject();
-
-				String nickname = properties.getAsJsonObject().get("nickname").getAsString();
-				String email = kakao_account.getAsJsonObject().get("email").getAsString();
-
+				String nickname = properties.getAsJsonObject().get("nickname").toString();
+				JsonObject profile = kakao_account.getAsJsonObject().get("profile").getAsJsonObject();
+//				String email = kakao_account.getAsJsonObject().get("email").toString();
+				String email = element.getAsJsonObject().get("id").toString();
+				String img = "";
+				if (profile.getAsJsonObject().get("profile_image_url") != null) {
+					img = profile.getAsJsonObject().get("profile_image_url").toString();
+					img = img.substring(1,img.length()-1);
+				}
 				member.setMember_email(email);
 				member.setMember_nickname(nickname);
+				member.setMember_img(img);
 			}
 		} catch (IOException e) {
 			e.printStackTrace();
@@ -135,6 +140,7 @@ public class KakaoAPIServiceImpl implements KakaoAPIService {
 			conn.setRequestProperty("Content-Type", "application/x-www-form-urlencoded;charset=UTF-8");
 			conn.setDoInput(true);
 			conn.setDoOutput(true);
+			System.out.println(info.toString());
 
 			Host host = hostDao.getHost(info.getHost_num());
 			Map<String, String> params = new HashMap<String, String>();
@@ -154,7 +160,6 @@ public class KakaoAPIServiceImpl implements KakaoAPIService {
 			for (Map.Entry<String, String> elem : params.entrySet()) {
 				string_params += (elem.getKey() + "=" + elem.getValue() + "&");
 			}
-
 			conn.getOutputStream().write(string_params.getBytes());
 
 			BufferedReader in = new BufferedReader(new InputStreamReader(conn.getInputStream()));

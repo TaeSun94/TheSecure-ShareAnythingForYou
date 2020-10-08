@@ -159,7 +159,6 @@ export default {
       }
       if(this.house.options == undefined){
         this.house.options = this.options
-        // console.log(this.house.options)
       }
     }
 }

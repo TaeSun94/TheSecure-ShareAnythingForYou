@@ -1,36 +1,18 @@
 <template>
-    <div class="container">
-        <div class="container_contents" id="introduction">
-            <h2>2%</h2>
-            <h4>여러분의 숙소가 안전한지 확인하세요!</h4>
-            <span>introduction</span>
-            <a href="#review" class="scroll">Scroll to target</a>
+    <div>
+        <div>
+            <img src="../assets/main1.png" id="introduction">
         </div>
-        <div class="container_contents" id="reservation">
-            <h2>2%</h2>
-            <h4>여러분의 숙소가 안전한지 확인하세요1</h4>
-            <span>reservation</span>
+        <div>
+            <img src="../assets/main2.png" id="reservation">
         </div>
-        <div class="container_contents" id="homesharing">
-            <h2>2%</h2>
-            <h4>여러분의 숙소가 안전한지 확인하세요2</h4>
-            <span>home_sharing</span>
+        <div>
+            <img src="../assets/main3.png" id="homesharing">
         </div>
-        <div class="container_contents" id="review">
-            <h2>2%</h2>
-            <h4>여러분의 숙소가 안전한지 확인하세요3</h4>
-            <span>review</span>
-        </div>
-        <div class="container_contents" id="faq">
-            <h2>2%</h2>
-            <h4>여러분의 숙소가 안전한지 확인하세요4</h4>
-            <span>faq</span>
+        <div>
+            <img src="../assets/main4.png" id="review">
         </div>
     </div>
-
-
-
-
 </template>
 <script>
 export default {
@@ -60,9 +42,6 @@ export default {
                             case Math.floor($('#review').offset().top/100):
                                 $('html,body').animate({scrollTop: $('#homesharing').offset().top}, 1000);
                                 break;
-                            case Math.floor($('#faq').offset().top/100):
-                                $('html,body').animate({scrollTop: $('#review').offset().top}, 1000);
-                                break;
                         }
                         setTimeout(function() { f = true }, 1000);
                         // window.scrollTo({top:$('#introduction').offset().top, behavior:'smooth'});
@@ -76,9 +55,6 @@ export default {
                                 break;
                             case Math.floor($('#homesharing').offset().top/100):
                                 $('html,body').animate({scrollTop: $('#review').offset().top}, 1000);
-                                break;
-                            case Math.floor($('#review').offset().top/100):
-                                $('html,body').animate({scrollTop: $('#faq').offset().top}, 1000);
                                 break;
                         }
                         // setTimeout(function() { f = true }, 1000);
@@ -107,7 +83,6 @@ export default {
     padding-bottom: 0px;
     margin-bottom : 0px;
     margin-top: 0px;
-
 }
 #introduction{
     /* width: ; */

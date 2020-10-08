@@ -3,18 +3,18 @@
         <div class="drawsvg">
             <svg version="1.1" viewBox="0 0 700 300">
                 <symbol id="fade-text">
-                <text x="45%" y="40%" text-anchor="middle">Welcome to 2%</text>
-                <text x="55%" y="60%" text-anchor="middle">Use </text>
+                <text x="45%" y="40%" text-anchor="middle" style="font">Welcome to SSAFY</text>
+                <text x="55%" y="60%" text-anchor="middle">by 2% </text>
                 </symbol>
                 <g> <use class="stroke" xlink:href="#fade-text"/> <use class="fill" xlink:href="#fade-text"/> </g>
             </svg>
         </div>
-        <div class ="col">
+        <div class ="col" style="text-align:center;">
           <div v-if ="this.isLogin">
             <button @click="moveHome()">Home</button>
           </div>            
           <div v-else>
-            <button style="margin-right : 10px;" @click="moveHome()">Test</button> 
+            <!-- <button style="margin-right : 10px;" @click="moveHome()">Test</button>  -->
             <button @click="openModal()">Go</button>
           </div>
         </div>
@@ -53,7 +53,6 @@ export default {
     }
   },
   mounted(){
-    console.log(this.isLogin)
   },
 }
 </script>
@@ -62,7 +61,7 @@ export default {
   overflow: hidden;
 }
 
-.drawsvg,svg {width: 100%; height: 300px}
+.drawsvg,svg {width: 100%; height: 350px}
 .stroke {
   stroke: #000;
   stroke-width: 1px;

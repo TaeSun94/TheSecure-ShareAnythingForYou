@@ -1,10 +1,15 @@
 package com.ssafy.sharing.domain;
 
+import java.util.Arrays;
+
 public class Reservation {
+	
 	private String member_email;
+	private Host host;
 	private int host_num;
 	private String[] reserve_day;
-	private String tid;
+	private int rid;
+	private int price;
 
 	public String getMember_email() {
 		return member_email;
@@ -30,12 +35,31 @@ public class Reservation {
 		this.reserve_day = reserve_day;
 	}
 
-	public String getTid() {
-		return tid;
+
+	public int getRid() {
+		return rid;
 	}
 
-	public void setTid(String tid) {
-		this.tid = tid;
+	public void setRid(int rid) {
+		this.rid = rid;
 	}
+
+	public int getPrice() {
+		return price;
+	}
+
+	public void setPrice(int price) {
+		this.price = price;
+	}
+
+	public Host getHost() {
+		return host;
+	}
+
+	public void setHost(Host host) {
+		this.host = host;
+	}
+
+
 
 }

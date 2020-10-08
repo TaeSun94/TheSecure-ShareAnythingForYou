@@ -34,12 +34,28 @@ public class UserController {
 			if (member == null) {
 				return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
 			} else {
+				
 				return new ResponseEntity<>(userService.getUserinfo(member_email), HttpStatus.OK);
 			}
 		}
-
+		
 		return new ResponseEntity<>(null, HttpStatus.UNAUTHORIZED);
 	}
 	
+	@ApiOperation(value = "member의 blockchain net password 설정", response = Boolean.class)
+	@PutMapping("/user/password")
+	public ResponseEntity<Boolean> setPassword(@ApiParam(value = "Member", required = true) @RequestBody Member member){
+		if(member == null) {
+			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+		}
+		
+		return new ResponseEntity<>(userService.setPassword(member), HttpStatus.OK);
+	}
 	
+	
+	@ApiOperation(value = "테스트", response = Member.class)
+	@GetMapping("/test")
+	public ResponseEntity<Member> test(){
+		return new ResponseEntity<Member>(userService.test(), HttpStatus.OK);
+	}
 }

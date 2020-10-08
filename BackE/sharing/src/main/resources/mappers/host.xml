@@ -13,9 +13,9 @@
 
 	<insert id="registHost" parameterType="hashmap">
 		INSERT INTO host
-		(member_email, host_address, host_type, host_intro, host_price)
+		(member_email, host_address, host_type, host_intro, host_price, host_capacity)
 		VALUES
-		(#{member_email},#{host_address},#{host_type},#{host_intro},#{host_price})
+		(#{member_email},#{host_address},#{host_type},#{host_intro},#{host_price},#{host_capacity})
 	</insert>
 
 	<select id="getRecentHostNum" parameterType="string"
@@ -57,6 +57,7 @@
 		VALUES
 		(#{host_num},#{item1},#{item2},#{item3},#{item4},#{item5},#{item6},#{item7},#{item8},#{item9},#{item10})
 	</insert>
+	
 	<select id="getHosts" parameterType="string"
 		resultType="com.ssafy.sharing.domain.Host">
 		SELECT *
@@ -67,7 +68,7 @@
 	<select id="getHostImages" parameterType="_int"
 		resultType="com.ssafy.sharing.domain.HostImages">
 		SELECT img1, img2, img3, img4, img5, img6
-		FROM host_imgs
+		FROM host_images
 		WHERE host_num = #{host_num}
 	</select>
 
@@ -76,10 +77,10 @@
 		SELECT host_available_day
 		FROM host_available_days
 		WHERE
-		host_num = #{host_num}
+		host_num = #{host_num} AND is_reservation = FALSE
 	</select>
 
-	<select id="getHostItems" parameterType="_int"
+	<select id="getHostProvideItems" parameterType="_int"
 		resultType="com.ssafy.sharing.domain.HostItems">
 		SELECT item1, item2, item3, item4, item5, item6, item7,
 		item8, item9, item10
@@ -97,7 +98,7 @@
 		#{host_num}
 	</update>
 
-	<select id="getHost" parameterType="_int">
+	<select id="getHost" parameterType="_int" resultType="com.ssafy.sharing.domain.Host">
 		SELECT *
 		FROM host
 		WHERE host_num = #{host_num}
@@ -116,11 +117,34 @@
 		</foreach>
 	</select>
 
-	<select id="getLatelyHost" parameterType="_int">
+	<select id="getLatelyHosts" parameterType="_int" resultType="com.ssafy.sharing.domain.Host">
 		SELECT *
 		FROM host
 		ORDER BY host_num DESC
-		LIMIT 8;
+		LIMIT 8
+	</select>
+	
+	<select id="getAllHost" resultType="com.ssafy.sharing.domain.Host">
+		SELECT *
+		FROM host
+	</select>
+	
+	<select id="getSearchHost" parameterType="string" resultType="com.ssafy.sharing.domain.Host">
+		SELECT *
+		FROM host
+		WHERE host_address LIKE CONCAT('%',#{keyword},'%')
 	</select>
 
+	<select id="getLatelyHost" resultType="com.ssafy.sharing.domain.Host">
+		SELECT *
+		FROM host
+		ORDER BY host_num DESC
+		LIMIT 1
+	</select>
+	
+	<update id="updateAvailableDay" parameterType="hashmap">
+		UPDATE host_available_days
+		SET is_reservation = TRUE
+		WHERE host_num = #{host_num} AND host_available_day = #{reserve_day}
+	</update>
 </mapper>

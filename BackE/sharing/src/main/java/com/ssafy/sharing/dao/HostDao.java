@@ -42,4 +42,12 @@ public interface HostDao {
 	int checkAvailableDay(Map<String, Object> map);
 
 	List<Host> getLatelyHosts();
+	
+	List<Host> getAllHost();
+	
+	List<Host> getSearchHost(String keyword);
+
+	Host getLatelyHost();
+
+	void updateAvailableDay(Map<String, Object> map);
 }

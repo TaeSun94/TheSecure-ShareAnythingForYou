@@ -21,6 +21,7 @@
                           v-model="dates"
                           multiple
                           chips
+                          clearable
                           label="선택하신 날짜"
                           prepend-icon="mdi-view-dashboard"
                           readonly
@@ -48,7 +49,7 @@ export default {
   props:['bus'],
   computed : {
     ...mapState({
-      houseDates : state => state.house.houseDates
+      houseDates : state => state.house.houseDates,
     }),
   },
   watch :{

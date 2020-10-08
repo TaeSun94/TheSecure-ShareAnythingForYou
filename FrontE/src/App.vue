@@ -35,11 +35,10 @@ export default {
       this.$router.push({'name' : 'Cover'})
     }
     else if(code !== undefined){
-      console.log(code)
       this.$cookies.set("code",code,"1h")
-      //this.getAccessToken(code)
+      this.getAccessToken(code)
       // user id 도 저장할거임 
-      this.$router.push({'name' : 'Home'})
+      this.$router.push({'name' : 'Cover'})
     }
 
     //
@@ -58,7 +57,7 @@ export default {
 font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  text-align: center;
+  /* text-align: center; */
   color: #2c3e50;
   background-image: url(./assets/background.png);
   background-repeat: repeat;

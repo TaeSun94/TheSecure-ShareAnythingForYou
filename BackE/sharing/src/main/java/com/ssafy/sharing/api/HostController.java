@@ -9,6 +9,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -35,16 +36,18 @@ public class HostController {
 	@Autowired
 	FileService fileService;
 	
-	@ApiOperation(value = "sharing home을 등록한다.", response = Boolean.class)
+	@ApiOperation(value = "sharing home을 등록한다.", response = Host.class)
 	@PostMapping("/host/regist")
-	public ResponseEntity<Boolean> registHost(
+	public ResponseEntity<Host> registHost(
 			@ApiParam(value = "Host object", required = true) @RequestBody Host host) {
 		if (host == null) {
 			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
 		}
-//		host.setHost_images(fileService.uploadFile(host.getFiles()));
-		return new ResponseEntity<>(hostService.registHost(host),HttpStatus.OK);
-
+		if(hostService.registHost(host)) {
+			Host ret = hostService.getLatelyHost();
+			return new ResponseEntity<>(ret,HttpStatus.OK);
+		}
+		return new ResponseEntity<>(HttpStatus.EXPECTATION_FAILED);
 	}
 	
 	@ApiOperation(value = "등록된 sharing home을 제거한다.", response = Boolean.class)
@@ -54,21 +57,21 @@ public class HostController {
 	}
 
 	@ApiOperation(value = "내가 등록한 sharing home 리스트를 불러온다.", response = Host.class)
-	@GetMapping("/host/read")
-	public ResponseEntity<List<Host>> getHosts(@ApiParam(value = "member_email", required = true)@RequestBody String member_email){
+	@GetMapping("/host/read/{member_email}/")
+	public ResponseEntity<List<Host>> getHosts(@ApiParam(value = "member_email", required = true)@PathVariable String member_email){
 		if(!userService.checkMember(member_email)) {
 			return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
 		}
 		List<Host> host_list = hostService.getHosts(member_email);
+		for(Host host : host_list) {
+			System.out.println(host.toString());
+		}
 		return new ResponseEntity<>(host_list, HttpStatus.OK);
 	}
 
 	@ApiOperation(value = "등록된 sharing home 중 가장 최근 8개에 대한 리스트를 불러온다.", response = Host.class)
 	@GetMapping("/host/rately")
-	public ResponseEntity<List<Host>> getLatelyHosts(@ApiParam(value = "member_email", required = true)@RequestBody String member_email){
-		if(!userService.checkMember(member_email)) {
-			return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
-		}
+	public ResponseEntity<List<Host>> getLatelyHosts(){
 		List<Host> host_list = hostService.getLatelyHosts();
 		return new ResponseEntity<>(host_list, HttpStatus.OK);
 	}
@@ -80,6 +83,13 @@ public class HostController {
 			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
 		}
 		return new ResponseEntity<>(hostService.updateHost(host), HttpStatus.OK);
+	}
+	
+	@ApiOperation(value = "입력한 검색어로 숙소를 조회한다.", response = Host.class)
+	@GetMapping("/host/search/{keyword}/")
+	public ResponseEntity<List<Host>> searchHost(@ApiParam(value = "Host List", required=true) @PathVariable String keyword){
+		List<Host> list = hostService.searchHost(keyword);
+		return new ResponseEntity<>(list, HttpStatus.OK);
 	}
 	
 }

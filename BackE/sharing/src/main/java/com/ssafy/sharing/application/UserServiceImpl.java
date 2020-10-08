@@ -1,5 +1,8 @@
 package com.ssafy.sharing.application;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -33,6 +36,26 @@ public class UserServiceImpl implements UserService {
 			e.printStackTrace();
 		}
 		return false;
+	}
+
+	@Override
+	public boolean setPassword(Member member) {
+		try {
+			Map<String,Object> map = new HashMap<>();
+			map.put("member_email", member.getMember_email());
+			map.put("password", member.getPassword());
+			map.put("public_key", member.getPublic_key());
+			
+			return userDao.setPassword(map);
+		}catch (Exception e) {
+			e.printStackTrace();
+		}
+		return false;
+	}
+
+	@Override
+	public Member test() {
+		return userDao.test();
 	}
 
 }
