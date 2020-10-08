@@ -23,7 +23,7 @@ export default {
             state.houseData = {}
         },
         initHouses(state){
-            state.house = []
+            state.houses = []
         },
         setHouseData(state,payload){
             state.houseData = payload
@@ -51,50 +51,27 @@ export default {
             http
                 .get('/host/rately')
                 .then(({data})=>{
-                    console.log(data)
                     context.commit('setRecentHouses',data)
                 })
-                .catch(err => console.log(err.response))
+                .catch()
             
         },
         fetchHouseByKeyword(context,payload){
             http
                 .get('/host/search/'+payload + '/')
                 .then(({data})=>{
-                    console.log(data)
                     context.commit('setHouses',data)
-                }).catch(err => console.log(err.response))
+                }).catch()
         },     
         fetchHousesByEmail(context,payload){//payload : user.email
-            console.log(payload)
             http
                 .get('/host/read/'+ payload +'/')
                 .then(({data})=>{
-                    console.log(data)
                     context.commit('setMyHouses',data)
                 })
-                .catch(err => console.log(err.response))
-            // var myHouses = 
-            // [
-            //     {
-            //         register_id : 1,
-            //         host_images : ["https://cdn.vuetifyjs.com/images/cards/sunshine.jpg"],
-            //         host_address : "광산구 장덕동",
-            //         host_type : "아파트",
-            //         host_capacity : "2~3인용"
-            //     },
-            //     {
-            //         register_id : 2,
-            //         host_images :["https://cdn.vuetifyjs.com/images/cards/sunshine.jpg"],
-            //         host_address : "광산구 장덕동 1589",
-            //         host_type : "아파트",
-            //         host_capacity : "개인실"
-            //     },
-            // ]
-            // context.commit('setMyHouses',myHouses)
+                .catch()
         },
         imageUpload(context,payload){
-            // console.log(payload)
             const fd = new FormData()
             if(payload.img.length > 0){
                 fd.append('file', payload.img.pop())
@@ -104,8 +81,6 @@ export default {
                         'Content-Type':"multipart/form-data"
                     }
                 }).then(({data}) =>{
-                    // console.log(data)
-                    // console.log(payload)
                     var imgurl = [];
                     imgurl.push(data)
                     var hostData = 
@@ -114,30 +89,26 @@ export default {
                         host_type : payload.select,
                         host_intro : '편히 쉬다가세요',
                         host_price : payload.price,
-                        host_capactiy : payload.select_number,
+                        host_capacity : payload.select_number,
                         host_provide_items : payload.options,
                         host_available_day : payload.dates,
                         member_email : $cookies.get('member').member_email,
                         host_images : imgurl,
                     }
-                    // console.log(hostData)
                     //집등록부분
                     http
                         .post('/host/regist', hostData)
                         .then((data) => {
                             hostEthereum.registerHost($cookies.get('member'),data.data).then(value=>{
-                                console.log(value);
                                 var transaction = {
                                     member_email : $cookies.get('member').member_email,
                                     tx_hash: value
                                 }
                                 http.post('/transaction/insert',transaction);
                             })
-                            // console.log(data);
-                            console.log("집등록완료"),
                             router.push({path: '/home'})
                         })
-                        .catch(err => console.log(err.response))
+                        .catch()
                 })
             }
         }

@@ -95,9 +95,7 @@ export default {
     ...mapMutations('house',['setHouseData','initHouseData']),
     ...mapMutations(['setFormValid']),
     complete(data){
-      // console.log(data.address)
       this.setHouseData(data)
-      // console.log(this.address)
     },
     reset () {
       this.initHouseData()
@@ -106,7 +104,6 @@ export default {
     },
   },
   mounted(){
-    // console.log(this.address)
   }
 }
 </script>

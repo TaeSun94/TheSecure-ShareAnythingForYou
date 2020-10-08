@@ -322,7 +322,10 @@ export default {
             //하루씩 더해가면서 다음날이 end와 같으면 거기서 종료시키기
             //같지 않으면 예약일배열에 넣기
             if(start == end){
-                alert("이용기간을 하루이상 선택해주세요")
+                swal({
+                      text : "이용기간을 하루이상 선택해주세요",
+                      icon: "error"
+                  })
                 check = false
             }
             var year = start.substr(0,4) *1
@@ -335,7 +338,10 @@ export default {
                 start.setDate(start.getDate() + 1)
                 dayformat = start.toISOString().substr(0,10)
                 if(!this.allowedDates.includes(dayformat)){
-                    alert("이용가능기간을 연속되게 선택해주세요")
+                    swal({
+                      text : "이용가능기간을 연속되게 선택해주세요",
+                      icon: "error"
+                  })
                     check= false
                     break;
                 }
@@ -363,7 +369,6 @@ export default {
     mounted(){
         this.gettomorrow()
         this.house = this.$route.params.house
-        console.log(this.house)
         if(this.house.member.member_img == '' || this.house.member.member_img == undefined) this.house.member.member_img = require('../assets/avatar_default.png')
         this.allowedDates = this.house.host_available_day
         this.options = this.house.host_provide_items

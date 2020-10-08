@@ -89,6 +89,7 @@
                                     <span class="grey--text">{{house.host_type}}</span>
                                 </div>
                             </v-card-title>
+                            <v-card-text class="grey--text" style="margin-left:2vh;" ><span>{{house.host_capacity}}</span></v-card-text>
                         </v-card>
                     </v-hover>
                 </v-col>
@@ -127,6 +128,7 @@ import {mapState,mapActions,mapMutations} from 'vuex'
 export default {
     data(){
         return{
+            member : {},
             vartical : false,
             showArrow : false,
             slides: [
@@ -177,7 +179,21 @@ export default {
         })
     },
     mounted(){
-        this.fetchRecentHouses()
+        if(this.member != undefined){
+            this.member = this.$cookies.get('member')
+            if(this.member.password == null){
+                swal({
+                      title : "아직 지갑생성을 안하셨군요?",
+                      text : "안전한 사용을 위해 지갑을 먼저 생성해주세요",
+                      icon: "warning",
+                      button: "돌아가기"
+                })
+                this.$router.push({path : '/home'})
+            }
+        }else{
+            document.documentElement.scrollTop = 0;
+            this.fetchRecentHouses()
+        }
     },
     beforeDestroy(){
         this.initHouses()

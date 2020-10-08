@@ -172,30 +172,39 @@ import SharingStep5 from './PriceStep.vue'
                         this.e1 = n + 1
                     }
                 }else{
-                    alert("동의해야함")
+                    swal({
+                      text : "약관에 동의해야 합니다!",
+                      icon: "error"
+                    })
                 }
                 break
               case 2 :
                 if(this.formValid == true){
-                  // console.log(this.house.address +" " + this.house.detail)
-                  // this.houseData.address = this.house.address
-                  // this.houseData.detail = this.house.detail
                   this.e1 = n + 1
                   this.setFormValid(false)
                 }else{
-                  alert("상세주소를 입력해야합니다.")
+                  swal({
+                      text : "상세주소를 입력해야합니다.",
+                      icon: "error"
+                  })
                 }
                 break
               case 3 :
                 if(this.house.imageUrl == null || this.house.imageUrl =='' || this.house.imageUrl == undefined){
-                  alert("숙소사진을 등록해야합니다.")
+                  swal({
+                      text : "숙소사진을 등록해야합니다.",
+                      icon: "error"
+                  })
                 }else{
                   this.e1 = n + 1
                 }
                 break
               case 4 :
                 if(this.houseDates.length <= 0){
-                  alert("최소 하루이상의 날짜를 선택해야합니다")
+                  swal({
+                      text : "최소 하루이상의 날짜를 선택해야합니다",
+                      icon: "error"
+                  })
                 }else{
                   this.house.dates = this.houseDates
                   this.e1 = n + 1
@@ -212,16 +221,27 @@ import SharingStep5 from './PriceStep.vue'
           },
           save(){
               if(this.house.price == '' || this.house.price == undefined || this.house.price == null){
-                alert("가격은(는) 필수입력 값입니다.")
+                swal({
+                      text : "가격은(는) 필수입력 값입니다.",
+                      icon: "error"
+                  })
               }else{
                 if(this.checkPrice(this.house.price) == false){
-                  alert("가격은 숫자여야 합니다.")
+                  swal({
+                      text : "가격은 숫자여야 합니다.",
+                      icon: "error"
+                  })
                 }else{
                   this.file = Object.assign({},this.house)
                   this.upload(this.file)
                   // this.imageUpload(this.file)
                   this.setHouseData(this.houseData)
-                  alert("완료되었습니다.")
+                  swal({
+                      title : "축하드립니다!",
+                      text : "이제부터 예약을 받을 수 있습니다..",
+                      icon: "success",
+                      button: "확인!"
+                  })
                   this.closeModal()
                 }
               }

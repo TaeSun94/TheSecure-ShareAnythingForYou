@@ -83,7 +83,6 @@ export default {
     padding-bottom: 0px;
     margin-bottom : 0px;
     margin-top: 0px;
-
 }
 #introduction{
     /* width: ; */

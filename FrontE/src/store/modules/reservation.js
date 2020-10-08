@@ -26,10 +26,9 @@ export default {
             http
                 .get('/reserve/read/' +payload+ '/')
                 .then(({data})=>{
-                    console.log(data)
                     context.commit('setMyResrvations',data)
                 })
-                .catch(err => console.log(err.response))
+                .catch()
             // var reservations = 
             // [
             //     {
@@ -52,7 +51,6 @@ export default {
                 .post('/reserve/done',payload)
                 .then(({data})=>{
                     reservationEthereum.registerReservation($cookies.get('member'),data).then(value=>{
-                        console.log(value);
                             var transaction = {
                                 member_email : $cookies.get('member').member_email,
                                 tx_hash: value
@@ -60,9 +58,14 @@ export default {
                             http.post('/transaction/insert',transaction);
                     })
 
-                    alert("예약이 완료되었습니다.")
+                    swal({
+                        title : "예약 완료!",
+                        text : "여행을 준비하세요",
+                        icon: "success",
+                        button: "Go!"
+                    })
                     router.push({ path: '/home' })
-                }).catch(err => console.log(err.response))
+                }).catch()
         }
     },
 	getters: {
