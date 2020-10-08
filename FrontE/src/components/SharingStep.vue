@@ -177,9 +177,6 @@ import SharingStep5 from './PriceStep.vue'
                 break
               case 2 :
                 if(this.formValid == true){
-                  // console.log(this.house.address +" " + this.house.detail)
-                  // this.houseData.address = this.house.address
-                  // this.houseData.detail = this.house.detail
                   this.e1 = n + 1
                   this.setFormValid(false)
                 }else{

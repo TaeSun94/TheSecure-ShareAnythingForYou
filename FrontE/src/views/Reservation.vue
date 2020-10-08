@@ -89,6 +89,7 @@
                                     <span class="grey--text">{{house.host_type}}</span>
                                 </div>
                             </v-card-title>
+                            <v-card-text class="grey--text" style="margin-left:2vh;" ><span>{{house.host_capacity}}</span></v-card-text>
                         </v-card>
                     </v-hover>
                 </v-col>
@@ -177,6 +178,7 @@ export default {
         })
     },
     mounted(){
+        document.documentElement.scrollTop = 0;
         this.fetchRecentHouses()
     },
     beforeDestroy(){

@@ -21,7 +21,6 @@ export default {
 	actions: {
        async getAccessToken(context,code){
            const resp =  await http.post('/login',code)
-           console.log(resp);
            //테스트코드
            //사용할코드
            $cookies.set('member',resp.data,'1h')
@@ -39,7 +38,6 @@ export default {
                 router.go()
                 })
             }catch(e){
-                console.log("비밀번호 설정중 오류")
             }
        }
     },
