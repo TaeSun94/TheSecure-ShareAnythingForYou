@@ -194,6 +194,7 @@ export default {
                     break;
                 case "Logout":
                     this.$cookies.remove("code");
+                    this.$cookies.remove("member")
                     this.$router.push({ name : 'Cover'})
                     //this.$cookies.remove("token");
                     this.setisLogin(false);

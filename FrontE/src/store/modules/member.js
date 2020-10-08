@@ -33,7 +33,7 @@ export default {
             membershipEthereum.createAccount(member.password).then(value=>{
                 var account = value;
                 member.public_key = account;
-                $cookies.set('member',member,'1h');
+                $cookies.set('member',member,'2h');
                 http.put('/user/password',member);
                 router.go()
                 })
