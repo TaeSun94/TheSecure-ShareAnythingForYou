@@ -58,7 +58,12 @@ export default {
                             http.post('/transaction/insert',transaction);
                     })
 
-                    alert("예약이 완료되었습니다.")
+                    swal({
+                        title : "예약 완료!",
+                        text : "여행을 준비하세요",
+                        icon: "success",
+                        button: "Go!"
+                    })
                     router.push({ path: '/home' })
                 }).catch()
         }

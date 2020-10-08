@@ -221,7 +221,10 @@ export default {
                 this.setpwdDialog(false)
                 // this.dialog = false
             }else{
-                alert("비밀번호를 확인하세요")
+               swal({
+                      text : "비밀번호를 확인하세요!",
+                      icon: "error"
+                  })
                 this.$refs.form.reset()
                 // this.password=''
             }

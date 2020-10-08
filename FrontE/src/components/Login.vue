@@ -28,6 +28,7 @@ export default {
   methods: {
     kakaoLogin () {
       window.location.href = 'https://kauth.kakao.com/oauth/authorize?client_id=f67bfd6f7cdb600868d04a4e1408199f&response_type=code&redirect_uri=http://localhost:3000/login'
+      // window.location.href = 'https://kauth.kakao.com/oauth/authorize?client_id=f67bfd6f7cdb600868d04a4e1408199f&response_type=code&redirect_uri=http://j3c201.p.ssafy.io:80/login/'
     },
     closeModal(){
       if(this.check != 0){
