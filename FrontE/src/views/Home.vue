@@ -144,9 +144,9 @@ export default {
         items: [
             { title: 'Our Service', icon: 'mdi-view-dashboard'},
             { title: 'Reservation', icon: 'mdi-image' },
-            { title: 'Home-Sharing', icon: 'mdi-help-box' },
+            { title: 'Home-Sharing', icon: 'mdi-view-dashboard' },
             // { title: 'Review', icon: 'mdi-view-dashboard' },
-            { title: 'FAQ', icon: 'mdi-view-dashboard' },
+            { title: 'FAQ', icon: 'mdi-help-box' },
             { title: 'Logout', icon:'mdi-exit-run'},
         ],
         right: null,
@@ -194,6 +194,7 @@ export default {
                     break;
                 case "Logout":
                     this.$cookies.remove("code");
+                    this.$cookies.remove("member")
                     this.$router.push({ name : 'Cover'})
                     //this.$cookies.remove("token");
                     this.setisLogin(false);
@@ -221,7 +222,10 @@ export default {
                 this.setpwdDialog(false)
                 // this.dialog = false
             }else{
-                alert("비밀번호를 확인하세요")
+               swal({
+                      text : "비밀번호를 확인하세요!",
+                      icon: "error"
+                  })
                 this.$refs.form.reset()
                 // this.password=''
             }

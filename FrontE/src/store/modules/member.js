@@ -21,7 +21,6 @@ export default {
 	actions: {
        async getAccessToken(context,code){
            const resp =  await http.post('/login',code)
-           console.log(resp);
            //테스트코드
            //사용할코드
            $cookies.set('member',resp.data,'1h')
@@ -34,12 +33,11 @@ export default {
             membershipEthereum.createAccount(member.password).then(value=>{
                 var account = value;
                 member.public_key = account;
-                $cookies.set('member',member,'1h');
+                $cookies.set('member',member,'2h');
                 http.put('/user/password',member);
                 router.go()
                 })
             }catch(e){
-                console.log("비밀번호 설정중 오류")
             }
        }
     },

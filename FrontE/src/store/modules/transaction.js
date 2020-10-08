@@ -19,11 +19,10 @@ export default {
                 .then(({data})=>{
                     // context.commit('setReservations',data)
                     membershipEthereum.getTransactions(data).then(value=>{
-                        console.log(value);
                         context.commit('setTransactions',value);
                     })
                 })
-                .catch(err => console.log(err.response))
+                .catch()
         },
          
         

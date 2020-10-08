@@ -131,6 +131,7 @@ import SharingStep from '@/components/SharingStep.vue'
 export default {
     data(){
         return{
+            member : {},
             dialog: false,
             modalOn: "",
             btnval : true,
@@ -159,6 +160,18 @@ export default {
         }
     },
     mounted(){
+        if(this.member != undefined){
+            this.member = this.$cookies.get('member')
+            if(this.member.password == null){
+                swal({
+                      title : "아직 지갑생성을 안하셨군요?",
+                      text : "안전한 사용을 위해 지갑을 먼저 생성해주세요",
+                      icon: "warning",
+                      button: "돌아가기"
+                })
+                this.$router.push({path : '/home'})
+            }
+        }
         document.documentElement.scrollTop = 0;
     }    
 }

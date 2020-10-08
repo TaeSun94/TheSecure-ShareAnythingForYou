@@ -44,8 +44,6 @@ export default {
             this.$refs.imageInput.click();
         },
         onChangeImages(e) {
-            // console.log(e.target.files)
-            // const file = e.target.files[0];
             if(e == undefined){
               this.imageUrl = ''
               this.house.imageUrl = ''
@@ -54,17 +52,14 @@ export default {
               this.house.imageUrl = this.imageUrl;
               // 기존에 파일이있엇을 경우에 일단 1장이므로 이렇게 처리
               if(this.img.length !== 0){
-                console.log("this.file.length !== 0")
                 this.img.pop()
                 this.img.push(e)
                 this.house.img = this.img
               }else{
-                console.log("else")
                 this.img.push(e)
                 this.house.img = this.img
               }
             }
-            console.log(this.house.img)
         },
         // click: function(){
         //   alert("클릭!")
