@@ -36,7 +36,7 @@ public class HostController {
 	@Autowired
 	FileService fileService;
 	
-	@ApiOperation(value = "sharing home을 등록한다.", response = Boolean.class)
+	@ApiOperation(value = "sharing home을 등록한다.", response = Host.class)
 	@PostMapping("/host/regist")
 	public ResponseEntity<Host> registHost(
 			@ApiParam(value = "Host object", required = true) @RequestBody Host host) {
