@@ -49,7 +49,7 @@ public class KakaoAPIServiceImpl implements KakaoAPIService {
 			StringBuilder sb = new StringBuilder();
 			sb.append("grant_type=authorization_code");
 			sb.append("&client_id=f67bfd6f7cdb600868d04a4e1408199f");
-			sb.append("&redirect_uri=http://j3c201.p.ssafy.io:80/login");
+			sb.append("&redirect_uri=http://j3c201.p.ssafy.io/login");
 //			sb.append("&redirect_uri=http://localhost:3000/login");
 
 			sb.append("&code=" + authorize_code);
